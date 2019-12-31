@@ -6,45 +6,34 @@ body {
   text-align: center;
 }
 
-.wrapper {
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
-}
-main {
-  flex-grow: 1;
-  display: flex;
+h1 {
+  font-size: 50px;
 }
 
-.gameSection {
-  flex: 1;
+.start {
+  font-size: 30px;
 }
-.sideSection {
-  flex: 1;
+
+main {
+  text-align: left;
 }
 
 div.playerGrid {
-  width: 440px;
-  height: 440px;
+  width: 500px;
+  height: 500px;
   display: flex;
   flex-wrap: wrap;
 }
 
 div.computerGrid {
-  width: 440px;
-  height: 440px;
+  width: 500px;
+  height: 500px;
   display: flex;
   flex-wrap: wrap;
 }
 
 div.grid-item {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   border: 1px solid black;
-}
-
-div.grid-item.player {
-  background-image: url(../../../project-01/starter-code/assets/shipLong.png);
-  background-repeat: no-repeat;
-  background-size: contain;
 }

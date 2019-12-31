@@ -11,37 +11,14 @@
 <body>
   <div class="wrapper">
     <h1>Battleship</h1>
-    <!-- I could name it "saving ships" or "Save Us!" and you are deploying parachute drops of materials to save each other's ships (or islands).
-    The goal is to drop a parachute of rescue goods to the correct square and be the first to save all of your allies' ships (or islands). -->
+    <button class="start">Place My Ships</button>
     <main>
-      <div class="gameSection">
-        <button class="start">Start Game</button>
-        <div class="playerGrid">
-        </div>
-        <div class="computerGrid">
-        </div>
+      <h2>Player Grid</h2>
+      <div class="playerGrid">
       </div>
-      <aside>
-        <div class="sideSection">
-          <h2>Ideas for ship placement</h2>
-          <p>Different sized ships (or islands) are displayed here.</p>
-          <p>I need to find a way for the player to click the ship and add it to the grid.</p>
-          <p>After adding it to the grid, they should be able to rotate it.</p>
-          <p>I could add a class to the ship that makes it disappear from the box and appear on the grid.</p>
-          <!-- <p>I could randomly select a spot for the player again and again until they're happy.</p>
-          <p>But that's not as fun as choosing yourself.</p> -->
-          <p>The player can move and rotate their ship with key strokes. (like how pikachu moved around)
-          <p>But I'll need a way to "lock in" their decisions once they begin the game.<p>
-          <h2>The computer's grid.</h2>
-          <p>Or, they could click the grid to add the ships and a text input box takes a co-ordinate every turn for
-            their guess.</p>
-          <p>I'd need to take the co-ordinate, store it in a variable, and check that varible against the (unseen)
-            computer's board.</p>
-          <!-- like this: https://stackoverflow.com/questions/17433557/how-to-save-user-input-into-a-variable-in-html-and-js -->
-          <p>I could make the computer's board physically on the page, but give it a class that displays: none once I am
-            done testing.</p>
-        </div>
-      </aside>
+      <h2>Computer Grid</h2>
+      <div class="computerGrid">
+      </div>
     </main>
 </body>
 </div>

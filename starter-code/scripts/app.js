@@ -1,65 +1,91 @@
-//today I want to take some "ships" and put them on the board.
-//I need to figure out how to make a ship appear to take up more than 1 square
-//I think I need to use aspect ratios for this
-//https://css-tricks.com/aspect-ratios-grid-items/
-//then I want to be able to place and rotate them
-//I would also like to try to place numbers and letters along the grid
-
-
 function init() {
   //  dom variables
   const playerGrid = document.querySelector('.playerGrid')
-  //the array to store the dom grid squares in
-  const gridSquares = []
+  const computerGrid = document.querySelector('.computerGrid')
+ 
+  const gridCells = []
+  const width = 10
+  let lastCell
 
-  // game variables
-  const width = 11
-  let playerIndex = 1
-
-  //uppercase Array makes an empty array to be filled 
-  //filled with the width squared to create an equal grid
-  //loop as many times as width times the width to fill the grid
-  Array(width * width).join('.').split('.').forEach(() => {
-    const square = document.createElement('div')
-    square.classList.add('grid-item')
-    gridSquares.push(square)
-    playerGrid.appendChild(square)
-  })
-  // places player at the starting position when grid has finished building
-  gridSquares[playerIndex].classList.add('player')
-  
-  //find key code for every keyboard item
-  //call this on 'keydown' event
-  function handleKeyDown(e) {
-    switch (e.keyCode) {
-      case 39:
-        if (playerIndex % width < width - 1) {
-          playerIndex++
-        }
-        break
-      case 37:
-        if (playerIndex % width > 0) {
-          playerIndex--
-        }
-        break
-      case 40:
-        if (playerIndex + width < width * width) {
-          playerIndex += width 
-        }
-        break
-      case 38:
-        if (playerIndex - width >= 0) {
-          playerIndex -= width
-        } 
-        break
-      default:
-        console.log('player shouldnt move')
-    }
-    gridSquares.forEach(square => square.classList.remove('player'))
-    gridSquares[playerIndex].classList.add('player')
-    console.log('current player index is', playerIndex)
+  const ship1 = {
+    //made up of grid cells: 1 width x 2 height
+    length: 2,
+    //replace with a number 0-9
+    locationNumber: null,
+    //replace with a letter A-J
+    locationLetter: null
   }
-  // event handlers
-  window.addEventListener('keydown', handleKeyDown)
+
+  const ship2 = {
+    //made up of grid cells: 1 width x 3 height
+    length: 3,
+    //replace with a number 0-9
+    locationNumber: null,
+    //replace with a letter A-J
+    locationLetter: null
+  }
+
+  const ship3 = {
+    //made up of grid cells: 1 width x 4 height
+    length: 4,
+    //replace with a number 0-9
+    locationNumber: null,
+    //replace with a letter A-J
+    locationLetter: null
+  }
+
+  const ship4 = {
+    //made up of grid cells: 1 width x 5 height
+    length: 5,
+    //replace with a number 0-9. The verticle location
+    cellNumber: null,
+    //replace with a letter A-J. The horizonal location
+    cellLetter: null
+  }
+
+
+  //player grid
+  Array(width * width).join('.').split('.').forEach(() => {
+    const cell = document.createElement('div')
+    cell.classList.add('grid-item')
+    gridCells.push(cell)
+    playerGrid.appendChild(cell)
+  })
+
+  //computer grid. Will be hidden once game is finished testing.
+  Array(width * width).join('.').split('.').forEach(() => {
+    const cell = document.createElement('div')
+    cell.classList.add('grid-item')
+    gridCells.push(cell)
+    computerGrid.appendChild(cell)
+  })
+
+  //first step is setup
+  //randomly place different sized ships on player and computer grid
+  //the ship cannot go off the board
+  //the ship cannot intersect another ship
+  
+  //second step is player-chosen missile fire
+  //a missle can MISS, HIT, and SINK a ship
+
+  //a function that randomises a cellNumber (number between 0-9)
+  function createNumber() {
+    const idx = Math.floor(Math.random() * 10)
+    if (idx === lastCell) {
+      console.log('same cell was chosen')
+      return createNumber()
+    }
+    lastCell = idx
+    return idx
+  }
+  console.log(createNumber())
+
+  //a function that randomises a cellLetter
+
+  //a function that takes a cell number and cell letter to randomise placement
+  // function placeShip(cellNumber, cellLetter) {
+    
+  // }
+  
 }
 window.addEventListener('DOMContentLoaded', init)
