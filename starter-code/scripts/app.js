@@ -9,7 +9,8 @@ function init() {
 
   const ship1 = {
     //made up of grid cells: 1 width x 2 height
-    length: 2,
+    //fill empty array with grid squares when grid location is set (different every game)
+    length: [],
     //replace with a number 0-9
     locationNumber: null,
     //replace with a letter A-J
@@ -18,7 +19,7 @@ function init() {
 
   const ship2 = {
     //made up of grid cells: 1 width x 3 height
-    length: 3,
+    length: [],
     //replace with a number 0-9
     locationNumber: null,
     //replace with a letter A-J
@@ -27,7 +28,7 @@ function init() {
 
   const ship3 = {
     //made up of grid cells: 1 width x 4 height
-    length: 4,
+    length: [],
     //replace with a number 0-9
     locationNumber: null,
     //replace with a letter A-J
@@ -36,7 +37,7 @@ function init() {
 
   const ship4 = {
     //made up of grid cells: 1 width x 5 height
-    length: 5,
+    length: [],
     //replace with a number 0-9. The verticle location
     cellNumber: null,
     //replace with a letter A-J. The horizonal location
@@ -60,13 +61,16 @@ function init() {
     computerGrid.appendChild(cell)
   })
 
-  //first step is setup
+  //first stage is setup
   //randomly place different sized ships on player and computer grid
-  //the ship cannot go off the board
-  //the ship cannot intersect another ship
+  //-the ship cannot go off the board
+  //-the ship cannot intersect another ship
   
-  //second step is player-chosen missile fire
+  //second stage is player-chosen missile fire
+  //player input is taken, such as A7 or B1
   //a missle can MISS, HIT, and SINK a ship
+
+  //STAGE ONE: SET-UP FUNCTIONS
 
   //a function that randomises a cellNumber (number between 0-9)
   function createNumber() {
@@ -81,11 +85,12 @@ function init() {
   console.log(createNumber())
 
   //a function that randomises a cellLetter
+  //use an array of letters for this
+  //and math.random to retreive an index of the array
 
-  //a function that takes a cell number and cell letter to randomise placement
-  // function placeShip(cellNumber, cellLetter) {
-    
-  // }
+  //a function that takes the random cellNumber and cellLetter
+  //adds nearby grid cells to make a different lengthed "ship"
+  //stores info in ship1, ship2 etc object
   
 }
 window.addEventListener('DOMContentLoaded', init)
