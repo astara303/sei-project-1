@@ -53,3 +53,23 @@ div.ship3 {
 div.ship4 {
   background-color: lavender;
 }
+
+div.computerShip1 {
+  /* background-color: white; */
+  background-color: red;
+}
+
+div.computerShip2 {
+  /* background-color: white; */
+  background-color: orange;
+}
+
+div.computerShip3 {
+  /* background-color: white; */
+  background-color: purple;
+}
+
+div.computerShip4 {
+  /* background-color: white; */
+  background-color: green;
+}

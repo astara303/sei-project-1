@@ -52,12 +52,12 @@ function init() {
   After placement, save these grid cells in ship1 location array
   When 5 values are given, tell the player to click the "initiate game" button to start firing
 
-  Player can press the "set-up" button again to clear and restart placement
+  Player can press the "clear board" button to restart placement
 
 
   SET-UP.) Place ships on the computer grid (hidden)
 
-  When player clicks a button, all computer ships are placed but not shown
+  When player clicks "Begin Firing Missiles", a function checks if "allShipsPlaced" is true 
 
   Randomise a number 0-99 (This corresponds to an index in the array of grid cells)
   Use that random number (1, 22 etc) to add 1, 2, or more grid cells on to it to create horizonal or vertical length 
@@ -129,6 +129,7 @@ function init() {
   // GAME VARIABLES
   const gridCells = []
   const width = 10
+  //changes to true when all ships have been placed
   let allShipsPlaced = false
   //a changeable variable to check the last chosen grid cell so as not to choose it again, or to choose nearby cells
   //let lastCell
@@ -139,8 +140,7 @@ function init() {
   //length: 2
   const playerShip1 = {
     location: [],
-    //might need this to change to false if every item in the array has a class of HIT in order to change them all to SUNK
-    //could also store each grid index that makes length and location as its own variable if needed but the array should work
+    //change to false if every item in the array has a class of HIT in order to change them all to SUNK
     isSunk: false
   }
   
@@ -212,22 +212,31 @@ function init() {
   //can place your first ship
   //must log each clicked cell into the corresponding ship array
   function cellClicked(i) {
-    if (playerShip4.location.length >= 5) {
+    if (allShipsPlaced) {
+      return
+    }
+    if (playerShip4.location.length >= 4) {
       allShipsPlaced = true
+      console.log(allShipsPlaced === true)
     }
     if (playerShip3.location.length >= 4) {
+      // innerHTML not working
+      // instructions.innerHTML = 'Place your fourth ship. It has a length of 5. When placed, click "Begin Firing Missiles"!'
       gridCells[i].classList.add('ship4')
       if (gridCells[i].classList.contains('ship4')) {
         playerShip4.location.push(i)
       }
     }
     if (playerShip2.location.length >= 3) {
+      // innerHTML not working
+      // instructions.innerHTML = 'Place your third ship. It has a length of 4. Do not click "Begin Firing Missiles" until all 4 ships have been placed.'
       gridCells[i].classList.add('ship3')
       if (gridCells[i].classList.contains('ship3')) {
         playerShip3.location.push(i)
       }
     }
     if (playerShip1.location.length >= 2) {
+      // instructions.innerHTML = 'Place your second ship. It has a length of 3. Do not click "Begin Firing Missiles" until all 4 ships have been placed.'
       gridCells[i].classList.add('ship2')
       if (gridCells[i].classList.contains('ship2')) {
         playerShip2.location.push(i)
@@ -237,25 +246,32 @@ function init() {
     if (gridCells[i].classList.contains('ship1')) {
       playerShip1.location.push(i)
     }
-    console.log('ship1', playerShip1.location)
-    console.log('ship2', playerShip2.location)
-    console.log('ship3', playerShip3.location)
+    // console.log('ship1', playerShip1.location)
+    // console.log('ship2', playerShip2.location)
+    // console.log('ship3', playerShip3.location)
+    // console.log('ship3', playerShip3.location)
   }
 
   //COMPUTER FUNCTIONS
 
-  //a function that randomly chooses a number between 0-99
+  //a function that randomly chooses a whole number between 0-99
   function createNumber() {
-    //generate a random whole number 0-99
     const cellNumber = Math.floor(Math.random() * 100)
     return cellNumber
   }
-  // console.log(createNumber())
 
-  //a function that calls createNumber and stores it in a globally declared var (the ship's length array)
-  //Each ship will have its own version of the function that adds 1, 2 etc cell numbers to this array
-  //the function will add nearby cells
-  //so it must be able to determine that grid cell 13 is surrounded by 12 and 14 (current chosen cell number +1 (++) or -1 (--)) and 3 and 23 (current chosen cell number +10 or -10)
+  /*a function that calls createNumber to generate ships on computer grid
+  this number is turned into the index of the computer grid
+  cells nearby this cell is also given a class of computerShip1, then 2, etc.
+  it must be able to determine that grid cell 13 is surrounded by 12 and 14 (current chosen cell number +1 (++) or -1 (--)) and 3 and 23 (current chosen cell number +10 or -10) 
+  */
+  function createShips() {
+    if (allShipsPlaced === true) {
+      const firstShip = createNumber()
+      console.log(firstShip)
+    }
+  }
+  createShips()
   
 
   // STAGE ONE: SET-UP EVENTS
