@@ -145,7 +145,7 @@ function init() {
     //change to false if every item in the array has a class of HIT in order to change them all to SUNK
     isSunk: false
   }
-  
+
   //length: 3
   const playerShip2 = {
     location: [],
@@ -157,29 +157,29 @@ function init() {
     isSunk: false
   }
   //length: 5
-  const playerShip4  = {
+  const playerShip4 = {
     location: [],
     isSunk: false
   }
 
   //these ships will not have a class added to the cells, so that they do not appear
   //length: 2
-  const computerShip1  = {
+  const computerShip1 = {
     location: [],
     isSunk: false
   }
   //length: 3
-  const computerShip2  = {
+  const computerShip2 = {
     location: [],
     isSunk: false
   }
   //length: 4
-  const computerShip3  = {
+  const computerShip3 = {
     location: [],
     isSunk: false
   }
   //length: 5
-  const computerShip4  = {
+  const computerShip4 = {
     location: [],
     isSunk: false
   }
@@ -225,7 +225,7 @@ function init() {
       // innerHTML not working
       // instructions.innerHTML = 'Place your fourth ship. It has a length of 5. When placed, click "Begin Firing Missiles"!'
       playerGridCells[i].classList.add('ship4')
-      if ( playerGridCells[i].classList.contains('ship4')) {
+      if (playerGridCells[i].classList.contains('ship4')) {
         playerShip4.location.push(i)
       }
     }
@@ -233,19 +233,19 @@ function init() {
       // innerHTML not working
       // instructions.innerHTML = 'Place your third ship. It has a length of 4. Do not click "Begin Firing Missiles" until all 4 ships have been placed.'
       playerGridCells[i].classList.add('ship3')
-      if ( playerGridCells[i].classList.contains('ship3')) {
+      if (playerGridCells[i].classList.contains('ship3')) {
         playerShip3.location.push(i)
       }
     }
     if (playerShip1.location.length >= 2) {
       // instructions.innerHTML = 'Place your second ship. It has a length of 3. Do not click "Begin Firing Missiles" until all 4 ships have been placed.'
       playerGridCells[i].classList.add('ship2')
-      if ( playerGridCells[i].classList.contains('ship2')) {
+      if (playerGridCells[i].classList.contains('ship2')) {
         playerShip2.location.push(i)
       }
     }
     playerGridCells[i].classList.add('ship1')
-    if ( playerGridCells[i].classList.contains('ship1')) {
+    if (playerGridCells[i].classList.contains('ship1')) {
       playerShip1.location.push(i)
     }
     // console.log('ship1', playerShip1.location)
@@ -280,60 +280,198 @@ function init() {
   Should check to see that no previously used cells are reused
   */
 
-  function createShips() {
-    //when game is complete, add if allShipsPlaced is true, then execute this:
-    const ranNum1 = createNumber()
-    const ranNum2 = createNumber()
-    const ranNum3 = createNumber()
-    const ranNum4 = createNumber()
-    computerGridCells[ranNum1].classList.add('computerShip1')
-    computerGridCells[ranNum2].classList.add('computerShip2')
-    computerGridCells[ranNum3].classList.add('computerShip3')
-    computerGridCells[ranNum4].classList.add('computerShip4')
-    computerShip1.location.push(ranNum1)
-    computerShip2.location.push(ranNum2)
-    computerShip3.location.push(ranNum3)
-    computerShip4.location.push(ranNum4)
-    if (computerGridCells[ranNum1].classList.contains('computerShip1')) {
-      computerGridCells[ranNum1 - 1].classList.add('computerShip1')
-      computerShip1.location.push(ranNum1 - 1)
+  //does not stop ships intersecting but does stop them from wrapping on the grid
+  function createShip1() {
+    const ranNum = createNumber()
+    computerGridCells[ranNum].classList.add('computerShip1')
+    computerShip1.location.push(ranNum)
+    if (computerGridCells[ranNum].classList.contains('computerShip1') && ranNum === 0 || ranNum === 10 || ranNum === 20 || ranNum === 30 || ranNum === 40 || ranNum === 50 || ranNum === 60 || ranNum === 70 || ranNum === 80 || ranNum === 90) {
+      computerGridCells[ranNum + 1].classList.add('computerShip1')
+      computerShip1.location.push(ranNum + 1)
+    } else if (computerGridCells[ranNum].classList.contains('computerShip1') && ranNum === 9 || ranNum === 19 || ranNum === 29 || ranNum === 39 || ranNum === 49 || ranNum === 59 || ranNum === 69 || ranNum === 79 || ranNum === 89 || ranNum === 99) {
+      computerGridCells[ranNum - 1].classList.add('computerShip1')
+      computerShip1.location.push(ranNum - 1)
+    } else {
+      computerGridCells[ranNum - 1].classList.add('computerShip1')
+      computerShip1.location.push(ranNum - 1)
     }
-    if (computerGridCells[ranNum2].classList.contains('computerShip2')) {
-      computerGridCells[ranNum2 + 10].classList.add('computerShip2')
-      computerShip2.location.push(ranNum2 + 10)
-      computerGridCells[ranNum2 - 10].classList.add('computerShip2')
-      computerShip2.location.push(ranNum2 - 10)
-    }
-    if (computerGridCells[ranNum3].classList.contains('computerShip3')) {
-      computerGridCells[ranNum3 - 1].classList.add('computerShip3')
-      computerShip3.location.push(ranNum3 - 1)
-      computerGridCells[ranNum3 - 2].classList.add('computerShip3')
-      computerShip3.location.push(ranNum3 - 2)
-      computerGridCells[ranNum3 + 1 ].classList.add('computerShip3')
-      computerShip3.location.push(ranNum3 + 1)
-    }
-    if (computerGridCells[ranNum4].classList.contains('computerShip4')) {
-      computerGridCells[ranNum4 + 10].classList.add('computerShip4')
-      computerShip4.location.push(ranNum4 + 10)
-      computerGridCells[ranNum4 + 20].classList.add('computerShip4')
-      computerShip4.location.push(ranNum4 + 20)
-      computerGridCells[ranNum4 - 10].classList.add('computerShip4')
-      computerShip4.location.push(ranNum4 - 10)
-      computerGridCells[ranNum4 - 20].classList.add('computerShip4')
-      computerShip4.location.push(ranNum4 - 20)
-    }
-    console.log('comp Ship 1 length of 2', computerShip1.location)
-    console.log('comp Ship 2 length of 3', computerShip2.location)
-    console.log('comp Ship 3 length of 4', computerShip3.location)
-    console.log('comp Ship 4 length of 5', computerShip4.location)
+    console.log('comp ship 1 length of 2', computerShip1.location)
   }
-  createShips()
+  createShip1()
 
+  //prohibits ships from wrapping on the grid
+  //does not stop ships intersecting
+  function createShip2() {
+    const ranNum = createNumber()
+    computerGridCells[ranNum].classList.add('computerShip2')
+    computerShip2.location.push(ranNum)
+    if (computerGridCells[ranNum].classList.contains('computerShip2') && ranNum === 0 || ranNum === 10 || ranNum === 20 || ranNum === 30 || ranNum === 40 || ranNum === 50 || ranNum === 60 || ranNum === 70 || ranNum === 80 || ranNum === 90) {
+      computerGridCells[ranNum + 1].classList.add('computerShip2')
+      computerShip2.location.push(ranNum + 1)
+      computerGridCells[ranNum + 2].classList.add('computerShip2')
+      computerShip2.location.push(ranNum + 2)
+    } else if (computerGridCells[ranNum].classList.contains('computerShip2') && ranNum === 9 || ranNum === 19 || ranNum === 29 || ranNum === 39 || ranNum === 49 || ranNum === 59 || ranNum === 69 || ranNum === 79 || ranNum === 89 || ranNum === 99) {
+      computerGridCells[ranNum - 1].classList.add('computerShip2')
+      computerShip2.location.push(ranNum - 1)
+      computerGridCells[ranNum - 2].classList.add('computerShip2')
+      computerShip2.location.push(ranNum - 2)
+    } else if (computerGridCells[ranNum].classList.contains('computerShip2')) {
+      computerGridCells[ranNum - 1].classList.add('computerShip2')
+      computerShip2.location.push(ranNum - 1)
+      computerGridCells[ranNum + 1].classList.add('computerShip2')
+      computerShip2.location.push(ranNum + 1)
+    }
+    console.log('comp ship 2 length of 3', computerShip2.location)
+  }
+  createShip2()
 
-  
+  //stops ships wrapping on grid
+  //does not stop ships intersecting
+  function createShip3() {
+    const ranNum = createNumber()
+    computerGridCells[ranNum].classList.add('computerShip3')
+    computerShip3.location.push(ranNum)
+    if (computerGridCells[ranNum].classList.contains('computerShip3') && ranNum === 0 || ranNum === 10 || ranNum === 20 || ranNum === 30 || ranNum === 40 || ranNum === 50 || ranNum === 60 || ranNum === 70 || ranNum === 80 || ranNum === 90) {
+      computerGridCells[ranNum + 1].classList.add('computerShip3')
+      computerShip3.location.push(ranNum + 1)
+      computerGridCells[ranNum + 2].classList.add('computerShip3')
+      computerShip3.location.push(ranNum + 2)
+      computerGridCells[ranNum + 3].classList.add('computerShip3')
+      computerShip3.location.push(ranNum + 3)
+    } else if (computerGridCells[ranNum].classList.contains('computerShip3') && ranNum === 9 || ranNum === 19 || ranNum === 29 || ranNum === 39 || ranNum === 49 || ranNum === 59 || ranNum === 69 || ranNum === 79 || ranNum === 89 || ranNum === 99) {
+      computerGridCells[ranNum - 1].classList.add('computerShip3')
+      computerShip3.location.push(ranNum - 1)
+      computerGridCells[ranNum - 2].classList.add('computerShip3')
+      computerShip3.location.push(ranNum - 2)
+      computerGridCells[ranNum - 3].classList.add('computerShip3')
+      computerShip3.location.push(ranNum - 3)
+    } else if (computerGridCells[ranNum].classList.contains('computerShip3') && ranNum === 1 || ranNum === 11 || ranNum === 21 || ranNum === 31 || ranNum === 41 || ranNum === 51 || ranNum === 61 || ranNum === 71 || ranNum === 81 || ranNum === 91) {
+      computerGridCells[ranNum + 1].classList.add('computerShip3')
+      computerShip3.location.push(ranNum + 1)
+      computerGridCells[ranNum + 2].classList.add('computerShip3')
+      computerShip3.location.push(ranNum + 2)
+      computerGridCells[ranNum + 3].classList.add('computerShip3')
+      computerShip3.location.push(ranNum + 3)
+    } else if (computerGridCells[ranNum].classList.contains('computerShip3') && ranNum === 8 || ranNum === 18 || ranNum === 28 || ranNum === 38 || ranNum === 48 || ranNum === 58 || ranNum === 68 || ranNum === 78 || ranNum === 88 || ranNum === 98) {
+      computerGridCells[ranNum - 1].classList.add('computerShip3')
+      computerShip3.location.push(ranNum - 1)
+      computerGridCells[ranNum - 2].classList.add('computerShip3')
+      computerShip3.location.push(ranNum - 2)
+      computerGridCells[ranNum - 3].classList.add('computerShip3')
+      computerShip3.location.push(ranNum - 3)
+    } else if (computerGridCells[ranNum].classList.contains('computerShip3')) {
+      computerGridCells[ranNum - 1].classList.add('computerShip3')
+      computerShip3.location.push(ranNum - 1)
+      computerGridCells[ranNum + 1].classList.add('computerShip3')
+      computerShip3.location.push(ranNum + 1)
+      computerGridCells[ranNum - 2].classList.add('computerShip3')
+      computerShip3.location.push(ranNum - 2)
+    }
+    console.log('comp ship 3 length of 4', computerShip3.location)
+  }
+  createShip3()
+
+  //stops ships wrapping on grid
+  //does not stop ships intersecting
+  function createShip4() {
+    const ranNum = createNumber()
+    computerGridCells[ranNum].classList.add('computerShip4')
+    computerShip4.location.push(ranNum)
+    if (computerGridCells[ranNum].classList.contains('computerShip4') && ranNum === 0 || ranNum === 10 || ranNum === 20 || ranNum === 30 || ranNum === 40 || ranNum === 50 || ranNum === 60 || ranNum === 70 || ranNum === 80 || ranNum === 90) {
+      computerGridCells[ranNum + 1].classList.add('computerShip4')
+      computerShip4.location.push(ranNum + 1)
+      computerGridCells[ranNum + 2].classList.add('computerShip4')
+      computerShip4.location.push(ranNum + 2)
+      computerGridCells[ranNum + 3].classList.add('computerShip4')
+      computerShip4.location.push(ranNum + 3)
+    } else if (computerGridCells[ranNum].classList.contains('computerShip4') && ranNum === 9 || ranNum === 19 || ranNum === 29 || ranNum === 39 || ranNum === 49 || ranNum === 59 || ranNum === 69 || ranNum === 79 || ranNum === 89 || ranNum === 99) {
+      computerGridCells[ranNum - 1].classList.add('computerShip4')
+      computerShip4.location.push(ranNum - 1)
+      computerGridCells[ranNum - 2].classList.add('computerShip4')
+      computerShip4.location.push(ranNum - 2)
+      computerGridCells[ranNum - 3].classList.add('computerShip4')
+      computerShip4.location.push(ranNum - 3)
+    } else if (computerGridCells[ranNum].classList.contains('computerShip4') && ranNum === 1 || ranNum === 11 || ranNum === 21 || ranNum === 31 || ranNum === 41 || ranNum === 51 || ranNum === 61 || ranNum === 71 || ranNum === 81 || ranNum === 91) {
+      computerGridCells[ranNum + 1].classList.add('computerShip4')
+      computerShip4.location.push(ranNum + 1)
+      computerGridCells[ranNum + 2].classList.add('computerShip4')
+      computerShip4.location.push(ranNum + 2)
+      computerGridCells[ranNum + 3].classList.add('computerShip4')
+      computerShip4.location.push(ranNum + 3)
+    } else if (computerGridCells[ranNum].classList.contains('computerShip4') && ranNum === 8 || ranNum === 18 || ranNum === 28 || ranNum === 38 || ranNum === 48 || ranNum === 58 || ranNum === 68 || ranNum === 78 || ranNum === 88 || ranNum === 98) {
+      computerGridCells[ranNum - 1].classList.add('computerShip4')
+      computerShip4.location.push(ranNum - 1)
+      computerGridCells[ranNum - 2].classList.add('computerShip4')
+      computerShip4.location.push(ranNum - 2)
+      computerGridCells[ranNum - 3].classList.add('computerShip4')
+      computerShip4.location.push(ranNum - 3)
+    } else if (computerGridCells[ranNum].classList.contains('computerShip4')) {
+      computerGridCells[ranNum - 1].classList.add('computerShip4')
+      computerShip4.location.push(ranNum - 1)
+      computerGridCells[ranNum + 1].classList.add('computerShip4')
+      computerShip4.location.push(ranNum + 1)
+      computerGridCells[ranNum - 2].classList.add('computerShip4')
+      computerShip4.location.push(ranNum - 2)
+    }
+    console.log('comp ship 4 length of 5', computerShip4.location)
+  }
+  createShip4()
+
+  // function createShips() {
+  //   //when game is complete, add if allShipsPlaced is true, then execute this:
+  //   const ranNum1 = createNumber()
+  //   const ranNum2 = createNumber()
+  //   const ranNum3 = createNumber()
+  //   const ranNum4 = createNumber()
+  //   computerGridCells[ranNum1].classList.add('computerShip1')
+  //   computerGridCells[ranNum2].classList.add('computerShip2')
+  //   computerGridCells[ranNum3].classList.add('computerShip3')
+  //   computerGridCells[ranNum4].classList.add('computerShip4')
+  //   computerShip1.location.push(ranNum1)
+  //   computerShip2.location.push(ranNum2)
+  //   computerShip3.location.push(ranNum3)
+  //   computerShip4.location.push(ranNum4)
+  //   if (computerGridCells[ranNum1].classList.contains('computerShip1') && ranNum1 !== 0 || ranNum1 !== 10 || ranNum1 !== 20 || ranNum1 !== 30 || ranNum1 !== 40 || ranNum1 !== 50 || ranNum1 !== 60 || ranNum1 !== 70 || ranNum1 !== 80 || ranNum1 !== 90) {
+  //     computerGridCells[ranNum1 - 1].classList.add('computerShip1')
+  //     computerShip1.location.push(ranNum1 - 1)
+  //   }
+  //   else if (computerGridCells[ranNum1].classList.contains('computerShip1') && ranNum1 !== 9 || ranNum1 !== 19 || ranNum1 !== 29 || ranNum1 !== 39 || ranNum1 !== 49 || ranNum1 !== 59 || ranNum1 !== 69 || ranNum1 !== 79 || ranNum1 !== 89 || ranNum1 !== 99) {
+  //     computerGridCells[ranNum1 + 1].classList.add('computerShip1')
+  //     computerShip1.location.push(ranNum1 + 1)
+  //   }
+  //   if (computerGridCells[ranNum2].classList.contains('computerShip2')) {
+  //     computerGridCells[ranNum2 + 10].classList.add('computerShip2')
+  //     computerShip2.location.push(ranNum2 + 10)
+  //     computerGridCells[ranNum2 - 10].classList.add('computerShip2')
+  //     computerShip2.location.push(ranNum2 - 10)
+  //   }
+  //   if (computerGridCells[ranNum3].classList.contains('computerShip3')) {
+  //     computerGridCells[ranNum3 - 1].classList.add('computerShip3')
+  //     computerShip3.location.push(ranNum3 - 1)
+  //     computerGridCells[ranNum3 - 2].classList.add('computerShip3')
+  //     computerShip3.location.push(ranNum3 - 2)
+  //     computerGridCells[ranNum3 + 1 ].classList.add('computerShip3')
+  //     computerShip3.location.push(ranNum3 + 1)
+  //   }
+  //   if (computerGridCells[ranNum4].classList.contains('computerShip4')) {
+  //     computerGridCells[ranNum4 + 10].classList.add('computerShip4')
+  //     computerShip4.location.push(ranNum4 + 10)
+  //     computerGridCells[ranNum4 + 20].classList.add('computerShip4')
+  //     computerShip4.location.push(ranNum4 + 20)
+  //     computerGridCells[ranNum4 - 10].classList.add('computerShip4')
+  //     computerShip4.location.push(ranNum4 - 10)
+  //     computerGridCells[ranNum4 - 20].classList.add('computerShip4')
+  //     computerShip4.location.push(ranNum4 - 20)
+  //   }
+  //   console.log('comp Ship 1 length of 2', computerShip1.location)
+  //   console.log('comp Ship 2 length of 3', computerShip2.location)
+  //   console.log('comp Ship 3 length of 4', computerShip3.location)
+  //   console.log('comp Ship 4 length of 5', computerShip4.location)
+  // }
+  // createShips()
 
   // STAGE ONE: SET-UP EVENTS
 
-  
+
 }
 window.addEventListener('DOMContentLoaded', init)
