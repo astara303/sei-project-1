@@ -72,8 +72,9 @@ function init() {
 
 
   SET-UP.) How will computer ships not go off the board?
-
-  I should look to the pikachu grid in order to use this method to restrict the borders of the grid
+  If the random number is on the sides of the board, add or subract 1 to keep it from wrapping
+  -1 for (ranNum === 9 || ranNum === 19 || ranNum === 29 || ranNum === 39 || ranNum === 49 || ranNum === 59 || ranNum === 69 || ranNum === 79 || ranNum === 89 || ranNum === 99)
+  +1 for (ranNum === 0 || ranNum === 10 || ranNum === 20 || ranNum === 30 || ranNum === 40 || ranNum === 50 || ranNum === 60 || ranNum === 70 || ranNum === 80 || ranNum === 90)
 
 
   PLAYER MISSILE-FIRE.) Player chosen missile-fire
@@ -127,7 +128,8 @@ function init() {
 
 
   // GAME VARIABLES
-  const gridCells = []
+  const playerGridCells = []
+  const computerGridCells = []
   const width = 10
   //changes to true when all ships have been placed
   let allShipsPlaced = false
@@ -188,7 +190,7 @@ function init() {
     const cell = document.createElement('div')
     cell.classList.add('grid-item')
     cell.addEventListener('click', () => cellClicked(i))
-    gridCells.push(cell)
+    playerGridCells.push(cell)
     playerGrid.appendChild(cell)
   })
 
@@ -197,7 +199,7 @@ function init() {
   Array(width * width).join('.').split('.').forEach(() => {
     const cell = document.createElement('div')
     cell.classList.add('grid-item')
-    gridCells.push(cell)
+    computerGridCells.push(cell)
     computerGrid.appendChild(cell)
   })
 
@@ -217,33 +219,33 @@ function init() {
     }
     if (playerShip4.location.length >= 4) {
       allShipsPlaced = true
-      console.log(allShipsPlaced === true)
+      // console.log(allShipsPlaced === true)
     }
     if (playerShip3.location.length >= 4) {
       // innerHTML not working
       // instructions.innerHTML = 'Place your fourth ship. It has a length of 5. When placed, click "Begin Firing Missiles"!'
-      gridCells[i].classList.add('ship4')
-      if (gridCells[i].classList.contains('ship4')) {
+      playerGridCells[i].classList.add('ship4')
+      if ( playerGridCells[i].classList.contains('ship4')) {
         playerShip4.location.push(i)
       }
     }
     if (playerShip2.location.length >= 3) {
       // innerHTML not working
       // instructions.innerHTML = 'Place your third ship. It has a length of 4. Do not click "Begin Firing Missiles" until all 4 ships have been placed.'
-      gridCells[i].classList.add('ship3')
-      if (gridCells[i].classList.contains('ship3')) {
+      playerGridCells[i].classList.add('ship3')
+      if ( playerGridCells[i].classList.contains('ship3')) {
         playerShip3.location.push(i)
       }
     }
     if (playerShip1.location.length >= 2) {
       // instructions.innerHTML = 'Place your second ship. It has a length of 3. Do not click "Begin Firing Missiles" until all 4 ships have been placed.'
-      gridCells[i].classList.add('ship2')
-      if (gridCells[i].classList.contains('ship2')) {
+      playerGridCells[i].classList.add('ship2')
+      if ( playerGridCells[i].classList.contains('ship2')) {
         playerShip2.location.push(i)
       }
     }
-    gridCells[i].classList.add('ship1')
-    if (gridCells[i].classList.contains('ship1')) {
+    playerGridCells[i].classList.add('ship1')
+    if ( playerGridCells[i].classList.contains('ship1')) {
       playerShip1.location.push(i)
     }
     // console.log('ship1', playerShip1.location)
@@ -256,22 +258,36 @@ function init() {
 
   //a function that randomly chooses a whole number between 0-99
   function createNumber() {
-    const cellNumber = Math.floor(Math.random() * 100)
-    return cellNumber
+    return Math.floor(Math.random() * 100)
   }
+
+  //could create a function for generating what is a nerby cell?
 
   /*a function that calls createNumber to generate ships on computer grid
   this number is turned into the index of the computer grid
   cells nearby this cell is also given a class of computerShip1, then 2, etc.
-  it must be able to determine that grid cell 13 is surrounded by 12 and 14 (current chosen cell number +1 (++) or -1 (--)) and 3 and 23 (current chosen cell number +10 or -10) 
+  advanced: it can determine that grid cell 13 is surrounded by 12 and 14 (current chosen cell number +1 (++) or -1 (--)) and 3 and 23 (current chosen cell number +10 or -10) 
   */
+
   function createShips() {
-    if (allShipsPlaced === true) {
-      const firstShip = createNumber()
-      console.log(firstShip)
+    const ranNum1 = createNumber()
+    const ranNum2 = createNumber()
+    const ranNum3 = createNumber()
+    const ranNum4 = createNumber()
+    computerGridCells[ranNum1].classList.add('computerShip1')
+    computerGridCells[ranNum2].classList.add('computerShip2')
+    computerGridCells[ranNum3].classList.add('computerShip3')
+    computerGridCells[ranNum4].classList.add('computerShip4')
+    computerShip1.location.push(ranNum1)
+    if (computerGridCells[ranNum1].classList.contains('computerShip1')) {
+      computerGridCells[ranNum1 - 1].classList.add('computerShip1')
+      computerShip1.location.push(ranNum1 - 1)
     }
+    console.log(computerShip1.location)
   }
   createShips()
+
+
   
 
   // STAGE ONE: SET-UP EVENTS
