@@ -48,7 +48,7 @@ function init() {
   After placement, save these grid cells in ship3 location array
   When 4 values are given, present the next instructions
 
-  Tell the player they are setting a ship with the length of 5 (orange)
+  Tell the player they are setting a ship with the length of 5 (purple)
   After placement, save these grid cells in ship1 location array
   When 5 values are given, tell the player to click the "initiate game" button to start firing
 
@@ -66,12 +66,12 @@ function init() {
   Push these values into the computer ship location array
   
 
-  SET-UP.) How will the ships not intersect?
+  SET-UP.) How will computer ships not intersect?
 
   I have to find a way for the function to recognise if previously placed ships occupy that grid cell already 
 
 
-  SET-UP.) How will ships not go off the board?
+  SET-UP.) How will computer ships not go off the board?
 
   I should look to the pikachu grid in order to use this method to restrict the borders of the grid
 
@@ -120,18 +120,18 @@ function init() {
 
   // DOM VARIABLES
 
-  const setUpButton = document.querySelector('.setUp')
+  const instructions = document.querySelector('.instructions')
+  const startGameBtn = document.querySelector('.setUpComplete')
   const playerGrid = document.querySelector('.playerGrid')
   const computerGrid = document.querySelector('.computerGrid')
-  const playerData = document.querySelector('.playerData')
-  const fireButton = document.querySelector('#fire')
 
 
   // GAME VARIABLES
   const gridCells = []
   const width = 10
+  let allShipsPlaced = false
   //a changeable variable to check the last chosen grid cell so as not to choose it again, or to choose nearby cells
-  // let lastCell
+  //let lastCell
 
 
   // SHIP OBJECTS
@@ -184,9 +184,10 @@ function init() {
 
 
   //PLAYER GRID
-  Array(width * width).join('.').split('.').forEach(() => {
+  Array(width * width).join('.').split('.').forEach((num, i) => {
     const cell = document.createElement('div')
     cell.classList.add('grid-item')
+    cell.addEventListener('click', () => cellClicked(i))
     gridCells.push(cell)
     playerGrid.appendChild(cell)
   })
@@ -201,6 +202,47 @@ function init() {
   })
 
   //STAGE ONE: SET-UP FUNCTIONS
+  //PLAYER FUNCTIONS
+
+  /* A function that is called when "set-up" is clicked.
+  The first function generates ship1
+  Once two grid cells have been chosen, the function checks the length of the ship location array and then calls the function for the next ship (ship2) */
+
+  //works immediately when page is loaded
+  //can place your first ship
+  //must log each clicked cell into the corresponding ship array
+  function cellClicked(i) {
+    if (playerShip4.location.length >= 5) {
+      allShipsPlaced = true
+    }
+    if (playerShip3.location.length >= 4) {
+      gridCells[i].classList.add('ship4')
+      if (gridCells[i].classList.contains('ship4')) {
+        playerShip4.location.push(i)
+      }
+    }
+    if (playerShip2.location.length >= 3) {
+      gridCells[i].classList.add('ship3')
+      if (gridCells[i].classList.contains('ship3')) {
+        playerShip3.location.push(i)
+      }
+    }
+    if (playerShip1.location.length >= 2) {
+      gridCells[i].classList.add('ship2')
+      if (gridCells[i].classList.contains('ship2')) {
+        playerShip2.location.push(i)
+      }
+    }
+    gridCells[i].classList.add('ship1')
+    if (gridCells[i].classList.contains('ship1')) {
+      playerShip1.location.push(i)
+    }
+    console.log('ship1', playerShip1.location)
+    console.log('ship2', playerShip2.location)
+    console.log('ship3', playerShip3.location)
+  }
+
+  //COMPUTER FUNCTIONS
 
   //a function that randomly chooses a number between 0-99
   function createNumber() {
@@ -208,7 +250,7 @@ function init() {
     const cellNumber = Math.floor(Math.random() * 100)
     return cellNumber
   }
-  console.log(createNumber())
+  // console.log(createNumber())
 
   //a function that calls createNumber and stores it in a globally declared var (the ship's length array)
   //Each ship will have its own version of the function that adds 1, 2 etc cell numbers to this array
@@ -216,16 +258,8 @@ function init() {
   //so it must be able to determine that grid cell 13 is surrounded by 12 and 14 (current chosen cell number +1 (++) or -1 (--)) and 3 and 23 (current chosen cell number +10 or -10)
   
 
+  // STAGE ONE: SET-UP EVENTS
 
-  //STAGE TWO: PLAYER MISSILE FIRE
-
-  // //an event that, when the submit button is clicked, the playerData is console logged
-  // fireButton.addEventListener('click', e => {
-  //   e.preventDefault()
-  //   //this is logging the number of times its clicked, not logging the value of user input I saved as playerData
-  //   console.log('player cell choice was', playerData.value)
-  //   //this logs undefined
-  //   //console.log(playerData.value)
-  // })
+  
 }
 window.addEventListener('DOMContentLoaded', init)

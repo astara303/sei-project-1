@@ -37,3 +37,19 @@ div.grid-item {
   height: 50px;
   border: 1px solid black;
 }
+
+div.ship1 {
+  background-color: lightskyblue;
+}
+
+div.ship2 {
+  background-color: yellow;
+}
+
+div.ship3 {
+  background-color: lightgreen;
+}
+
+div.ship4 {
+  background-color: lavender;
+}
