@@ -122,6 +122,7 @@ function init() {
   // DOM VARIABLES
 
   const instructions = document.querySelector('.instructions')
+  //I could only reveal the computer grid when "start game" is pressed. Otherwise I may not need it to trigger anything
   const startGameBtn = document.querySelector('.setUpComplete')
   const playerGrid = document.querySelector('.playerGrid')
   const computerGrid = document.querySelector('.computerGrid')
@@ -196,9 +197,10 @@ function init() {
 
   //COMPUTER GRID
   //ships will not be shown, but MISS, and HIT, and SUNK will.
-  Array(width * width).join('.').split('.').forEach(() => {
+  Array(width * width).join('.').split('.').forEach((num, i) => {
     const cell = document.createElement('div')
     cell.classList.add('grid-item')
+    cell.addEventListener('click', () => fireMissile(i))
     computerGridCells.push(cell)
     computerGrid.appendChild(cell)
   })
@@ -384,6 +386,8 @@ function init() {
       computerShip4.location.push(ranNum + 2)
       computerGridCells[ranNum + 3].classList.add('computerShip4')
       computerShip4.location.push(ranNum + 3)
+      computerGridCells[ranNum + 4].classList.add('computerShip4')
+      computerShip4.location.push(ranNum + 4)
     } else if (computerGridCells[ranNum].classList.contains('computerShip4') && ranNum === 9 || ranNum === 19 || ranNum === 29 || ranNum === 39 || ranNum === 49 || ranNum === 59 || ranNum === 69 || ranNum === 79 || ranNum === 89 || ranNum === 99) {
       computerGridCells[ranNum - 1].classList.add('computerShip4')
       computerShip4.location.push(ranNum - 1)
@@ -391,6 +395,8 @@ function init() {
       computerShip4.location.push(ranNum - 2)
       computerGridCells[ranNum - 3].classList.add('computerShip4')
       computerShip4.location.push(ranNum - 3)
+      computerGridCells[ranNum - 4].classList.add('computerShip4')
+      computerShip4.location.push(ranNum - 4)
     } else if (computerGridCells[ranNum].classList.contains('computerShip4') && ranNum === 1 || ranNum === 11 || ranNum === 21 || ranNum === 31 || ranNum === 41 || ranNum === 51 || ranNum === 61 || ranNum === 71 || ranNum === 81 || ranNum === 91) {
       computerGridCells[ranNum + 1].classList.add('computerShip4')
       computerShip4.location.push(ranNum + 1)
@@ -398,6 +404,8 @@ function init() {
       computerShip4.location.push(ranNum + 2)
       computerGridCells[ranNum + 3].classList.add('computerShip4')
       computerShip4.location.push(ranNum + 3)
+      computerGridCells[ranNum + 4].classList.add('computerShip4')
+      computerShip4.location.push(ranNum - 4)
     } else if (computerGridCells[ranNum].classList.contains('computerShip4') && ranNum === 8 || ranNum === 18 || ranNum === 28 || ranNum === 38 || ranNum === 48 || ranNum === 58 || ranNum === 68 || ranNum === 78 || ranNum === 88 || ranNum === 98) {
       computerGridCells[ranNum - 1].classList.add('computerShip4')
       computerShip4.location.push(ranNum - 1)
@@ -405,6 +413,26 @@ function init() {
       computerShip4.location.push(ranNum - 2)
       computerGridCells[ranNum - 3].classList.add('computerShip4')
       computerShip4.location.push(ranNum - 3)
+      computerGridCells[ranNum - 4].classList.add('computerShip4')
+      computerShip4.location.push(ranNum - 4)
+    } else if (computerGridCells[ranNum].classList.contains('computerShip4') && ranNum === 2 || ranNum === 12 || ranNum === 22 || ranNum === 32 || ranNum === 42 || ranNum === 52 || ranNum === 62 || ranNum === 72 || ranNum === 82 || ranNum === 92) {
+      computerGridCells[ranNum + 1].classList.add('computerShip4')
+      computerShip4.location.push(ranNum + 1)
+      computerGridCells[ranNum + 2].classList.add('computerShip4')
+      computerShip4.location.push(ranNum + 2)
+      computerGridCells[ranNum + 3].classList.add('computerShip4')
+      computerShip4.location.push(ranNum + 3)
+      computerGridCells[ranNum + 4].classList.add('computerShip4')
+      computerShip4.location.push(ranNum - 4)
+    } else if (computerGridCells[ranNum].classList.contains('computerShip4') && ranNum === 7 || ranNum === 17 || ranNum === 27 || ranNum === 37 || ranNum === 47 || ranNum === 57 || ranNum === 67 || ranNum === 77 || ranNum === 87 || ranNum === 97) {
+      computerGridCells[ranNum - 1].classList.add('computerShip4')
+      computerShip4.location.push(ranNum - 1)
+      computerGridCells[ranNum - 2].classList.add('computerShip4')
+      computerShip4.location.push(ranNum - 2)
+      computerGridCells[ranNum - 3].classList.add('computerShip4')
+      computerShip4.location.push(ranNum - 3)
+      computerGridCells[ranNum - 4].classList.add('computerShip4')
+      computerShip4.location.push(ranNum - 4)
     } else if (computerGridCells[ranNum].classList.contains('computerShip4')) {
       computerGridCells[ranNum - 1].classList.add('computerShip4')
       computerShip4.location.push(ranNum - 1)
@@ -412,6 +440,8 @@ function init() {
       computerShip4.location.push(ranNum + 1)
       computerGridCells[ranNum - 2].classList.add('computerShip4')
       computerShip4.location.push(ranNum - 2)
+      computerGridCells[ranNum + 2].classList.add('computerShip4')
+      computerShip4.location.push(ranNum + 2)
     }
     console.log('comp ship 4 length of 5', computerShip4.location)
   }
@@ -470,8 +500,15 @@ function init() {
   // }
   // createShips()
 
-  // STAGE ONE: SET-UP EVENTS
+  // SET-UP EVENTS
 
+  // STAGE TWO: PLAYER MISSILE-FIRE
+
+  // PLAYER MISSILE-FIRE FUNCTIONS
+
+  function fireMissile(i) {
+    console.log(`ready to fire at ${i}!`)
+  }
 
 }
 window.addEventListener('DOMContentLoaded', init)
