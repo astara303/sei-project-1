@@ -261,15 +261,27 @@ function init() {
     return Math.floor(Math.random() * 100)
   }
 
-  //could create a function for generating what is a nerby cell?
-
   /*a function that calls createNumber to generate ships on computer grid
   this number is turned into the index of the computer grid
   cells nearby this cell is also given a class of computerShip1, then 2, etc.
   advanced: it can determine that grid cell 13 is surrounded by 12 and 14 (current chosen cell number +1 (++) or -1 (--)) and 3 and 23 (current chosen cell number +10 or -10) 
+  could create a function for generating what is a nerby cell?
+  
+  if randomNumber is an edge number:
+
+  Horizontal:
+  MUST add 1 in length: 0, 10, 20, 30, 40, 50, 60, 70, 80, 90
+  MUST subtract 1 in length: 9, 19, 29, 39, 49, 59, 69, 79, 89, 99
+
+  Vertical:
+  MUST add 10 to top: 90, 91, 92, 93, 94, 95, 96, 97, 98, 99
+  MUST subtract 10 from bottom: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+  
+  Should check to see that no previously used cells are reused
   */
 
   function createShips() {
+    //when game is complete, add if allShipsPlaced is true, then execute this:
     const ranNum1 = createNumber()
     const ranNum2 = createNumber()
     const ranNum3 = createNumber()
@@ -279,11 +291,41 @@ function init() {
     computerGridCells[ranNum3].classList.add('computerShip3')
     computerGridCells[ranNum4].classList.add('computerShip4')
     computerShip1.location.push(ranNum1)
+    computerShip2.location.push(ranNum2)
+    computerShip3.location.push(ranNum3)
+    computerShip4.location.push(ranNum4)
     if (computerGridCells[ranNum1].classList.contains('computerShip1')) {
       computerGridCells[ranNum1 - 1].classList.add('computerShip1')
       computerShip1.location.push(ranNum1 - 1)
     }
-    console.log(computerShip1.location)
+    if (computerGridCells[ranNum2].classList.contains('computerShip2')) {
+      computerGridCells[ranNum2 + 10].classList.add('computerShip2')
+      computerShip2.location.push(ranNum2 + 10)
+      computerGridCells[ranNum2 - 10].classList.add('computerShip2')
+      computerShip2.location.push(ranNum2 - 10)
+    }
+    if (computerGridCells[ranNum3].classList.contains('computerShip3')) {
+      computerGridCells[ranNum3 - 1].classList.add('computerShip3')
+      computerShip3.location.push(ranNum3 - 1)
+      computerGridCells[ranNum3 - 2].classList.add('computerShip3')
+      computerShip3.location.push(ranNum3 - 2)
+      computerGridCells[ranNum3 + 1 ].classList.add('computerShip3')
+      computerShip3.location.push(ranNum3 + 1)
+    }
+    if (computerGridCells[ranNum4].classList.contains('computerShip4')) {
+      computerGridCells[ranNum4 + 10].classList.add('computerShip4')
+      computerShip4.location.push(ranNum4 + 10)
+      computerGridCells[ranNum4 + 20].classList.add('computerShip4')
+      computerShip4.location.push(ranNum4 + 20)
+      computerGridCells[ranNum4 - 10].classList.add('computerShip4')
+      computerShip4.location.push(ranNum4 - 10)
+      computerGridCells[ranNum4 - 20].classList.add('computerShip4')
+      computerShip4.location.push(ranNum4 - 20)
+    }
+    console.log('comp Ship 1 length of 2', computerShip1.location)
+    console.log('comp Ship 2 length of 3', computerShip2.location)
+    console.log('comp Ship 3 length of 4', computerShip3.location)
+    console.log('comp Ship 4 length of 5', computerShip4.location)
   }
   createShips()
 
