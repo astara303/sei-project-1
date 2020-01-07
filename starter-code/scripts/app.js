@@ -200,7 +200,7 @@ function init() {
   Array(width * width).join('.').split('.').forEach((num, i) => {
     const cell = document.createElement('div')
     cell.classList.add('grid-item')
-    cell.addEventListener('click', () => fireMissile(i))
+    cell.addEventListener('click', () => isInArray(i))
     computerGridCells.push(cell)
     computerGrid.appendChild(cell)
   })
@@ -373,7 +373,7 @@ function init() {
   }
   createShip3()
 
-  //stops ships wrapping on grid
+  //stops ships wrapping on grid (confirmed?)
   //does not stop ships intersecting
   function createShip4() {
     const ranNum = createNumber()
@@ -506,9 +506,27 @@ function init() {
 
   // PLAYER MISSILE-FIRE FUNCTIONS
 
-  function fireMissile(i) {
-    console.log(`ready to fire at ${i}!`)
+  // function fireMissile(i) {
+  //   console.log(`ready to fire at ${i}!`)
+  // }
+
+  //why is it logging a click when I load the page?
+  //how to actually check i against the values in the array?
+  function isInArray(i) {
+    console.log(`this is ${i}, does it match a number in ${computerShip1.location}?`)
+    if (i === computerShip1.location) {
+      console.log('HIT')
+    } else if (i === computerShip2.location) {
+      console.log('HIT')
+    } else if (i === computerShip3.location) {
+      console.log('HIT')
+    } else if (i === computerShip4.location) {
+      console.log('HIT')
+    } else {
+      console.log('MISS')
+    }
   }
+  isInArray()
 
 }
 window.addEventListener('DOMContentLoaded', init)
