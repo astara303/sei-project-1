@@ -209,7 +209,6 @@ function init() {
   makePlayerGrid()
 
   //COMPUTER GRID
-  //ships will not be shown, but MISS, and HIT, and SUNK will.
   function makeComputerGrid() {
     Array(width * width).join('.').split('.').forEach((num, i) => {
       const cell = document.createElement('div')
@@ -229,43 +228,36 @@ function init() {
   //logs each clicked cell into the corresponding ship array
   function placeShips(i) {
     if (allShipsPlaced) {
-      return
-    }
-    if (playerShip4.location.length >= 4) {
+      // return
+      console.log('ship1', playerShip1.location)
+      console.log('ship2', playerShip2.location)
+      console.log('ship3', playerShip3.location)
+      console.log('ship4', playerShip4.location)
+    } else if (playerShip4.location.length === 5) {
       allShipsPlaced = true
-      // console.log(allShipsPlaced === true)
-    }
-    if (playerShip3.location.length >= 4) {
-      // innerHTML not working
-      // instructions.innerHTML = 'Place your fourth ship. It has a length of 5. When placed, click "Begin Firing Missiles"!'
+    } else if (playerShip3.location.length === 4) {
       playerGridCells[i].classList.add('ship4')
       if (playerGridCells[i].classList.contains('ship4')) {
         playerShip4.location.push(i)
       }
-    }
-    if (playerShip2.location.length >= 3) {
-      // innerHTML not working
-      // instructions.innerHTML = 'Place your third ship. It has a length of 4. Do not click "Begin Firing Missiles" until all 4 ships have been placed.'
+    } else if (playerShip2.location.length === 3) {
       playerGridCells[i].classList.add('ship3')
       if (playerGridCells[i].classList.contains('ship3')) {
         playerShip3.location.push(i)
       }
-    }
-    if (playerShip1.location.length >= 2) {
-      // instructions.innerHTML = 'Place your second ship. It has a length of 3. Do not click "Begin Firing Missiles" until all 4 ships have been placed.'
+    } else if (playerShip1.location.length === 2) {
       playerGridCells[i].classList.add('ship2')
       if (playerGridCells[i].classList.contains('ship2')) {
         playerShip2.location.push(i)
       }
+    } else if (!allShipsPlaced) {
+      playerGridCells[i].classList.add('ship1')
+      if (playerGridCells[i].classList.contains('ship1')) {
+        playerShip1.location.push(i)
+      }
+    } else {
+      console.log('complete')
     }
-    playerGridCells[i].classList.add('ship1')
-    if (playerGridCells[i].classList.contains('ship1')) {
-      playerShip1.location.push(i)
-    }
-    // console.log('ship1', playerShip1.location)
-    // console.log('ship2', playerShip2.location)
-    // console.log('ship3', playerShip3.location)
-    // console.log('ship3', playerShip3.location)
   }
 
   //COMPUTER FUNCTIONS
@@ -371,7 +363,7 @@ function init() {
     const ranNum = createNumber()
     computerGridCells[ranNum].classList.add('computerShip4')
     computerShip4.location.push(ranNum)
-    if (computerGridCells[ranNum].classList.contains('computerShip4') && ranNum === 0 || ranNum === 10 || ranNum === 20 || ranNum === 30 || ranNum === 40 || ranNum === 50 || ranNum === 60 || ranNum === 70 || ranNum === 80 || ranNum === 90 || ranNum === 1 || ranNum === 11 || ranNum === 21 || ranNum === 31 || ranNum === 41 || ranNum === 51 || ranNum === 61 || ranNum === 71 || ranNum === 81 || ranNum === 91 ||  ranNum === 2 || ranNum === 12 || ranNum === 22 || ranNum === 32 || ranNum === 42 || ranNum === 52 || ranNum === 62 || ranNum === 72 || ranNum === 82 || ranNum === 92) {
+    if (computerGridCells[ranNum].classList.contains('computerShip4') && ranNum === 0 || ranNum === 10 || ranNum === 20 || ranNum === 30 || ranNum === 40 || ranNum === 50 || ranNum === 60 || ranNum === 70 || ranNum === 80 || ranNum === 90 || ranNum === 1 || ranNum === 11 || ranNum === 21 || ranNum === 31 || ranNum === 41 || ranNum === 51 || ranNum === 61 || ranNum === 71 || ranNum === 81 || ranNum === 91 || ranNum === 2 || ranNum === 12 || ranNum === 22 || ranNum === 32 || ranNum === 42 || ranNum === 52 || ranNum === 62 || ranNum === 72 || ranNum === 82 || ranNum === 92) {
       computerGridCells[ranNum + 1].classList.add('computerShip4')
       computerShip4.location.push(ranNum + 1)
       computerGridCells[ranNum + 2].classList.add('computerShip4')
@@ -462,30 +454,64 @@ function init() {
         computerShip4.isSunk = true
       })
     }
+    console.log(playerShip1.location.map(l => playerGridCells[l]))
+    if (playerShip1.location.every(l => playerGridCells[l].classList.contains('hit'))) {
+      console.log('ship1 sunk')
+      playerShip1.location.forEach(l => {
+        playerGridCells[l].classList.remove('hit')
+        playerGridCells[l].classList.add('sunk')
+        playerShip1.isSunk = true
+      })
+    }
+    if (playerShip2.location.every(l => playerGridCells[l].classList.contains('hit'))) {
+      console.log('ship2 sunk')
+      playerShip2.location.forEach(l => {
+        playerGridCells[l].classList.remove('hit')
+        playerGridCells[l].classList.add('sunk')
+        playerShip2.isSunk = true
+      })
+    }
+    if (playerShip3.location.every(l => playerGridCells[l].classList.contains('hit'))) {
+      console.log('ship3 sunk')
+      playerShip3.location.forEach(l => {
+        playerGridCells[l].classList.remove('hit')
+        playerGridCells[l].classList.add('sunk')
+        playerShip3.isSunk = true
+      })
+    }
+    if (playerShip4.location.every(l => playerGridCells[l].classList.contains('hit'))) {
+      console.log('ship4 sunk')
+      playerShip4.location.forEach(l => {
+        playerGridCells[l].classList.remove('hit')
+        playerGridCells[l].classList.add('sunk')
+        playerShip4.isSunk = true
+      })
+    }
   }
 
   // STAGE THREE: COMPUTER MISSILE-FIRE
 
+  //target must never repeat
   function computerMissileFire() {
     // const target = playerGridCells[createNumber()]
-    const target = Math.floor(Math.random() * playerGridCells.length) - 1
+    const target = Math.floor(Math.random() * playerGridCells.length)
     console.log(target)
     if (playerShip1.location.includes(target)) {
       console.log('hit')
       playerGridCells[target].classList.add('hit')
-      // checkSunk()
+      checkSunk()
     } else if (playerShip2.location.includes(target)) {
       console.log('hit')
       playerGridCells[target].classList.add('hit')
-      // checkSunk()
+      checkSunk()
     } else if (playerShip3.location.includes(target)) {
       console.log('hit')
       playerGridCells[target].classList.add('hit')
-      // checkSunk()
+      checkSunk()
     } else if (playerShip4.location.includes(target)) {
       console.log('hit')
       playerGridCells[target].classList.add('hit')
-      // checkSunk()
+      checkSunk()
     } else {
       console.log('miss')
       playerGridCells[target].classList.add('miss')
