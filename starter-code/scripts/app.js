@@ -11,6 +11,10 @@ function init() {
   -make sure clicks do not change ship placement one the set-up phase is complete
   -the ship cannot go off the board
   -the ship cannot intersect another ship
+
+  *advanced*
+  When player clicks "Begin Firing Missiles", a function checks if "allShipsPlaced" is true
+  Only then can classes of hit and miss be added to the computer board 
   
 
   STAGE TWO: PLAYER MISSILE FIRE
@@ -22,10 +26,15 @@ function init() {
 
   STAGE THREE: COMPUTER MISSILE FIRE (can make the game 2 player for MVP)
 
-  The computer choice is generated once per turn, after the player has had their turn
+  The computer choice is generated once per turn, after the player has had their turn 
+  (how to know this? button? I would like it to happen automatically. Maybe it could be called every time the player clicks a computer cell)
   Randomised cell is chosen to fire missile
   A missile can MISS, HIT, and SINK a ship
   Computer's turn is displayed on player grid
+  
+  *advanced*
+  On their next turn, computer should check nearby cells when it registered a hit on their last turn
+  Or are the rules that you can keep firing if you got a hit? if that's the case I need to stop the computer firing when the player gets a hit
 
   STAGE FOUR: DECLARE A WINNER
 
@@ -38,31 +47,29 @@ function init() {
 
   Tell the player they are setting a ship with the length of 2 (blue)
   After placement, save these grid cells in ship1 location array
-  When 2 values are given, present the next instructions
+  When 2 values are given, let the next ship be placed
 
   Tell the player they are setting a ship with the length of 3 (yellow)
   After placement, save these grid cells in ship2 location array
-  When 3 values are given, present the next instructions
+  When 3 values are given, let the next ship be placed
 
   Tell the player they are setting a ship with the length of 4 (green)
   After placement, save these grid cells in ship3 location array
-  When 4 values are given, present the next instructions
+  When 4 values are given, let the next ship be placed
 
   Tell the player they are setting a ship with the length of 5 (purple)
   After placement, save these grid cells in ship1 location array
-  When 5 values are given, tell the player to click the "initiate game" button to start firing
+  When 5 values are given, the player can no longer click cells
 
   Player can press the "clear board" button to restart placement
 
 
   SET-UP.) Place ships on the computer grid (hidden)
 
-  When player clicks "Begin Firing Missiles", a function checks if "allShipsPlaced" is true 
-
   Randomise a number 0-99 (This corresponds to an index in the array of grid cells)
   Use that random number (1, 22 etc) to add 1, 2, or more grid cells on to it to create horizonal or vertical length 
   (add grid cell 2 to 3 to create ship 1 horizontally) 
-  (add grid cells C1 and D1 to B1 to create ship 2 vertically)
+  (add grid cells 12 and 32 to 22 to create ship 2 vertically)
   Push these values into the computer ship location array
   
 
@@ -73,6 +80,7 @@ function init() {
 
   SET-UP.) How will computer ships not go off the board?
   If the random number is on the sides of the board, add or subract 1 to keep it from wrapping
+  !!Can I use the pikachu width * width -1 thing for this?
   -1 for (ranNum === 9 || ranNum === 19 || ranNum === 29 || ranNum === 39 || ranNum === 49 || ranNum === 59 || ranNum === 69 || ranNum === 79 || ranNum === 89 || ranNum === 99)
   +1 for (ranNum === 0 || ranNum === 10 || ranNum === 20 || ranNum === 30 || ranNum === 40 || ranNum === 50 || ranNum === 60 || ranNum === 70 || ranNum === 80 || ranNum === 90)
 
@@ -123,7 +131,7 @@ function init() {
 
   const instructions = document.querySelector('.instructions')
   //I could only reveal the computer grid when "start game" is pressed. Otherwise I may not need it to trigger anything
-  const startGameBtn = document.querySelector('.setUpComplete')
+  const clearBoard = document.querySelector('.clearBoard')
   const playerGrid = document.querySelector('.playerGrid')
   const computerGrid = document.querySelector('.computerGrid')
 
@@ -187,23 +195,30 @@ function init() {
 
 
   //PLAYER GRID
-  Array(width * width).join('.').split('.').forEach((num, i) => {
-    const cell = document.createElement('div')
-    cell.classList.add('grid-item')
-    cell.addEventListener('click', () => cellClicked(i))
-    playerGridCells.push(cell)
-    playerGrid.appendChild(cell)
-  })
+  function makePlayerGrid() {
+    Array(width * width).join('.').split('.').forEach((num, i) => {
+      const cell = document.createElement('div')
+      cell.classList.add('grid-item')
+      cell.addEventListener('click', () => placeShips(i))
+      playerGridCells.push(cell)
+      playerGrid.appendChild(cell)
+    })
+  }
+  makePlayerGrid()
 
   //COMPUTER GRID
   //ships will not be shown, but MISS, and HIT, and SUNK will.
-  Array(width * width).join('.').split('.').forEach((num, i) => {
-    const cell = document.createElement('div')
-    cell.classList.add('grid-item')
-    cell.addEventListener('click', () => isInArray(i))
-    computerGridCells.push(cell)
-    computerGrid.appendChild(cell)
-  })
+  function makeComputerGrid() {
+    Array(width * width).join('.').split('.').forEach((num, i) => {
+      const cell = document.createElement('div')
+      cell.classList.add('grid-item')
+      cell.innerText = i
+      cell.addEventListener('click', () => fireMissile(i))
+      computerGridCells.push(cell)
+      computerGrid.appendChild(cell)
+    })
+  }
+  makeComputerGrid()
 
   //STAGE ONE: SET-UP FUNCTIONS
   //PLAYER FUNCTIONS
@@ -215,7 +230,7 @@ function init() {
   //works immediately when page is loaded
   //can place your first ship
   //must log each clicked cell into the corresponding ship array
-  function cellClicked(i) {
+  function placeShips(i) {
     if (allShipsPlaced) {
       return
     }
@@ -373,7 +388,7 @@ function init() {
   }
   createShip3()
 
-  //stops ships wrapping on grid (confirmed?)
+  //stops ships wrapping on grid
   //does not stop ships intersecting
   function createShip4() {
     const ranNum = createNumber()
@@ -510,23 +525,85 @@ function init() {
   //   console.log(`ready to fire at ${i}!`)
   // }
 
-  //why is it logging a click when I load the page?
-  //how to actually check i against the values in the array?
-  function isInArray(i) {
-    console.log(`this is ${i}, does it match a number in ${computerShip1.location}?`)
-    if (i === computerShip1.location) {
-      console.log('HIT')
-    } else if (i === computerShip2.location) {
-      console.log('HIT')
-    } else if (i === computerShip3.location) {
-      console.log('HIT')
-    } else if (i === computerShip4.location) {
-      console.log('HIT')
-    } else {
-      console.log('MISS')
+  //a function that takes plaer missile fire and checks for a hit or a miss on the computer's board
+  //does not check for "sunk" ships
+  function fireMissile(i) {
+    if (computerShip1.location.includes(i)) {
+      computerGridCells[i].classList.add('hit')
+      checkSunk()
     }
+    // } else if (computerShip2.location.includes(i)) {
+    //   computerGridCells[i].classList.add('hit')
+    //   // checkSunk()
+    // } else if (computerShip3.location.includes(i)) {
+    //   computerGridCells[i].classList.add('hit')
+    //   // checkSunk()
+    // } else if (computerShip4.location.includes(i)) {
+    //   computerGridCells[i].classList.add('hit')
+    //   // checkSunk()
+    // } else {
+    //   computerGridCells[i].classList.add('miss')
+    // }
   }
-  isInArray()
+
+  function checkSunk() {
+    if (computerShip1.location.every(l => computerGridCells[l].classList.contains('hit'))) {
+      computerShip1.location.forEach(l => {
+        computerGridCells[l].classList.remove('hit')
+        computerGridCells[l].classList.add('sunk')
+      })
+    }
+    //if every item in the array has a class of hit
+    //use map instead of every? then use forEach to call this function?
+    // if (computerShip1.location.every(checkShip)) {
+    //   //change every item to have a class of sunk 
+    //   //will this be an issue when a square changes class from ship1, ship2 etc to 'hit'? or does it retain class of ship1 if it is hit?
+    //   computerGridCells.forEach(cell => cell.classList.remove('hit'))
+    //   computerGridCells.classList.add('sunk')
+    //   computerShip1.isSunk = true
+    // }
+    //repeat computerShip1 code for all ships
+  }
+
+  // function shipIsSunk() {
+  //   computerGridCells.map((computerGridCells, index) => {
+  //     if (index.contains('hit')) {
+  //       return computerGridCells.classList.add('sunk')
+  //     }
+  //     return computerGridCells
+  //   })
+  // }
+
+  //if every item in computerShip1.location array has a class of hit, change isSunk value to TRUE
+  // function checkShip1() {
+  //   if computerShip1.location.length
+  // }
+
+  // function checkShip1(computerShip1, classes) {
+  //   return computerShip1.location.filter(function (cell, elem) {
+  //     return classes.some(function () {
+  //       return elem.classList.contains('hit');
+  //     });
+  //   }).length > 0
+  // }
+  // console.log(checkShip1())
+
+  //use 'every' or 'forEach' instead of filter?
+  // computerShip1.location.filter(computerGridCells => {
+  //   computerGridCells.classList.contains('hit')
+  // })
+  // computerShip1.isSunk = true
+
+  //if computerShip1.isSunk = true
+  //execute shipIsSunk to transform all array items to have a class of 'sunk'
+  //should only execute on a certain ship that is sunk, even though function loops though every grid cell
+
+
+
+  //Reset Game Event
+  clearBoard.addEventListener('click', () => {
+    window.location.reload()
+  })
 
 }
 window.addEventListener('DOMContentLoaded', init)
