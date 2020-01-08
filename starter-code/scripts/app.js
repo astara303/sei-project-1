@@ -189,16 +189,11 @@ function init() {
   const allComputerShips = []
   let allShipsPlaced = false
 
-  //turn to true when allShipsPlaced is true. Turn to false if player wins (otherwise computer makes one more move after player wins)
-  // let allowComputerFire = false
-
-
   // SHIP OBJECTS
 
   //length: 2
   const playerShip1 = {
     location: [],
-    //change to true when sunk. Check this to determine a winner. Could store the variable globally and make it let playerShip1Sunk = false
     isSunk: false
   }
 
@@ -222,7 +217,6 @@ function init() {
   //length: 2
   const computerShip1 = {
     location: [],
-    isPlaced: false,
     isSunk: false
   }
   //length: 3
@@ -321,27 +315,64 @@ function init() {
   function coinFlip() {
     return Math.random() < 0.5
   }
-
-  //can be horizontal or vertical
-  //does not check for previous ships (first ship)
-  function makeShip1() {
+  
+  function makeShip4() {
     const choice = coinFlip()
     if (choice) {
-      ship1Horizontal()
+      ship4Horizontal()
     } else {
-      ship1Vertical()
+      ship4Vertical()
     }
   }
+
+  function makeShip3() {
+    if (computerShip4.isPlaced) {
+      const choice = coinFlip()
+      if (choice) {
+        ship3Horizontal()
+      } else {
+        ship3Vertical()
+      }
+    }
+  }
+
+  function makeShip2() {
+    if (computerShip3.isPlaced) {
+      const choice = coinFlip()
+      if (choice) {
+        ship2Horizontal()
+      } else {
+        ship2Vertical()
+      }
+    }
+  }
+
+  function makeShip1() {
+    if (computerShip2.isPlaced) {
+      const choice = coinFlip()
+      if (choice) {
+        ship1Horizontal()
+      } else {
+        ship1Vertical()
+      }
+    }
+  }
+
   //this could happen when all player ships have been placed, or on a start button etc.
-  makeShip1()
+  makeShip4()
+  makeShip3()
   makeShip2()
+  makeShip1()
+ 
 
   function ship1Horizontal() {
     const ranNum = createNumber()
+    //may need to check at this point if ranNum already exists in array
     computerGridCells[ranNum].classList.add('computerShip1')
     computerShip1.location.push(ranNum)
     allComputerShips.push(ranNum)
     if (ranNum % width > 0) {
+      //check if added cells exist in array
       computerGridCells[ranNum - 1].classList.add('computerShip1')
       computerShip1.location.push(ranNum - 1)
       allComputerShips.push(ranNum - 1)
@@ -378,17 +409,6 @@ function init() {
     console.log(computerShip1.location)
   }
 
-  function makeShip2() {
-    if (computerShip1.isPlaced) {
-      const choice = coinFlip()
-      if (choice) {
-        ship2Horizontal()
-      } else {
-        ship2Vertical()
-      }
-    }
-  }
-
   function ship2Horizontal() {
     const ranNum = createNumber()
     computerGridCells[ranNum].classList.add('computerShip2')
@@ -405,11 +425,11 @@ function init() {
     } else if (ranNum % width < width - 2) {
       computerGridCells[ranNum + 1].classList.add('computerShip2')
       computerGridCells[ranNum + 2].classList.add('computerShip2')
-      computerShip1.location.push(ranNum + 1)
-      computerShip1.location.push(ranNum + 2)
+      computerShip2.location.push(ranNum + 1)
+      computerShip2.location.push(ranNum + 2)
       allComputerShips.push(ranNum + 1)
       allComputerShips.push(ranNum + 2)
-      computerShip1.isPlaced = true
+      computerShip2.isPlaced = true
     } else {
       ship2Horizontal()
     }
@@ -417,136 +437,179 @@ function init() {
   }
 
   function ship2Vertical() {
-    console.log('vertical was chosen')
-  }
-
-  /*
-  //does not check to see that no previously used cells are reused
-  //prohibits ship from wrapping on the grid
-  //ship can only sit horizonally on board
-  //!!Might want to make a key of "is created = false" on the ships that turns to true before the next ship is allowed to be created
-  function createShip1() {
-    const ranNum = createNumber()
-    computerGridCells[ranNum].classList.add('computerShip1')
-    computerShip1.location.push(ranNum)
-    if (computerGridCells[ranNum].classList.contains('computerShip1') && ranNum === 0 || ranNum === 10 || ranNum === 20 || ranNum === 30 || ranNum === 40 || ranNum === 50 || ranNum === 60 || ranNum === 70 || ranNum === 80 || ranNum === 90) {
-      computerGridCells[ranNum + 1].classList.add('computerShip1')
-      computerShip1.location.push(ranNum + 1)
-    } else if (computerGridCells[ranNum].classList.contains('computerShip1') && ranNum === 9 || ranNum === 19 || ranNum === 29 || ranNum === 39 || ranNum === 49 || ranNum === 59 || ranNum === 69 || ranNum === 79 || ranNum === 89 || ranNum === 99) {
-      computerGridCells[ranNum - 1].classList.add('computerShip1')
-      computerShip1.location.push(ranNum - 1)
-    } else {
-      computerGridCells[ranNum - 1].classList.add('computerShip1')
-      computerShip1.location.push(ranNum - 1)
-    }
-    console.log('comp ship 1 length of 2', computerShip1.location)
-  }
-  createShip1()
-
-  //does not check to see that no previously used cells are reused
-  //prohibits ship from wrapping on the grid
-  //ship can only sit horizonally on board
-  //!!Might want to make a key of "is created = false" on the ships that turns to true before the next ship is allowed to be created
-  function createShip2() {
     const ranNum = createNumber()
     computerGridCells[ranNum].classList.add('computerShip2')
     computerShip2.location.push(ranNum)
-    if (computerGridCells[ranNum].classList.contains('computerShip2') && ranNum === 0 || ranNum === 10 || ranNum === 20 || ranNum === 30 || ranNum === 40 || ranNum === 50 || ranNum === 60 || ranNum === 70 || ranNum === 80 || ranNum === 90) {
-      computerGridCells[ranNum + 1].classList.add('computerShip2')
-      computerShip2.location.push(ranNum + 1)
-      computerGridCells[ranNum + 2].classList.add('computerShip2')
-      computerShip2.location.push(ranNum + 2)
-    } else if (computerGridCells[ranNum].classList.contains('computerShip2') && ranNum === 9 || ranNum === 19 || ranNum === 29 || ranNum === 39 || ranNum === 49 || ranNum === 59 || ranNum === 69 || ranNum === 79 || ranNum === 89 || ranNum === 99) {
-      computerGridCells[ranNum - 1].classList.add('computerShip2')
-      computerShip2.location.push(ranNum - 1)
-      computerGridCells[ranNum - 2].classList.add('computerShip2')
-      computerShip2.location.push(ranNum - 2)
-    } else if (computerGridCells[ranNum].classList.contains('computerShip2')) {
-      computerGridCells[ranNum - 1].classList.add('computerShip2')
-      computerShip2.location.push(ranNum - 1)
-      computerGridCells[ranNum + 1].classList.add('computerShip2')
-      computerShip2.location.push(ranNum + 1)
+    allComputerShips.push(ranNum)
+    if (ranNum + width < (width - 1) * (width - 1)) {
+      computerGridCells[ranNum + width].classList.add('computerShip2')
+      computerGridCells[ranNum + (width * 2)].classList.add('computerShip2')
+      computerShip2.location.push(ranNum + width)
+      allComputerShips.push(ranNum + width)
+      computerShip2.location.push(ranNum + (width * 2))
+      allComputerShips.push(ranNum + (width * 2))
+      computerShip2.isPlaced = true
+    } else if (ranNum - width >= 1) {
+      computerGridCells[ranNum - width].classList.add('computerShip2')
+      computerGridCells[ranNum - (width * 2)].classList.add('computerShip2')
+      computerShip2.location.push(ranNum - width)
+      computerShip2.location.push(ranNum - (width * 2))
+      allComputerShips.push(ranNum - width)
+      allComputerShips.push(ranNum - (width * 2))
+      computerShip2.isPlaced = true
+    } else {
+      ship2Vertical()
     }
-    console.log('comp ship 2 length of 3', computerShip2.location)
+    console.log(computerShip2.location)
   }
-  createShip2()
 
-  //does not stop ships intersecting
-  //does not check to see that no previously used cells are reused
-  //prohibits ship from wrapping on the grid
-  //ship can only sit horizonally on board
-  //!!Might want to make a key of "is created = false" on the ships that turns to true before the next ship is allowed to be created
-  function createShip3() {
+  function ship3Horizontal() {
     const ranNum = createNumber()
     computerGridCells[ranNum].classList.add('computerShip3')
     computerShip3.location.push(ranNum)
-    if (computerGridCells[ranNum].classList.contains('computerShip3') && ranNum === 0 || ranNum === 10 || ranNum === 20 || ranNum === 30 || ranNum === 40 || ranNum === 50 || ranNum === 60 || ranNum === 70 || ranNum === 80 || ranNum === 90 || ranNum === 1 || ranNum === 11 || ranNum === 21 || ranNum === 31 || ranNum === 41 || ranNum === 51 || ranNum === 61 || ranNum === 71 || ranNum === 81 || ranNum === 91) {
-      computerGridCells[ranNum + 1].classList.add('computerShip3')
-      computerShip3.location.push(ranNum + 1)
-      computerGridCells[ranNum + 2].classList.add('computerShip3')
-      computerShip3.location.push(ranNum + 2)
-      computerGridCells[ranNum + 3].classList.add('computerShip3')
-      computerShip3.location.push(ranNum + 3)
-    } else if (computerGridCells[ranNum].classList.contains('computerShip3') && ranNum === 9 || ranNum === 19 || ranNum === 29 || ranNum === 39 || ranNum === 49 || ranNum === 59 || ranNum === 69 || ranNum === 79 || ranNum === 89 || ranNum === 99 || ranNum === 8 || ranNum === 18 || ranNum === 28 || ranNum === 38 || ranNum === 48 || ranNum === 58 || ranNum === 68 || ranNum === 78 || ranNum === 88 || ranNum === 98) {
+    allComputerShips.push(ranNum)
+    if (ranNum % width > 2) {
       computerGridCells[ranNum - 1].classList.add('computerShip3')
-      computerShip3.location.push(ranNum - 1)
       computerGridCells[ranNum - 2].classList.add('computerShip3')
-      computerShip3.location.push(ranNum - 2)
       computerGridCells[ranNum - 3].classList.add('computerShip3')
-      computerShip3.location.push(ranNum - 3)
-    } else if (computerGridCells[ranNum].classList.contains('computerShip3')) {
-      computerGridCells[ranNum - 1].classList.add('computerShip3')
       computerShip3.location.push(ranNum - 1)
-      computerGridCells[ranNum + 1].classList.add('computerShip3')
-      computerShip3.location.push(ranNum + 1)
-      computerGridCells[ranNum - 2].classList.add('computerShip3')
       computerShip3.location.push(ranNum - 2)
+      computerShip3.location.push(ranNum - 3)
+      allComputerShips.push(ranNum - 1)
+      allComputerShips.push(ranNum - 2)
+      allComputerShips.push(ranNum - 3)
+      computerShip3.isPlaced = true
+    } else if (ranNum % width < width - 3) {
+      computerGridCells[ranNum + 1].classList.add('computerShip3')
+      computerGridCells[ranNum + 2].classList.add('computerShip3')
+      computerGridCells[ranNum + 3].classList.add('computerShip3')
+      computerShip3.location.push(ranNum + 1)
+      computerShip3.location.push(ranNum + 2)
+      computerShip3.location.push(ranNum + 3)
+      allComputerShips.push(ranNum + 1)
+      allComputerShips.push(ranNum + 2)
+      allComputerShips.push(ranNum + 3)
+      computerShip3.isPlaced = true
+    } else {
+      ship3Horizontal()
     }
-    console.log('comp ship 3 length of 4', computerShip3.location)
+    console.log(computerShip3.location)
   }
-  createShip3()
 
-  //does not stop ships intersecting
-  //does not check to see that no previously used cells are reused
-  //prohibits ship from wrapping on the grid
-  //ship can only sit horizonally on board
-  //!!Might want to make a key of "is created = false" on the ships that turns to true before the next ship is allowed to be created
-  function createShip4() {
+  function ship3Vertical() {
+    const ranNum = createNumber()
+    computerGridCells[ranNum].classList.add('computerShip3')
+    computerShip3.location.push(ranNum)
+    allComputerShips.push(ranNum)
+    if (ranNum + width < (width - 2) * (width - 2)) {
+      computerGridCells[ranNum + width].classList.add('computerShip3')
+      computerGridCells[ranNum + (width * 2)].classList.add('computerShip3')
+      computerGridCells[ranNum + (width * 3)].classList.add('computerShip3')
+      computerShip3.location.push(ranNum + width)
+      computerShip3.location.push(ranNum + (width * 2))
+      computerShip3.location.push(ranNum + (width * 3))
+      allComputerShips.push(ranNum + width)
+      allComputerShips.push(ranNum + (width * 2))
+      allComputerShips.push(ranNum + (width * 3))
+      computerShip3.isPlaced = true
+    } else if (ranNum - width >= 2) {
+      computerGridCells[ranNum - width].classList.add('computerShip3')
+      computerGridCells[ranNum - (width * 2)].classList.add('computerShip3')
+      computerGridCells[ranNum - (width * 3)].classList.add('computerShip3')
+      computerShip3.location.push(ranNum - width)
+      computerShip3.location.push(ranNum - (width * 2))
+      computerShip3.location.push(ranNum - (width * 3))
+      allComputerShips.push(ranNum - width)
+      allComputerShips.push(ranNum - (width * 2))
+      allComputerShips.push(ranNum - (width * 3))
+      computerShip3.isPlaced = true
+    } else {
+      ship3Vertical()
+    }
+    console.log(computerShip3.location)
+  }
+
+  function ship4Horizontal() {
     const ranNum = createNumber()
     computerGridCells[ranNum].classList.add('computerShip4')
     computerShip4.location.push(ranNum)
-    if (computerGridCells[ranNum].classList.contains('computerShip4') && ranNum === 0 || ranNum === 10 || ranNum === 20 || ranNum === 30 || ranNum === 40 || ranNum === 50 || ranNum === 60 || ranNum === 70 || ranNum === 80 || ranNum === 90 || ranNum === 1 || ranNum === 11 || ranNum === 21 || ranNum === 31 || ranNum === 41 || ranNum === 51 || ranNum === 61 || ranNum === 71 || ranNum === 81 || ranNum === 91 || ranNum === 2 || ranNum === 12 || ranNum === 22 || ranNum === 32 || ranNum === 42 || ranNum === 52 || ranNum === 62 || ranNum === 72 || ranNum === 82 || ranNum === 92) {
-      computerGridCells[ranNum + 1].classList.add('computerShip4')
-      computerShip4.location.push(ranNum + 1)
-      computerGridCells[ranNum + 2].classList.add('computerShip4')
-      computerShip4.location.push(ranNum + 2)
-      computerGridCells[ranNum + 3].classList.add('computerShip4')
-      computerShip4.location.push(ranNum + 3)
-      computerGridCells[ranNum + 4].classList.add('computerShip4')
-      computerShip4.location.push(ranNum + 4)
-    } else if (computerGridCells[ranNum].classList.contains('computerShip4') && ranNum === 9 || ranNum === 19 || ranNum === 29 || ranNum === 39 || ranNum === 49 || ranNum === 59 || ranNum === 69 || ranNum === 79 || ranNum === 89 || ranNum === 99 || ranNum === 8 || ranNum === 18 || ranNum === 28 || ranNum === 38 || ranNum === 48 || ranNum === 58 || ranNum === 68 || ranNum === 78 || ranNum === 88 || ranNum === 98 || ranNum === 7  || ranNum === 17 || ranNum === 27  || ranNum === 37  || ranNum === 47 || ranNum === 57  || ranNum === 67 || ranNum === 77 || ranNum === 87 || ranNum === 97) {
+    allComputerShips.push(ranNum)
+    if (ranNum % width > 3) {
       computerGridCells[ranNum - 1].classList.add('computerShip4')
-      computerShip4.location.push(ranNum - 1)
       computerGridCells[ranNum - 2].classList.add('computerShip4')
-      computerShip4.location.push(ranNum - 2)
       computerGridCells[ranNum - 3].classList.add('computerShip4')
-      computerShip4.location.push(ranNum - 3)
       computerGridCells[ranNum - 4].classList.add('computerShip4')
-      computerShip4.location.push(ranNum - 4)
-    } else if (computerGridCells[ranNum].classList.contains('computerShip4')) {
-      computerGridCells[ranNum - 1].classList.add('computerShip4')
       computerShip4.location.push(ranNum - 1)
-      computerGridCells[ranNum + 1].classList.add('computerShip4')
-      computerShip4.location.push(ranNum + 1)
-      computerGridCells[ranNum - 2].classList.add('computerShip4')
       computerShip4.location.push(ranNum - 2)
+      computerShip4.location.push(ranNum - 3)
+      computerShip4.location.push(ranNum - 4)
+      allComputerShips.push(ranNum - 1)
+      allComputerShips.push(ranNum - 2)
+      allComputerShips.push(ranNum - 3)
+      allComputerShips.push(ranNum - 4)
+      computerShip4.isPlaced = true
+      console.log(computerShip4.isPlaced)
+    } else if (ranNum % width < width - 4) {
+      computerGridCells[ranNum + 1].classList.add('computerShip4')
       computerGridCells[ranNum + 2].classList.add('computerShip4')
+      computerGridCells[ranNum + 3].classList.add('computerShip4')
+      computerGridCells[ranNum + 4].classList.add('computerShip4')
+      computerShip4.location.push(ranNum + 1)
       computerShip4.location.push(ranNum + 2)
+      computerShip4.location.push(ranNum + 3)
+      computerShip4.location.push(ranNum + 4)
+      allComputerShips.push(ranNum + 1)
+      allComputerShips.push(ranNum + 2)
+      allComputerShips.push(ranNum + 3)
+      allComputerShips.push(ranNum + 4)
+      computerShip4.isPlaced = true
+      console.log(computerShip4.isPlaced)
+    } else {
+      ship4Horizontal()
     }
-    console.log('comp ship 4 length of 5', computerShip4.location)
+    console.log(computerShip4.location)
   }
-  createShip4()
-*/
+
+  function ship4Vertical() {
+    const ranNum = createNumber()
+    computerGridCells[ranNum].classList.add('computerShip4')
+    computerShip4.location.push(ranNum)
+    allComputerShips.push(ranNum)
+    if (ranNum + width < (width - 3) * (width - 3)) {
+      computerGridCells[ranNum + width].classList.add('computerShip4')
+      computerGridCells[ranNum + (width * 2)].classList.add('computerShip4')
+      computerGridCells[ranNum + (width * 3)].classList.add('computerShip4')
+      computerGridCells[ranNum + (width * 4)].classList.add('computerShip4')
+      computerShip4.location.push(ranNum + width)
+      computerShip4.location.push(ranNum + (width * 2))
+      computerShip4.location.push(ranNum + (width * 3))
+      computerShip4.location.push(ranNum + (width * 4))
+      allComputerShips.push(ranNum + width)
+      allComputerShips.push(ranNum + (width * 2))
+      allComputerShips.push(ranNum + (width * 3))
+      allComputerShips.push(ranNum + (width * 4))
+      computerShip4.isPlaced = true
+      console.log(computerShip4.isPlaced)
+    } else if (ranNum - width >= 3) {
+      computerGridCells[ranNum - width].classList.add('computerShip4')
+      computerGridCells[ranNum - (width * 2)].classList.add('computerShip4')
+      computerGridCells[ranNum - (width * 3)].classList.add('computerShip4')
+      computerGridCells[ranNum - (width * 4)].classList.add('computerShip4')
+      computerShip4.location.push(ranNum - width)
+      computerShip4.location.push(ranNum - (width * 2))
+      computerShip4.location.push(ranNum - (width * 3))
+      computerShip4.location.push(ranNum - (width * 4))
+      allComputerShips.push(ranNum - width)
+      allComputerShips.push(ranNum - (width * 2))
+      allComputerShips.push(ranNum - (width * 3))
+      allComputerShips.push(ranNum - (width * 4))
+      computerShip4.isPlaced = true
+      console.log(computerShip4.isPlaced)
+    } else {
+      ship4Vertical()
+    }
+    console.log(computerShip4.location)
+  }
 
   // STAGE TWO: PLAYER MISSILE-FIRE
 
