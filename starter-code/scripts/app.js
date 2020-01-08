@@ -548,7 +548,6 @@ function init() {
       allComputerShips.push(ranNum - 3)
       allComputerShips.push(ranNum - 4)
       computerShip4.isPlaced = true
-      console.log(computerShip4.isPlaced)
     } else if (ranNum % width < width - 4) {
       computerGridCells[ranNum + 1].classList.add('computerShip4')
       computerGridCells[ranNum + 2].classList.add('computerShip4')
@@ -563,7 +562,6 @@ function init() {
       allComputerShips.push(ranNum + 3)
       allComputerShips.push(ranNum + 4)
       computerShip4.isPlaced = true
-      console.log(computerShip4.isPlaced)
     } else {
       ship4Horizontal()
     }
@@ -589,7 +587,6 @@ function init() {
       allComputerShips.push(ranNum + (width * 3))
       allComputerShips.push(ranNum + (width * 4))
       computerShip4.isPlaced = true
-      console.log(computerShip4.isPlaced)
     } else if (ranNum - width >= 3) {
       computerGridCells[ranNum - width].classList.add('computerShip4')
       computerGridCells[ranNum - (width * 2)].classList.add('computerShip4')
@@ -604,19 +601,37 @@ function init() {
       allComputerShips.push(ranNum - (width * 3))
       allComputerShips.push(ranNum - (width * 4))
       computerShip4.isPlaced = true
-      console.log(computerShip4.isPlaced)
     } else {
       ship4Vertical()
     }
     console.log(computerShip4.location)
   }
 
+  // testing below here
+
+  //this test should return true
+  // const array1 = [1, 2, 3, 4] 
+  // const array2 = [4, 5, 6]  
+
+  //this test should return false
+  const array1 = [1, 2, 3, 4] 
+  const array2 = [5, 6, 7] 
+    
+  // Iterate through each element in the 
+  // first array and if some of them  
+  // include the elements in the second 
+  // array then return true. 
+
+  function checkForOverlap(arr1, arr2) { 
+    return arr1.some(item => arr2.includes(item)) 
+  } 
+    
+  console.log(checkForOverlap(array1, array2)) 
+
   // STAGE TWO: PLAYER MISSILE-FIRE
 
   // PLAYER MISSILE-FIRE FUNCTIONS
 
-  //a function that takes player missile fire and checks for a hit or a miss on the computer's board
-  //checks for "sunk" ships
   function playerMissileFire(i) {
     if (computerShip1.location.includes(i)) {
       computerGridCells[i].classList.add('hit')
@@ -709,13 +724,11 @@ function init() {
 
   // STAGE THREE: COMPUTER MISSILE-FIRE
 
-  //target must never repeat
   function computerMissileFire() {
     const target = createNumber()
     console.log(target)
     if (computerMissiles.includes(target)) {
       console.log('repeated fire; fire again.')
-      // console.log(computerMissiles)
       computerMissileFire()
     } else if (playerShip1.location.includes(target)) {
       console.log('hit')
