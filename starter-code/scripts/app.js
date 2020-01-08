@@ -142,8 +142,10 @@ function init() {
   const playerGridCells = []
   const computerGridCells = []
   const width = 10
-  //changes to true when all ships have been placed
   let allShipsPlaced = false
+  // need a function to loop thrugh computer and player isSunk values
+  let allShipsSunk = false
+  computerMissiles = []
   //a changeable variable to check the last chosen grid cell so as not to choose it again, or to choose nearby cells
   //let lastCell
 
@@ -214,7 +216,7 @@ function init() {
       const cell = document.createElement('div')
       cell.classList.add('grid-item')
       // cell.innerText = i
-      cell.addEventListener('click', () => fireMissile(i))
+      cell.addEventListener('click', () => playerMissileFire(i))
       computerGridCells.push(cell)
       computerGrid.appendChild(cell)
     })
@@ -267,7 +269,6 @@ function init() {
     return Math.floor(Math.random() * 100)
   }
 
-  //does not stop ships intersecting
   //does not check to see that no previously used cells are reused
   //prohibits ship from wrapping on the grid
   //ship can only sit horizonally on board
@@ -290,7 +291,6 @@ function init() {
   }
   createShip1()
 
-  //does not stop ships intersecting
   //does not check to see that no previously used cells are reused
   //prohibits ship from wrapping on the grid
   //ship can only sit horizonally on board
@@ -372,7 +372,7 @@ function init() {
       computerShip4.location.push(ranNum + 3)
       computerGridCells[ranNum + 4].classList.add('computerShip4')
       computerShip4.location.push(ranNum + 4)
-    } else if (computerGridCells[ranNum].classList.contains('computerShip4') && ranNum === 9 || ranNum === 19 || ranNum === 29 || ranNum === 39 || ranNum === 49 || ranNum === 59 || ranNum === 69 || ranNum === 79 || ranNum === 89 || ranNum === 99 || ranNum === 8 || ranNum === 18 || ranNum === 28 || ranNum === 38 || ranNum === 48 || ranNum === 58 || ranNum === 68 || ranNum === 78 || ranNum === 88 || ranNum === 98) {
+    } else if (computerGridCells[ranNum].classList.contains('computerShip4') && ranNum === 9 || ranNum === 19 || ranNum === 29 || ranNum === 39 || ranNum === 49 || ranNum === 59 || ranNum === 69 || ranNum === 79 || ranNum === 89 || ranNum === 99 || ranNum === 8 || ranNum === 18 || ranNum === 28 || ranNum === 38 || ranNum === 48 || ranNum === 58 || ranNum === 68 || ranNum === 78 || ranNum === 88 || ranNum === 98 || ranNum === 7  || ranNum === 17 || ranNum === 27  || ranNum === 37  || ranNum === 47 || ranNum === 57  || ranNum === 67 || ranNum === 77 || ranNum === 87 || ranNum === 97) {
       computerGridCells[ranNum - 1].classList.add('computerShip4')
       computerShip4.location.push(ranNum - 1)
       computerGridCells[ranNum - 2].classList.add('computerShip4')
@@ -401,7 +401,7 @@ function init() {
 
   //a function that takes player missile fire and checks for a hit or a miss on the computer's board
   //checks for "sunk" ships
-  function fireMissile(i) {
+  function playerMissileFire(i) {
     if (computerShip1.location.includes(i)) {
       computerGridCells[i].classList.add('hit')
       checkSunk()
@@ -424,7 +424,6 @@ function init() {
     }
   }
 
-  //must change isSunk to True
   function checkSunk() {
     if (computerShip1.location.every(l => computerGridCells[l].classList.contains('hit'))) {
       computerShip1.location.forEach(l => {
@@ -454,9 +453,7 @@ function init() {
         computerShip4.isSunk = true
       })
     }
-    console.log(playerShip1.location.map(l => playerGridCells[l]))
     if (playerShip1.location.every(l => playerGridCells[l].classList.contains('hit'))) {
-      console.log('ship1 sunk')
       playerShip1.location.forEach(l => {
         playerGridCells[l].classList.remove('hit')
         playerGridCells[l].classList.add('sunk')
@@ -464,7 +461,6 @@ function init() {
       })
     }
     if (playerShip2.location.every(l => playerGridCells[l].classList.contains('hit'))) {
-      console.log('ship2 sunk')
       playerShip2.location.forEach(l => {
         playerGridCells[l].classList.remove('hit')
         playerGridCells[l].classList.add('sunk')
@@ -472,7 +468,6 @@ function init() {
       })
     }
     if (playerShip3.location.every(l => playerGridCells[l].classList.contains('hit'))) {
-      console.log('ship3 sunk')
       playerShip3.location.forEach(l => {
         playerGridCells[l].classList.remove('hit')
         playerGridCells[l].classList.add('sunk')
@@ -480,7 +475,6 @@ function init() {
       })
     }
     if (playerShip4.location.every(l => playerGridCells[l].classList.contains('hit'))) {
-      console.log('ship4 sunk')
       playerShip4.location.forEach(l => {
         playerGridCells[l].classList.remove('hit')
         playerGridCells[l].classList.add('sunk')
@@ -493,28 +487,32 @@ function init() {
 
   //target must never repeat
   function computerMissileFire() {
-    // const target = playerGridCells[createNumber()]
-    const target = Math.floor(Math.random() * playerGridCells.length)
+    const target = createNumber()
     console.log(target)
     if (playerShip1.location.includes(target)) {
       console.log('hit')
       playerGridCells[target].classList.add('hit')
+      computerMissileFire.push(target)
       checkSunk()
     } else if (playerShip2.location.includes(target)) {
       console.log('hit')
       playerGridCells[target].classList.add('hit')
+      computerMissileFire.push(target)
       checkSunk()
     } else if (playerShip3.location.includes(target)) {
       console.log('hit')
       playerGridCells[target].classList.add('hit')
+      computerMissileFire.push(target)
       checkSunk()
     } else if (playerShip4.location.includes(target)) {
       console.log('hit')
       playerGridCells[target].classList.add('hit')
+      computerMissileFire.push(target)
       checkSunk()
     } else {
       console.log('miss')
       playerGridCells[target].classList.add('miss')
+      computerMissileFire.push(target)
     }
   }
 
