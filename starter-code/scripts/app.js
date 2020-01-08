@@ -145,7 +145,7 @@ function init() {
   let allShipsPlaced = false
   // need a function to loop thrugh computer and player isSunk values
   let allShipsSunk = false
-  computerMissiles = []
+  const computerMissiles = []
   //a changeable variable to check the last chosen grid cell so as not to choose it again, or to choose nearby cells
   //let lastCell
 
@@ -489,30 +489,34 @@ function init() {
   function computerMissileFire() {
     const target = createNumber()
     console.log(target)
-    if (playerShip1.location.includes(target)) {
+    if (computerMissiles.includes(target)) {
+      console.log('repeated fire; fire again.')
+      // console.log(computerMissiles)
+      computerMissileFire()
+    } else if (playerShip1.location.includes(target)) {
       console.log('hit')
       playerGridCells[target].classList.add('hit')
-      computerMissileFire.push(target)
+      computerMissiles.push(target)
       checkSunk()
     } else if (playerShip2.location.includes(target)) {
       console.log('hit')
       playerGridCells[target].classList.add('hit')
-      computerMissileFire.push(target)
+      computerMissiles.push(target)
       checkSunk()
     } else if (playerShip3.location.includes(target)) {
       console.log('hit')
       playerGridCells[target].classList.add('hit')
-      computerMissileFire.push(target)
+      computerMissiles.push(target)
       checkSunk()
     } else if (playerShip4.location.includes(target)) {
       console.log('hit')
       playerGridCells[target].classList.add('hit')
-      computerMissileFire.push(target)
+      computerMissiles.push(target)
       checkSunk()
     } else {
       console.log('miss')
       playerGridCells[target].classList.add('miss')
-      computerMissileFire.push(target)
+      computerMissiles.push(target)
     }
   }
 
