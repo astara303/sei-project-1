@@ -213,6 +213,12 @@ function init() {
     isSunk: false
   }
 
+  //length: 6
+  const playerShip5 = {
+    location: [],
+    isSunk: false
+  }
+
   //these ships will have a class color of white, so that they do not appear
   //length: 2
   const computerShip1 = {
@@ -234,6 +240,12 @@ function init() {
   }
   //length: 5
   const computerShip4 = {
+    location: [],
+    isPlaced: false,
+    isSunk: false
+  }
+
+  const computerShip5 = {
     location: [],
     isPlaced: false,
     isSunk: false
@@ -268,17 +280,22 @@ function init() {
   //STAGE ONE: SET-UP FUNCTIONS
   //PLAYER FUNCTIONS
 
-  //works immediately when page is loaded
-  //logs each clicked cell into the corresponding ship array
+  //present on page load
   function placeShips(i) {
     if (allShipsPlaced) {
-      // return
-      console.log('ship1', playerShip1.location)
-      console.log('ship2', playerShip2.location)
-      console.log('ship3', playerShip3.location)
-      console.log('ship4', playerShip4.location)
-    } else if (playerShip4.location.length === 5) {
+      return
+      // console.log('ship1', playerShip1.location)
+      // console.log('ship2', playerShip2.location)
+      // console.log('ship3', playerShip3.location)
+      // console.log('ship4', playerShip4.location)
+    } else if (playerShip5.location.length === 6) {
       allShipsPlaced = true
+    } else if (playerShip4.location.length === 5) {
+      playerGridCells[i].classList.add('ship5')
+      //can I take out the line of code below?
+      if (playerGridCells[i].classList.contains('ship5')) {
+        playerShip5.location.push(i)
+      }
     } else if (playerShip3.location.length === 4) {
       playerGridCells[i].classList.add('ship4')
       if (playerGridCells[i].classList.contains('ship4')) {
@@ -294,13 +311,11 @@ function init() {
       if (playerGridCells[i].classList.contains('ship2')) {
         playerShip2.location.push(i)
       }
-    } else if (!allShipsPlaced) {
+    } else {
       playerGridCells[i].classList.add('ship1')
       if (playerGridCells[i].classList.contains('ship1')) {
         playerShip1.location.push(i)
       }
-    } else {
-      console.log('complete')
     }
   }
 
@@ -311,8 +326,7 @@ function init() {
     return Math.floor(Math.random() * 100)
   }
 
-  //a function that gives a 50/50 split decision
-  //will be true or false
+  //a function that gives a 50/50 true or false
   function coinFlip() {
     return Math.random() < 0.5
   }
@@ -320,8 +334,6 @@ function init() {
   function checkForOverlap(arr1, arr2) {
     return arr1.some(item => arr2.includes(item))
   }
-
-  // (checkForOverlap(computerShip1.location, allComputerShips)) 
 
   function makeShip4() {
     const choice = coinFlip()
@@ -365,7 +377,7 @@ function init() {
     }
   }
 
-  //this could happen when all player ships have been placed, or on a start button etc.
+  //happens on a start button etc.
   makeShip4()
   makeShip3()
   makeShip2()
@@ -378,11 +390,9 @@ function init() {
     if (ranNum % width > 0) {
       computerShip1.location.push(ranNum - 1)
       if (checkForOverlap(computerShip1.location, allComputerShips)) {
-        //must pop whatever was added to compshiplocation
         computerShip1.location = []
         ship1Horizontal()
       } else {
-        //don't push to all computer ships or add class until here
         computerGridCells[ranNum].classList.add('computerShip1')
         computerGridCells[ranNum - 1].classList.add('computerShip1')
         //might not need to push ship1 to all computers but ill leave it for now
