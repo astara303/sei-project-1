@@ -217,6 +217,7 @@ function init() {
   //length: 2
   const computerShip1 = {
     location: [],
+    isPlaced: false,
     isSunk: false
   }
   //length: 3
@@ -315,7 +316,13 @@ function init() {
   function coinFlip() {
     return Math.random() < 0.5
   }
-  
+
+  function checkForOverlap(arr1, arr2) {
+    return arr1.some(item => arr2.includes(item))
+  }
+
+  // (checkForOverlap(computerShip1.location, allComputerShips)) 
+
   function makeShip4() {
     const choice = coinFlip()
     if (choice) {
@@ -363,25 +370,39 @@ function init() {
   makeShip3()
   makeShip2()
   makeShip1()
- 
+
 
   function ship1Horizontal() {
     const ranNum = createNumber()
-    //may need to check at this point if ranNum already exists in array
-    computerGridCells[ranNum].classList.add('computerShip1')
     computerShip1.location.push(ranNum)
-    allComputerShips.push(ranNum)
     if (ranNum % width > 0) {
-      //check if added cells exist in array
-      computerGridCells[ranNum - 1].classList.add('computerShip1')
       computerShip1.location.push(ranNum - 1)
-      allComputerShips.push(ranNum - 1)
-      computerShip1.isPlaced = true
+      if (checkForOverlap(computerShip1.location, allComputerShips)) {
+        //must pop whatever was added to compshiplocation
+        computerShip1.location = []
+        ship1Horizontal()
+      } else {
+        //don't push to all computer ships or add class until here
+        computerGridCells[ranNum].classList.add('computerShip1')
+        computerGridCells[ranNum - 1].classList.add('computerShip1')
+        //might not need to push ship1 to all computers but ill leave it for now
+        allComputerShips.push(ranNum)
+        allComputerShips.push(ranNum - 1)
+        computerShip1.isPlaced = true
+      }
     } else if (ranNum % width < width - 1) {
-      computerGridCells[ranNum + 1].classList.add('computerShip1')
       computerShip1.location.push(ranNum + 1)
-      allComputerShips.push(ranNum + 1)
-      computerShip1.isPlaced = true
+      if (checkForOverlap(computerShip1.location, allComputerShips)) {
+        computerShip1.location = []
+        ship1Horizontal()
+      } else {
+        computerGridCells[ranNum].classList.add('computerShip1')
+        computerGridCells[ranNum + 1].classList.add('computerShip1')
+        //might not need to push ship1 to all computers but ill leave it for now
+        allComputerShips.push(ranNum)
+        allComputerShips.push(ranNum + 1)
+        computerShip1.isPlaced = true
+      }
     } else {
       ship1Horizontal()
     }
@@ -390,19 +411,32 @@ function init() {
 
   function ship1Vertical() {
     const ranNum = createNumber()
-    computerGridCells[ranNum].classList.add('computerShip1')
     computerShip1.location.push(ranNum)
-    allComputerShips.push(ranNum)
     if (ranNum + width < width * width) {
-      computerGridCells[ranNum + width].classList.add('computerShip1')
       computerShip1.location.push(ranNum + width)
-      allComputerShips.push(ranNum + width)
-      computerShip1.isPlaced = true
+      if (checkForOverlap(computerShip1.location, allComputerShips)) {
+        computerShip1.location = []
+        ship1Vertical()
+      } else {
+        //don't push to all computer ships or add class until here
+        computerGridCells[ranNum].classList.add('computerShip1')
+        computerGridCells[ranNum + width].classList.add('computerShip1')
+        allComputerShips.push(ranNum)
+        allComputerShips.push(ranNum + width)
+        computerShip1.isPlaced = true
+      }
     } else if (ranNum - width >= 0) {
-      computerGridCells[ranNum - width].classList.add('computerShip1')
       computerShip1.location.push(ranNum - width)
-      allComputerShips.push(ranNum - width)
-      computerShip1.isPlaced = true
+      if (checkForOverlap(computerShip1.location, allComputerShips)) {
+        computerShip1.location = []
+        ship1Vertical()
+      } else {
+        computerGridCells[ranNum].classList.add('computerShip1')
+        computerGridCells[ranNum - width].classList.add('computerShip1')
+        allComputerShips.push(ranNum)
+        allComputerShips.push(ranNum - width)
+        computerShip1.isPlaced = true
+      }
     } else {
       ship1Vertical()
     }
@@ -411,25 +445,37 @@ function init() {
 
   function ship2Horizontal() {
     const ranNum = createNumber()
-    computerGridCells[ranNum].classList.add('computerShip2')
     computerShip2.location.push(ranNum)
-    allComputerShips.push(ranNum)
     if (ranNum % width > 1) {
-      computerGridCells[ranNum - 1].classList.add('computerShip2')
-      computerGridCells[ranNum - 2].classList.add('computerShip2')
       computerShip2.location.push(ranNum - 1)
       computerShip2.location.push(ranNum - 2)
-      allComputerShips.push(ranNum - 1)
-      allComputerShips.push(ranNum - 2)
-      computerShip2.isPlaced = true
+      if (checkForOverlap(computerShip2.location, allComputerShips)) {
+        computerShip2.location = []
+        ship2Horizontal()
+      } else {
+        computerGridCells[ranNum].classList.add('computerShip2')
+        computerGridCells[ranNum - 1].classList.add('computerShip2')
+        computerGridCells[ranNum - 2].classList.add('computerShip2')
+        allComputerShips.push(ranNum)
+        allComputerShips.push(ranNum - 1)
+        allComputerShips.push(ranNum - 2)
+        computerShip2.isPlaced = true
+      }
     } else if (ranNum % width < width - 2) {
-      computerGridCells[ranNum + 1].classList.add('computerShip2')
-      computerGridCells[ranNum + 2].classList.add('computerShip2')
       computerShip2.location.push(ranNum + 1)
       computerShip2.location.push(ranNum + 2)
-      allComputerShips.push(ranNum + 1)
-      allComputerShips.push(ranNum + 2)
-      computerShip2.isPlaced = true
+      if (checkForOverlap(computerShip2.location, allComputerShips)) {
+        computerShip2.location = []
+        ship2Horizontal()
+      } else {
+        computerGridCells[ranNum].classList.add('computerShip2')
+        computerGridCells[ranNum + 1].classList.add('computerShip2')
+        computerGridCells[ranNum + 2].classList.add('computerShip2')
+        allComputerShips.push(ranNum)
+        allComputerShips.push(ranNum + 1)
+        allComputerShips.push(ranNum + 2)
+        computerShip2.isPlaced = true
+      }
     } else {
       ship2Horizontal()
     }
@@ -438,25 +484,37 @@ function init() {
 
   function ship2Vertical() {
     const ranNum = createNumber()
-    computerGridCells[ranNum].classList.add('computerShip2')
     computerShip2.location.push(ranNum)
-    allComputerShips.push(ranNum)
     if (ranNum + width < (width - 1) * (width - 1)) {
-      computerGridCells[ranNum + width].classList.add('computerShip2')
-      computerGridCells[ranNum + (width * 2)].classList.add('computerShip2')
       computerShip2.location.push(ranNum + width)
-      allComputerShips.push(ranNum + width)
       computerShip2.location.push(ranNum + (width * 2))
-      allComputerShips.push(ranNum + (width * 2))
-      computerShip2.isPlaced = true
+      if (checkForOverlap(computerShip2.location, allComputerShips)) {
+        computerShip2.location = []
+        ship2Vertical()
+      } else {
+        computerGridCells[ranNum].classList.add('computerShip2')
+        computerGridCells[ranNum + width].classList.add('computerShip2')
+        computerGridCells[ranNum + (width * 2)].classList.add('computerShip2')
+        allComputerShips.push(ranNum)
+        allComputerShips.push(ranNum + width)
+        allComputerShips.push(ranNum + (width * 2))
+        computerShip2.isPlaced = true
+      }
     } else if (ranNum - width >= 1) {
-      computerGridCells[ranNum - width].classList.add('computerShip2')
-      computerGridCells[ranNum - (width * 2)].classList.add('computerShip2')
       computerShip2.location.push(ranNum - width)
       computerShip2.location.push(ranNum - (width * 2))
-      allComputerShips.push(ranNum - width)
-      allComputerShips.push(ranNum - (width * 2))
-      computerShip2.isPlaced = true
+      if (checkForOverlap(computerShip2.location, allComputerShips)) {
+        computerShip2.location = []
+        ship2Vertical()
+      } else {
+        computerGridCells[ranNum].classList.add('computerShip2')
+        computerGridCells[ranNum - width].classList.add('computerShip2')
+        computerGridCells[ranNum - (width * 2)].classList.add('computerShip2')
+        allComputerShips.push(ranNum)
+        allComputerShips.push(ranNum - width)
+        allComputerShips.push(ranNum - (width * 2))
+        computerShip2.isPlaced = true
+      }
     } else {
       ship2Vertical()
     }
@@ -465,31 +523,43 @@ function init() {
 
   function ship3Horizontal() {
     const ranNum = createNumber()
-    computerGridCells[ranNum].classList.add('computerShip3')
     computerShip3.location.push(ranNum)
-    allComputerShips.push(ranNum)
     if (ranNum % width > 2) {
-      computerGridCells[ranNum - 1].classList.add('computerShip3')
-      computerGridCells[ranNum - 2].classList.add('computerShip3')
-      computerGridCells[ranNum - 3].classList.add('computerShip3')
       computerShip3.location.push(ranNum - 1)
       computerShip3.location.push(ranNum - 2)
       computerShip3.location.push(ranNum - 3)
-      allComputerShips.push(ranNum - 1)
-      allComputerShips.push(ranNum - 2)
-      allComputerShips.push(ranNum - 3)
-      computerShip3.isPlaced = true
+      if (checkForOverlap(computerShip3.location, allComputerShips)) {
+        computerShip3.location = []
+        ship3Horizontal()
+      } else {
+        computerGridCells[ranNum].classList.add('computerShip3')
+        computerGridCells[ranNum - 1].classList.add('computerShip3')
+        computerGridCells[ranNum - 2].classList.add('computerShip3')
+        computerGridCells[ranNum - 3].classList.add('computerShip3')
+        allComputerShips.push(ranNum)
+        allComputerShips.push(ranNum - 1)
+        allComputerShips.push(ranNum - 2)
+        allComputerShips.push(ranNum - 3)
+        computerShip3.isPlaced = true
+      }
     } else if (ranNum % width < width - 3) {
-      computerGridCells[ranNum + 1].classList.add('computerShip3')
-      computerGridCells[ranNum + 2].classList.add('computerShip3')
-      computerGridCells[ranNum + 3].classList.add('computerShip3')
       computerShip3.location.push(ranNum + 1)
       computerShip3.location.push(ranNum + 2)
       computerShip3.location.push(ranNum + 3)
-      allComputerShips.push(ranNum + 1)
-      allComputerShips.push(ranNum + 2)
-      allComputerShips.push(ranNum + 3)
-      computerShip3.isPlaced = true
+      if (checkForOverlap(computerShip3.location, allComputerShips)) {
+        computerShip3.location = []
+        ship3Horizontal()
+      } else {
+        computerGridCells[ranNum].classList.add('computerShip3')
+        computerGridCells[ranNum + 1].classList.add('computerShip3')
+        computerGridCells[ranNum + 2].classList.add('computerShip3')
+        computerGridCells[ranNum + 3].classList.add('computerShip3')
+        allComputerShips.push(ranNum)
+        allComputerShips.push(ranNum + 1)
+        allComputerShips.push(ranNum + 2)
+        allComputerShips.push(ranNum + 3)
+        computerShip3.isPlaced = true
+      }
     } else {
       ship3Horizontal()
     }
@@ -498,31 +568,43 @@ function init() {
 
   function ship3Vertical() {
     const ranNum = createNumber()
-    computerGridCells[ranNum].classList.add('computerShip3')
     computerShip3.location.push(ranNum)
-    allComputerShips.push(ranNum)
     if (ranNum + width < (width - 2) * (width - 2)) {
-      computerGridCells[ranNum + width].classList.add('computerShip3')
-      computerGridCells[ranNum + (width * 2)].classList.add('computerShip3')
-      computerGridCells[ranNum + (width * 3)].classList.add('computerShip3')
       computerShip3.location.push(ranNum + width)
       computerShip3.location.push(ranNum + (width * 2))
       computerShip3.location.push(ranNum + (width * 3))
-      allComputerShips.push(ranNum + width)
-      allComputerShips.push(ranNum + (width * 2))
-      allComputerShips.push(ranNum + (width * 3))
-      computerShip3.isPlaced = true
+      if (checkForOverlap(computerShip3.location, allComputerShips)) {
+        computerShip3.location = []
+        ship3Vertical()
+      } else {
+        computerGridCells[ranNum].classList.add('computerShip3')
+        computerGridCells[ranNum + width].classList.add('computerShip3')
+        computerGridCells[ranNum + (width * 2)].classList.add('computerShip3')
+        computerGridCells[ranNum + (width * 3)].classList.add('computerShip3')
+        allComputerShips.push(ranNum)
+        allComputerShips.push(ranNum + width)
+        allComputerShips.push(ranNum + (width * 2))
+        allComputerShips.push(ranNum + (width * 3))
+        computerShip3.isPlaced = true
+      }
     } else if (ranNum - width >= 2) {
-      computerGridCells[ranNum - width].classList.add('computerShip3')
-      computerGridCells[ranNum - (width * 2)].classList.add('computerShip3')
-      computerGridCells[ranNum - (width * 3)].classList.add('computerShip3')
       computerShip3.location.push(ranNum - width)
       computerShip3.location.push(ranNum - (width * 2))
       computerShip3.location.push(ranNum - (width * 3))
-      allComputerShips.push(ranNum - width)
-      allComputerShips.push(ranNum - (width * 2))
-      allComputerShips.push(ranNum - (width * 3))
-      computerShip3.isPlaced = true
+      if (checkForOverlap(computerShip3.location, allComputerShips)) {
+        computerShip3.location = []
+        ship3Vertical()
+      } else {
+        computerGridCells[ranNum].classList.add('computerShip3')
+        computerGridCells[ranNum - width].classList.add('computerShip3')
+        computerGridCells[ranNum - (width * 2)].classList.add('computerShip3')
+        computerGridCells[ranNum - (width * 3)].classList.add('computerShip3')
+        allComputerShips.push(ranNum)
+        allComputerShips.push(ranNum - width)
+        allComputerShips.push(ranNum - (width * 2))
+        allComputerShips.push(ranNum - (width * 3))
+        computerShip3.isPlaced = true
+      }
     } else {
       ship3Vertical()
     }
@@ -606,27 +688,6 @@ function init() {
     }
     console.log(computerShip4.location)
   }
-
-  // testing below here
-
-  //this test should return true
-  // const array1 = [1, 2, 3, 4] 
-  // const array2 = [4, 5, 6]  
-
-  //this test should return false
-  const array1 = [1, 2, 3, 4] 
-  const array2 = [5, 6, 7] 
-    
-  // Iterate through each element in the 
-  // first array and if some of them  
-  // include the elements in the second 
-  // array then return true. 
-
-  function checkForOverlap(arr1, arr2) { 
-    return arr1.some(item => arr2.includes(item)) 
-  } 
-    
-  console.log(checkForOverlap(array1, array2)) 
 
   // STAGE TWO: PLAYER MISSILE-FIRE
 
@@ -725,6 +786,9 @@ function init() {
   // STAGE THREE: COMPUTER MISSILE-FIRE
 
   function computerMissileFire() {
+    if (computerShip1.isSunk && computerShip2.isSunk && computerShip3.isSunk && computerShip4.isSunk) {
+      return
+    }
     const target = createNumber()
     console.log(target)
     if (computerMissiles.includes(target)) {
