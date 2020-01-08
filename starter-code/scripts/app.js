@@ -75,7 +75,57 @@ function init() {
 
   SET-UP.) How will computer ships not intersect?
 
-  I have to find a way for the function to recognise if previously placed ships occupy that grid cell already
+  This covers ships not interesting and not going off the board at the same time:
+      
+      A.) Call Ship Building Function
+    Choose random number
+    Decide if a ship will go horizontal or vertical (coin flip)
+      -if true, go horizontal
+      -if false, go vertical
+
+    !? ISSUE: I DON’T WANT TO FAVOUR THE LEFT (coin flip?)
+    if true, check right first
+    if false, check left first
+
+    B.) Horizontal: (make sure if doesn’t go off the board)
+    can random number add length to left? (for example ranNum % width > 0)
+      -if yes, go to B1
+      -if no, try adding to right (next statement)
+    can random number add length to right? (for example ranNum % width < width -1)
+      -if yes, go to B2
+      -if no, go to beginning
+
+    B1.) if it can add to the left (make sure it doesn’t overlap an existing ship)
+      Check that all cells of ran num + ship length to the left does not appear in generated ship 		cells array
+
+      -if cells are free, add classes to them to make them appear on the board and push them to 	arrays
+      -if cells are not free, go to beginning
+
+    B2.) if it can add to the right (make sure it doesn’t overlap an existing ship)
+      Check that all cells of ran num + ship length to the right does not appear in generated ship 	cells array
+
+      -if cells are free, add classes to them to make them appear on the board and push them to 	arrays
+      -if cells are not free, go to beginning
+
+    C.) Vertical: (make sure if doesn’t go off the board)
+    can random number add height to top? (for example ranNum + width < width * width)
+      -if yes, go to C1
+      -if no, try adding to bottom (next statement)
+    can random number add height to bottom? (for example ranNum % width < width -1)
+      -if yes, go to C2
+      -if no, go to beginning
+
+    C1.) if it can add to the top (make sure it doesn’t overlap an existing ship)
+    Check that all cells of ran num + ship length to the top does not appear in generated ship 		cells array
+
+      -if cells are free, add classes to them to make them appear on the board and push them to 	arrays
+      -if cells are not free, go to beginning
+
+    C2.) if it can add to the bottom (make sure it doesn’t overlap an existing ship)
+    Check that all cells of ran num + ship length to the bottom does not appear in generated ship 		cells array
+
+      -if cells are free, add classes to them to make them appear on the board and push them to 	arrays
+      -if cells are not free, go to beginning
 
 
   SET-UP.) How will computer ships not go off the board?
@@ -109,8 +159,7 @@ function init() {
   COMPUTER MISSILE-FIRE.) Computer generated missile fire
   Randomly generate a grid cell (0-99) to target on the player's board
   Read if the cell is contained in a player ship location array
-  OR
-  Randomly generate an item from the grid array and read the index of that item
+  Do not repeat firing of missiles
 
   COMPUTER MISSILE-FIRE.) Display player grid cells as HIT, MISS, or SUNK
 
@@ -123,20 +172,25 @@ function init() {
 
   // DOM VARIABLES
   const winner = document.querySelector('.winner')
-  //I could only reveal the computer grid when "start game" is pressed. "Start game" button could appear when allShipsPlaced is true. Otherwise I may not need a start button
+  //I could only reveal the computer grid when "start game" is pressed. "Start game" button could appear when allShipsPlaced is true
   const clearBoard = document.querySelector('.clearBoard')
   const playerGrid = document.querySelector('.playerGrid')
   const computerGrid = document.querySelector('.computerGrid')
 
 
   // GAME VARIABLES
+
+  //grid variables
   const playerGridCells = []
   const computerGridCells = []
   const width = 10
+
   const computerMissiles = []
+  const allComputerShips = []
   let allShipsPlaced = false
+
   //turn to true when allShipsPlaced is true. Turn to false if player wins (otherwise computer makes one more move after player wins)
-  let allowComputerFire = false
+  // let allowComputerFire = false
 
 
   // SHIP OBJECTS
@@ -168,21 +222,25 @@ function init() {
   //length: 2
   const computerShip1 = {
     location: [],
+    isPlaced: false,
     isSunk: false
   }
   //length: 3
   const computerShip2 = {
     location: [],
+    isPlaced: false,
     isSunk: false
   }
   //length: 4
   const computerShip3 = {
     location: [],
+    isPlaced: false,
     isSunk: false
   }
   //length: 5
   const computerShip4 = {
     location: [],
+    isPlaced: false,
     isSunk: false
   }
 
@@ -258,6 +316,111 @@ function init() {
     return Math.floor(Math.random() * 100)
   }
 
+  //a function that gives a 50/50 split decision
+  //will be true or false
+  function coinFlip() {
+    return Math.random() < 0.5
+  }
+
+  //can be horizontal or vertical
+  //does not check for previous ships (first ship)
+  function makeShip1() {
+    const choice = coinFlip()
+    if (choice) {
+      ship1Horizontal()
+    } else {
+      ship1Vertical()
+    }
+  }
+  //this could happen when all player ships have been placed, or on a start button etc.
+  makeShip1()
+  makeShip2()
+
+  function ship1Horizontal() {
+    const ranNum = createNumber()
+    computerGridCells[ranNum].classList.add('computerShip1')
+    computerShip1.location.push(ranNum)
+    allComputerShips.push(ranNum)
+    if (ranNum % width > 0) {
+      computerGridCells[ranNum - 1].classList.add('computerShip1')
+      computerShip1.location.push(ranNum - 1)
+      allComputerShips.push(ranNum - 1)
+      computerShip1.isPlaced = true
+    } else if (ranNum % width < width - 1) {
+      computerGridCells[ranNum + 1].classList.add('computerShip1')
+      computerShip1.location.push(ranNum + 1)
+      allComputerShips.push(ranNum + 1)
+      computerShip1.isPlaced = true
+    } else {
+      ship1Horizontal()
+    }
+    console.log(computerShip1.location)
+  }
+
+  function ship1Vertical() {
+    const ranNum = createNumber()
+    computerGridCells[ranNum].classList.add('computerShip1')
+    computerShip1.location.push(ranNum)
+    allComputerShips.push(ranNum)
+    if (ranNum + width < width * width) {
+      computerGridCells[ranNum + width].classList.add('computerShip1')
+      computerShip1.location.push(ranNum + width)
+      allComputerShips.push(ranNum + width)
+      computerShip1.isPlaced = true
+    } else if (ranNum - width >= 0) {
+      computerGridCells[ranNum - width].classList.add('computerShip1')
+      computerShip1.location.push(ranNum - width)
+      allComputerShips.push(ranNum - width)
+      computerShip1.isPlaced = true
+    } else {
+      ship1Vertical()
+    }
+    console.log(computerShip1.location)
+  }
+
+  function makeShip2() {
+    if (computerShip1.isPlaced) {
+      const choice = coinFlip()
+      if (choice) {
+        ship2Horizontal()
+      } else {
+        ship2Vertical()
+      }
+    }
+  }
+
+  function ship2Horizontal() {
+    const ranNum = createNumber()
+    computerGridCells[ranNum].classList.add('computerShip2')
+    computerShip2.location.push(ranNum)
+    allComputerShips.push(ranNum)
+    if (ranNum % width > 1) {
+      computerGridCells[ranNum - 1].classList.add('computerShip2')
+      computerGridCells[ranNum - 2].classList.add('computerShip2')
+      computerShip2.location.push(ranNum - 1)
+      computerShip2.location.push(ranNum - 2)
+      allComputerShips.push(ranNum - 1)
+      allComputerShips.push(ranNum - 2)
+      computerShip2.isPlaced = true
+    } else if (ranNum % width < width - 2) {
+      computerGridCells[ranNum + 1].classList.add('computerShip2')
+      computerGridCells[ranNum + 2].classList.add('computerShip2')
+      computerShip1.location.push(ranNum + 1)
+      computerShip1.location.push(ranNum + 2)
+      allComputerShips.push(ranNum + 1)
+      allComputerShips.push(ranNum + 2)
+      computerShip1.isPlaced = true
+    } else {
+      ship2Horizontal()
+    }
+    console.log(computerShip2.location)
+  }
+
+  function ship2Vertical() {
+    console.log('vertical was chosen')
+  }
+
+  /*
   //does not check to see that no previously used cells are reused
   //prohibits ship from wrapping on the grid
   //ship can only sit horizonally on board
@@ -383,6 +546,7 @@ function init() {
     console.log('comp ship 4 length of 5', computerShip4.location)
   }
   createShip4()
+*/
 
   // STAGE TWO: PLAYER MISSILE-FIRE
 
@@ -539,4 +703,5 @@ function init() {
   })
 
 }
+
 window.addEventListener('DOMContentLoaded', init)
