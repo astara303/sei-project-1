@@ -96,23 +96,15 @@ function init() {
   a function will check if the chosen cell index corresponds to any computer ship location array grid cells
   if it does, a class of "HIT" will be added to the grid cell and displayed on the computer grid
   if it doesn't, a class of "MISS" will be added to the grid cell and displayed on the computer grid
-  
-  Create a class that adds a color to the grid to display on a missed or hit grid cell. Have a key on the page that shows that yellow = miss, red = hit etc.
-  or 
-  Save an asset that is an image that says "MISS" or "HIT" and it fit into each grid cell when required
 
 
   PLAYER MISSILE-FIRE.) Display a computer ship's cells as SUNK after all grid cells have been HIT
    
-  Player's missile-fire input is converted into a grid cell index and a class of "HIT" has been added
+  Player's missile-fire input (a click) is a grid cell index and a class of "HIT" has been added
   A function checks if a class of "hit" has been added to all grid cells in a computer ship location's array
   If all grid cells have been hit, change isSunk from false to true
   if isSunk = true, add a class of SUNK to the ship grid cells
   
-  Create a class that adds a color to the grid to display on all sunk grid cells. Have a key on the page that shows that black = sunk
-  or 
-  Save an asset that is an image that says "SUNK" and it fit into each grid cell when required
-
 
   COMPUTER MISSILE-FIRE.) Computer generated missile fire
   Randomly generate a grid cell (0-99) to target on the player's board
@@ -130,9 +122,8 @@ function init() {
 
 
   // DOM VARIABLES
-
-  const instructions = document.querySelector('.instructions')
-  //I could only reveal the computer grid when "start game" is pressed. Otherwise I may not need a start button
+  const winner = document.querySelector('.winner')
+  //I could only reveal the computer grid when "start game" is pressed. "Start game" button could appear when allShipsPlaced is true. Otherwise I may not need a start button
   const clearBoard = document.querySelector('.clearBoard')
   const playerGrid = document.querySelector('.playerGrid')
   const computerGrid = document.querySelector('.computerGrid')
@@ -142,12 +133,10 @@ function init() {
   const playerGridCells = []
   const computerGridCells = []
   const width = 10
-  let allShipsPlaced = false
-  // need a function to loop thrugh computer and player isSunk values
-  let allShipsSunk = false
   const computerMissiles = []
-  //a changeable variable to check the last chosen grid cell so as not to choose it again, or to choose nearby cells
-  //let lastCell
+  let allShipsPlaced = false
+  //turn to true when allShipsPlaced is true. Turn to false if player wins (otherwise computer makes one more move after player wins)
+  let allowComputerFire = false
 
 
   // SHIP OBJECTS
@@ -430,6 +419,7 @@ function init() {
         computerGridCells[l].classList.remove('hit')
         computerGridCells[l].classList.add('sunk')
         computerShip1.isSunk = true
+        checkWinner()
       })
     }
     if (computerShip2.location.every(l => computerGridCells[l].classList.contains('hit'))) {
@@ -437,6 +427,7 @@ function init() {
         computerGridCells[l].classList.remove('hit')
         computerGridCells[l].classList.add('sunk')
         computerShip2.isSunk = true
+        checkWinner()
       })
     }
     if (computerShip3.location.every(l => computerGridCells[l].classList.contains('hit'))) {
@@ -444,6 +435,7 @@ function init() {
         computerGridCells[l].classList.remove('hit')
         computerGridCells[l].classList.add('sunk')
         computerShip3.isSunk = true
+        checkWinner()
       })
     }
     if (computerShip4.location.every(l => computerGridCells[l].classList.contains('hit'))) {
@@ -451,6 +443,7 @@ function init() {
         computerGridCells[l].classList.remove('hit')
         computerGridCells[l].classList.add('sunk')
         computerShip4.isSunk = true
+        checkWinner()
       })
     }
     if (playerShip1.location.every(l => playerGridCells[l].classList.contains('hit'))) {
@@ -458,6 +451,7 @@ function init() {
         playerGridCells[l].classList.remove('hit')
         playerGridCells[l].classList.add('sunk')
         playerShip1.isSunk = true
+        checkWinner()
       })
     }
     if (playerShip2.location.every(l => playerGridCells[l].classList.contains('hit'))) {
@@ -465,6 +459,7 @@ function init() {
         playerGridCells[l].classList.remove('hit')
         playerGridCells[l].classList.add('sunk')
         playerShip2.isSunk = true
+        checkWinner()
       })
     }
     if (playerShip3.location.every(l => playerGridCells[l].classList.contains('hit'))) {
@@ -472,6 +467,7 @@ function init() {
         playerGridCells[l].classList.remove('hit')
         playerGridCells[l].classList.add('sunk')
         playerShip3.isSunk = true
+        checkWinner()
       })
     }
     if (playerShip4.location.every(l => playerGridCells[l].classList.contains('hit'))) {
@@ -479,6 +475,7 @@ function init() {
         playerGridCells[l].classList.remove('hit')
         playerGridCells[l].classList.add('sunk')
         playerShip4.isSunk = true
+        checkWinner()
       })
     }
   }
@@ -520,6 +517,19 @@ function init() {
     }
   }
 
+  // FINAL STAGE: GAME OVER
+
+  function checkWinner() {
+    if (playerShip1.isSunk === true && playerShip2.isSunk === true && playerShip3.isSunk === true && playerShip4.isSunk === true) {
+      console.log('computer won this time!')
+      winner.innerHTML = 'Computer sunk all your ships!! Computer wins!'
+    } else if (computerShip1.isSunk === true && computerShip2.isSunk === true && computerShip3.isSunk === true && computerShip4.isSunk === true) {
+      console.log('player won this time!')
+      winner.innerHTML = 'YOU WON!!!'
+    } else {
+      return
+    }
+  }
 
   // EVENTS
 
