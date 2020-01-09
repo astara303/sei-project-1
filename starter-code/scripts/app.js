@@ -135,6 +135,7 @@ function init() {
   const computerMissiles = []
   const allComputerShips = []
   let allShipsPlaced = false
+  
   // SHIP OBJECTS
   //length: 2
   const playerShip1 = {
@@ -204,23 +205,22 @@ function init() {
     })
   }
   makeComputerGrid()
+
   //STAGE ONE: SET-UP FUNCTIONS
+
   //PLAYER FUNCTIONS
+
   //works immediately when page is loaded
-  //logs each clicked cell into the corresponding ship array
   function placeShips(i) {
-    if (allShipsPlaced) {
-      // return
-      console.log('ship1', playerShip1.location)
-      console.log('ship2', playerShip2.location)
-      console.log('ship3', playerShip3.location)
-      console.log('ship4', playerShip4.location)
-    } else if (playerShip4.location.length === 5) {
+    if (playerShip4.location.length === 5) {
+      console.log('changing allShipsPlaced to true')
+      console.log(playerShip4.location)
       allShipsPlaced = true
     } else if (playerShip3.location.length === 4) {
-      playerGridCells[i].classList.add('ship4')
-      if (playerGridCells[i].classList.contains('ship4')) {
+      playerGridCells[i] ? playerGridCells[i].classList.add('ship4') : null
+      if (playerGridCells[i] && playerGridCells[i].classList.contains('ship4')) {
         playerShip4.location.push(i)
+        placeShips()
       }
     } else if (playerShip2.location.length === 3) {
       playerGridCells[i].classList.add('ship3')
@@ -241,6 +241,7 @@ function init() {
       console.log('complete')
     }
   }
+
   //COMPUTER FUNCTIONS
   //a function that randomly chooses a whole number between 0-99
   function createNumber() {
@@ -302,8 +303,6 @@ function init() {
   makeShip3()
   makeShip2()
   makeShip1()
- 
-
 
   function ship1Horizontal() {
     const ranNum = createNumber()
@@ -621,52 +620,34 @@ function init() {
     console.log(computerShip4.location)
   }
 
-  // testing below here
-
-  //this test should return true
-  // const array1 = [1, 2, 3, 4] 
-  // const array2 = [4, 5, 6]  
-
-  //this test should return false
-  // const array1 = [1, 2, 3, 4] 
-  // const array2 = [5, 6, 7] 
-
-  // Iterate through each element in the 
-  // first array and if some of them  
-  // include the elements in the second 
-  // array then return true. 
-
-  // function checkForOverlap(arr1, arr2) { 
-  //   return arr1.some(item => arr2.includes(item)) 
-  // } 
-
-  // console.log(checkForOverlap(array1, array2)) 
-
   // STAGE TWO: PLAYER MISSILE-FIRE
 
   // PLAYER MISSILE-FIRE FUNCTIONS
   function playerMissileFire(i) {
-    if (computerShip1.location.includes(i)) {
-      computerGridCells[i].classList.add('hit')
-      checkSunk()
-      computerMissileFire()
-    } else if (computerShip2.location.includes(i)) {
-      computerGridCells[i].classList.add('hit')
-      checkSunk()
-      computerMissileFire()
-    } else if (computerShip3.location.includes(i)) {
-      computerGridCells[i].classList.add('hit')
-      checkSunk()
-      computerMissileFire()
-    } else if (computerShip4.location.includes(i)) {
-      computerGridCells[i].classList.add('hit')
-      checkSunk()
-      computerMissileFire()
-    } else {
-      computerGridCells[i].classList.add('miss')
-      computerMissileFire()
+    if (allShipsPlaced) {
+      if (computerShip1.location.includes(i)) {
+        computerGridCells[i].classList.add('hit')
+        checkSunk()
+        computerMissileFire()
+      } else if (computerShip2.location.includes(i)) {
+        computerGridCells[i].classList.add('hit')
+        checkSunk()
+        computerMissileFire()
+      } else if (computerShip3.location.includes(i)) {
+        computerGridCells[i].classList.add('hit')
+        checkSunk()
+        computerMissileFire()
+      } else if (computerShip4.location.includes(i)) {
+        computerGridCells[i].classList.add('hit')
+        checkSunk()
+        computerMissileFire()
+      } else {
+        computerGridCells[i].classList.add('miss')
+        computerMissileFire()
+      }
     }
   }
+
   function checkSunk() {
     if (computerShip1.location.every(l => computerGridCells[l].classList.contains('hit'))) {
       computerShip1.location.forEach(l => {
@@ -733,6 +714,7 @@ function init() {
       })
     }
   }
+  
   // STAGE THREE: COMPUTER MISSILE-FIRE
 
   function computerMissileFire() {

@@ -9,10 +9,21 @@ body {
 h1 {
   font-size: 50px;
   padding: 0;
+  font-family: 'Saira Stencil One';
 }
 
-main {
+h2 {
+  font-size: 25px;
+  padding: 0;
+  font-family: 'Saira Stencil One';
+}
+
+h3 {
   text-align: left;
+}
+
+p {
+  font-family: 'Roboto Condensed', sans-serif;
 }
 
 div.playerGrid {
