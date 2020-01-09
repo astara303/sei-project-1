@@ -136,7 +136,6 @@ function init() {
   const allComputerShips = []
   let allShipsPlaced = false
   let lastHit = ''
-  console.log(lastHit)
 
   // SHIP OBJECTS
   //length: 2
@@ -307,8 +306,9 @@ function init() {
 
   function ship1Horizontal() {
     const ranNum = createNumber()
-    computerShip1.location.push(ranNum)
-    if (ranNum % width > 0) {
+    if (ranNum % width > 0 && (ranNum - 1) % width > 0) {
+      console.log('ship1 chose to add to the left of', ranNum)
+      computerShip1.location.push(ranNum)
       computerShip1.location.push(ranNum - 1)
       computerShip1.isPlaced = true
       if (checkForOverlap(computerShip1.location, allComputerShips)) {
@@ -317,13 +317,13 @@ function init() {
       } else {
         computerGridCells[ranNum].classList.add('computerShip1')
         computerGridCells[ranNum - 1].classList.add('computerShip1')
-        //might not need to push ship1 to all computers but ill leave it for now
         allComputerShips.push(ranNum)
         allComputerShips.push(ranNum - 1)
         computerShip1.isPlaced = true
       }
-    } else if (ranNum % width < width - 1) {
-      computerGridCells[ranNum + 1].classList.add('computerShip1')
+    } else if (ranNum % width < width - 1 && (ranNum + 1) % width < width - 1) {
+      console.log('ship1 chose to add to the right of', ranNum)
+      computerShip1.location.push(ranNum)
       computerShip1.location.push(ranNum + 1)
       if (checkForOverlap(computerShip1.location, allComputerShips)) {
         computerShip1.location = []
@@ -336,15 +336,17 @@ function init() {
         computerShip1.isPlaced = true
       }
     } else {
+      //dont need this anymore after moving where I add location to the array
+      computerShip1.location = []
       ship1Horizontal()
     }
-    console.log(computerShip1.location)
   }
 
   function ship1Vertical() {
     const ranNum = createNumber()
-    computerShip1.location.push(ranNum)
-    if (ranNum + width < width * width) {
+    if (ranNum + width < width * width && ranNum + (width * 2) < width * width) {
+      console.log('ship1 chose to add to the bottom of', ranNum)
+      computerShip1.location.push(ranNum)
       computerShip1.location.push(ranNum + width)
       if (checkForOverlap(computerShip1.location, allComputerShips)) {
         computerShip1.location = []
@@ -357,7 +359,9 @@ function init() {
         allComputerShips.push(ranNum + width)
         computerShip1.isPlaced = true
       }
-    } else if (ranNum - width >= 0) {
+    } else if (ranNum - width >= 0 && ranNum - (width * 2) >= 0 ) {
+      console.log('ship1 chose to add to the top of', ranNum)
+      computerShip1.location.push(ranNum)
       computerShip1.location.push(ranNum - width)
       if (checkForOverlap(computerShip1.location, allComputerShips)) {
         computerShip1.location = []
@@ -370,15 +374,16 @@ function init() {
         computerShip1.isPlaced = true
       }
     } else {
+      computerShip1.location = []
       ship1Vertical()
     }
-    console.log(computerShip1.location)
   }
 
   function ship2Horizontal() {
     const ranNum = createNumber()
-    computerShip2.location.push(ranNum)
-    if (ranNum % width > 1) {
+    if (ranNum % width > 0 && (ranNum - 1) % width > 0 && (ranNum - 2) % width > 0) {
+      console.log('ship2 chose to add to the left of', ranNum)
+      computerShip2.location.push(ranNum)
       computerShip2.location.push(ranNum - 1)
       computerShip2.location.push(ranNum - 2)
       if (checkForOverlap(computerShip2.location, allComputerShips)) {
@@ -393,7 +398,9 @@ function init() {
         allComputerShips.push(ranNum - 2)
         computerShip2.isPlaced = true
       }
-    } else if (ranNum % width < width - 2) {
+    } else if (ranNum % width < width - 1 && (ranNum + 1) % width < width - 1 && (ranNum + 2) % width < width - 1) {
+      console.log('ship2 chose to add to the right of', ranNum)
+      computerShip2.location.push(ranNum)
       computerShip2.location.push(ranNum + 1)
       computerShip2.location.push(ranNum + 2)
       if (checkForOverlap(computerShip2.location, allComputerShips)) {
@@ -409,15 +416,16 @@ function init() {
         computerShip2.isPlaced = true
       }
     } else {
+      computerShip2.location = []
       ship2Horizontal()
     }
-    console.log(computerShip2.location)
   }
 
   function ship2Vertical() {
     const ranNum = createNumber()
-    computerShip2.location.push(ranNum)
-    if (ranNum + width < (width - 1) * (width - 1)) {
+    if (ranNum + width < width * width && ranNum + (width * 2) < width * width && ranNum + (width * 3) < width * width) {
+      console.log('ship2 chose to add to the bottom of', ranNum)
+      computerShip2.location.push(ranNum)
       computerShip2.location.push(ranNum + width)
       computerShip2.location.push(ranNum + (width * 2))
       if (checkForOverlap(computerShip2.location, allComputerShips)) {
@@ -432,7 +440,9 @@ function init() {
         allComputerShips.push(ranNum + (width * 2))
         computerShip2.isPlaced = true
       }
-    } else if (ranNum - width >= 1) {
+    } else if (ranNum - width >= 0 && ranNum - (width * 2) >= 0 && ranNum - (width * 3) >= 0) {
+      console.log('ship2 chose to add to the top of', ranNum)
+      computerShip2.location.push(ranNum)
       computerShip2.location.push(ranNum - width)
       computerShip2.location.push(ranNum - (width * 2))
       if (checkForOverlap(computerShip2.location, allComputerShips)) {
@@ -448,15 +458,16 @@ function init() {
         computerShip2.isPlaced = true
       }
     } else {
+      computerShip2.location = []
       ship2Vertical()
     }
-    console.log(computerShip2.location)
   }
 
   function ship3Horizontal() {
     const ranNum = createNumber()
-    computerShip3.location.push(ranNum)
-    if (ranNum % width > 2) {
+    if (ranNum % width > 0 && (ranNum - 1) % width > 0 && (ranNum - 2) % width > 0 && (ranNum - 3) % width > 0) {
+      console.log('ship3 chose to add to the left of', ranNum)
+      computerShip3.location.push(ranNum)
       computerShip3.location.push(ranNum - 1)
       computerShip3.location.push(ranNum - 2)
       computerShip3.location.push(ranNum - 3)
@@ -474,7 +485,9 @@ function init() {
         allComputerShips.push(ranNum - 3)
         computerShip3.isPlaced = true
       }
-    } else if (ranNum % width < width - 3) {
+    } else if (ranNum % width < width - 1 && (ranNum + 1) % width < width - 1 && (ranNum + 2) % width < width - 1 && (ranNum + 3) % width < width - 1) {
+      console.log('ship3 chose to add to the right of', ranNum)
+      computerShip3.location.push(ranNum)
       computerShip3.location.push(ranNum + 1)
       computerShip3.location.push(ranNum + 2)
       computerShip3.location.push(ranNum + 3)
@@ -493,15 +506,16 @@ function init() {
         computerShip3.isPlaced = true
       }
     } else {
+      computerShip3.location = []
       ship3Horizontal()
     }
-    console.log(computerShip3.location)
   }
 
   function ship3Vertical() {
     const ranNum = createNumber()
-    computerShip3.location.push(ranNum)
-    if (ranNum + width < (width - 2) * (width - 2)) {
+    if (ranNum + width < width * width && ranNum + (width * 2) < width * width && ranNum + (width * 3) < width * width && ranNum + (width * 4) < width * width) {
+      console.log('ship3 chose to add to the bottom of', ranNum)
+      computerShip3.location.push(ranNum)
       computerShip3.location.push(ranNum + width)
       computerShip3.location.push(ranNum + (width * 2))
       computerShip3.location.push(ranNum + (width * 3))
@@ -519,7 +533,9 @@ function init() {
         allComputerShips.push(ranNum + (width * 3))
         computerShip3.isPlaced = true
       }
-    } else if (ranNum - width >= 2) {
+    } else if (ranNum - width >= 0 && ranNum - (width * 2) >= 0 && ranNum - (width * 3) >= 0 && ranNum - (width * 4) >= 0) {
+      console.log('ship3 chose to add to the top of', ranNum)
+      computerShip3.location.push(ranNum)
       computerShip3.location.push(ranNum - width)
       computerShip3.location.push(ranNum - (width * 2))
       computerShip3.location.push(ranNum - (width * 3))
@@ -538,39 +554,44 @@ function init() {
         computerShip3.isPlaced = true
       }
     } else {
+      computerShip3.location = []
       ship3Vertical()
     }
-    console.log(computerShip3.location)
   }
 
   function ship4Horizontal() {
     const ranNum = createNumber()
-    computerGridCells[ranNum].classList.add('computerShip4')
-    computerShip4.location.push(ranNum)
-    allComputerShips.push(ranNum)
-    if (ranNum % width > 3) {
+    if (ranNum % width > 0 && (ranNum - 1) % width > 0 && (ranNum - 2) % width > 0 && (ranNum - 3) % width > 0 && (ranNum - 4) % width > 0) {
+      console.log('ship4 chose to add to the left of', ranNum)
+      computerGridCells[ranNum].classList.add('computerShip4')
       computerGridCells[ranNum - 1].classList.add('computerShip4')
       computerGridCells[ranNum - 2].classList.add('computerShip4')
       computerGridCells[ranNum - 3].classList.add('computerShip4')
       computerGridCells[ranNum - 4].classList.add('computerShip4')
+      computerShip4.location.push(ranNum)
       computerShip4.location.push(ranNum - 1)
       computerShip4.location.push(ranNum - 2)
       computerShip4.location.push(ranNum - 3)
       computerShip4.location.push(ranNum - 4)
+      allComputerShips.push(ranNum)
       allComputerShips.push(ranNum - 1)
       allComputerShips.push(ranNum - 2)
       allComputerShips.push(ranNum - 3)
       allComputerShips.push(ranNum - 4)
       computerShip4.isPlaced = true
-    } else if (ranNum % width < width - 4) {
+    } else if (ranNum % width < width - 1 && (ranNum + 1) % width < width - 1 && (ranNum + 2) % width < width - 1 && (ranNum + 3) % width < width - 1 && ranNum + 4 % width < width - 1) {
+      console.log('ship4 chose to add to the right of', ranNum)
+      computerGridCells[ranNum].classList.add('computerShip4')
       computerGridCells[ranNum + 1].classList.add('computerShip4')
       computerGridCells[ranNum + 2].classList.add('computerShip4')
       computerGridCells[ranNum + 3].classList.add('computerShip4')
       computerGridCells[ranNum + 4].classList.add('computerShip4')
+      computerShip4.location.push(ranNum)
       computerShip4.location.push(ranNum + 1)
       computerShip4.location.push(ranNum + 2)
       computerShip4.location.push(ranNum + 3)
       computerShip4.location.push(ranNum + 4)
+      allComputerShips.push(ranNum)
       allComputerShips.push(ranNum + 1)
       allComputerShips.push(ranNum + 2)
       allComputerShips.push(ranNum + 3)
@@ -579,37 +600,41 @@ function init() {
     } else {
       ship4Horizontal()
     }
-    console.log(computerShip4.location)
   }
 
   function ship4Vertical() {
     const ranNum = createNumber()
-    computerGridCells[ranNum].classList.add('computerShip4')
-    computerShip4.location.push(ranNum)
-    allComputerShips.push(ranNum)
-    if (ranNum + width < (width - 3) * (width - 3)) {
+    if (ranNum + width < width * width && ranNum + (width * 2) < width * width && ranNum + (width * 3) < width * width && ranNum + (width * 4) < width * width && ranNum + (width * 5) < width * width) {
+      console.log('ship4 chose to add to the bottom of', ranNum)
+      computerGridCells[ranNum].classList.add('computerShip4')
       computerGridCells[ranNum + width].classList.add('computerShip4')
       computerGridCells[ranNum + (width * 2)].classList.add('computerShip4')
       computerGridCells[ranNum + (width * 3)].classList.add('computerShip4')
       computerGridCells[ranNum + (width * 4)].classList.add('computerShip4')
+      computerShip4.location.push(ranNum)
       computerShip4.location.push(ranNum + width)
       computerShip4.location.push(ranNum + (width * 2))
       computerShip4.location.push(ranNum + (width * 3))
       computerShip4.location.push(ranNum + (width * 4))
+      allComputerShips.push(ranNum)
       allComputerShips.push(ranNum + width)
       allComputerShips.push(ranNum + (width * 2))
       allComputerShips.push(ranNum + (width * 3))
       allComputerShips.push(ranNum + (width * 4))
       computerShip4.isPlaced = true
-    } else if (ranNum - width >= 3) {
+    } else if (ranNum - width >= 0 && ranNum - (width * 2) >= 0 && ranNum - (width * 3) >= 0 && ranNum - (width * 4) >= 0 && ranNum - (width * 5) >= 0) {
+      console.log('ship4 chose to add to the top of', ranNum)
+      computerGridCells[ranNum].classList.add('computerShip4')
       computerGridCells[ranNum - width].classList.add('computerShip4')
       computerGridCells[ranNum - (width * 2)].classList.add('computerShip4')
       computerGridCells[ranNum - (width * 3)].classList.add('computerShip4')
       computerGridCells[ranNum - (width * 4)].classList.add('computerShip4')
+      computerShip4.location.push(ranNum)
       computerShip4.location.push(ranNum - width)
       computerShip4.location.push(ranNum - (width * 2))
       computerShip4.location.push(ranNum - (width * 3))
       computerShip4.location.push(ranNum - (width * 4))
+      allComputerShips.push(ranNum)
       allComputerShips.push(ranNum - width)
       allComputerShips.push(ranNum - (width * 2))
       allComputerShips.push(ranNum - (width * 3))
@@ -618,7 +643,6 @@ function init() {
     } else {
       ship4Vertical()
     }
-    console.log(computerShip4.location)
   }
 
   // STAGE TWO: PLAYER MISSILE-FIRE
