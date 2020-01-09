@@ -51,9 +51,9 @@ div.ship4 {
   background-color: lavender;
 }
 
-div.ship5 {
+/* div.ship5 {
   background-color: lightsalmon;
-}
+} */
 
 div.computerShip1 {
   /* background-color: white; */
@@ -75,10 +75,10 @@ div.computerShip4 {
   background-color: green;
 }
 
-div.computerShip5 {
-  /* background-color: white; */
+/* div.computerShip5 {
+  background-color: white;
   background-color: blue;
-}
+} */
 
 div.hit {
   background-image: url(/Users/Astara/Development/PROJECTS/project-01/starter-code/assets/hit.png);
