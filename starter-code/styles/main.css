@@ -7,18 +7,19 @@ https://pixabay.com/images/search/radar/ */
 
 body {
   text-align: center;
-  /* background-image: url(/Users/Astara/Development/PROJECTS/project-01/starter-code/assets/radarBackground.png);
-  background-repeat: no-repeat;
-  background-size: contain; */
+  background-image: url(/Users/Astara/Development/PROJECTS/project-01/starter-code/assets/aerialViewOfOcean.jpeg);
+  /* background-repeat: no-repeat; */
+  background-size: contain;
 }
 
 div.wrapper {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
+  /* align-items: center; */
 }
 
-main {
+.flexHere {
   flex-grow: 1;
   display: flex;
 }
@@ -28,6 +29,12 @@ h1 {
   padding: 0;
   margin: 0;
   font-family: 'Saira Stencil One';
+}
+
+.visibility {
+  background-color: rgba(217, 230, 242, 0.8);
+  border-radius: 10%;
+  border: 15px inset rgb(46, 184, 184);
 }
 
 h2 {
@@ -41,14 +48,24 @@ h3 {
   font-family: 'Saira Stencil One';
 }
 
+.instructionsBox {
+    color: black;
+    text-shadow: 1px 1px 2px grey;
+    font-weight: bold;
+    font-size: 15px;
+}
+
 p {
-  font-family: 'Roboto Condensed', sans-serif;
+  font-family: 'Roboto Mono', monospace;
+  margin: 6px;
 }
 
 .clearBoard {
   font-family: 'Saira Stencil One';
   font-size: 15px;
   border-radius: 10%;
+  padding: 10px;
+  margin: 10px;
 }
 
 .playerMap {
@@ -80,19 +97,19 @@ div.grid-item {
 }
 
 div.ship1 {
-  background-color: lightskyblue;
+  background-color: steelblue;
 }
 
 div.ship2 {
-  background-color: yellow;
+  background-color: lightslategrey
 }
 
 div.ship3 {
-  background-color: lightgreen;
+  background-color: lightskyblue;
 }
 
 div.ship4 {
-  background-color: lavender;
+  background-color: navy;
 }
 
 /* div.ship5 {
@@ -100,23 +117,27 @@ div.ship4 {
 } */
 
 div.computerShip1 {
-  background-color: white; 
+  font-size: small;
+  /* background-color: white;  */
   /* if white doesnt work with background image, just put a text value in */
   /* background-color: red; */
 }
 
 div.computerShip2 {
-  background-color: white;
+  font-size: small;
+  /* background-color: white; */
   /* background-color: orange; */
 }
 
 div.computerShip3 {
-  background-color: white;
+  font-size: small;
+  /* background-color: white; */
   /* background-color: purple; */
 }
 
 div.computerShip4 {
-  background-color: white;
+  font-size: small;
+  /* background-color: white; */
   /* background-color: green; */
 }
 

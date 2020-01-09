@@ -4,27 +4,30 @@
 <head>
   <meta charset="utf-8">
   <link href="https://fonts.googleapis.com/css?family=Saira+Stencil+One&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed|Roboto+Mono&display=swap" rel="stylesheet">
   <title>WDI Project 1</title>
   <link rel="stylesheet" href="styles/main.css">
   <script src="scripts/app.js"></script>
 </head>
 
 <body>
-  <h1>Battleship</h1>
-  <h2>Instructions</h2>
-  <p>Click on your map to place your Battleships! You may place them horizontally or
-    vertically.</p>
-  <!-- have a checkmark that appears when a ship has been placed -->
-  <p>Blue has a length of 2</p>
-  <p>Yellow has a length of 3</p>
-  <p>Green has a length of 4</p>
-  <p>Purple has a length of 5</p>
-  <p>When you're finished, click on your radar to fire missiles at your enemy!</p>
-  <button class="clearBoard">Clear Board</button>
-  <p class="winner"></p>
+    <h1>Battleship</h1>
+    <div class="visibility">
+    <div class="instructionsBox">
+    <h2>Instructions</h2>
+    <p>Click on your map to place your Battleships! You may place them horizontally or
+      vertically.</p>
+    <!-- have a checkmark that appears when a ship has been placed -->
+    <p>The Submarine has a length of 2 squares</p>
+    <p>The Destroyer has a length of 3 squares</p>
+    <p>The Aircraft Carrier has a length of 4 squares</p>
+    <p>The Battleship has a length of 5 squares</p>
+    <p>When you're finished, click on your radar to fire missiles at your enemy!</p>
+    <button class="clearBoard">Clear Board</button>
+    <p class="winner"></p>
+</div>
   <div class="wrapper">
-    <main>
+    <div class="flexHere">
       <section class="playerMap">
         <h3>YOUR MAP</h3>
         <div class="playerGrid">
@@ -35,8 +38,9 @@
         <div class="computerGrid">
         </div>
       </section>
-    </main>
+    </div>
   </div>
+</div>
 </body>
 
 </html>

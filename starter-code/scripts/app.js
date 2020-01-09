@@ -1037,7 +1037,7 @@ function init() {
   function checkWinner() {
     if (playerShip1.isSunk === true && playerShip2.isSunk === true && playerShip3.isSunk === true && playerShip4.isSunk === true) {
       console.log('computer won this time!')
-      winner.innerHTML = 'Computer sunk all your ships!! Computer wins!'
+      winner.innerHTML = 'Computer sunk all your ships! Computer wins!'
     } else if (computerShip1.isSunk === true && computerShip2.isSunk === true && computerShip3.isSunk === true && computerShip4.isSunk === true) {
       console.log('player won this time!')
       winner.innerHTML = 'YOU WON!!!'
