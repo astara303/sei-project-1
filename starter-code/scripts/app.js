@@ -651,11 +651,11 @@ function init() {
 
   // STAGE THREE: COMPUTER MISSILE-FIRE
 
+  //could look at where I update lastHit because on longer ships, 
+  //the AI forgets to check one side if it has reached the end of the other and has nowhere else to check
   function targetedFire() {
     if (lastHit === '') {
       return
-      //check if target has already been fired at, and that it is on the board
-      //check for sunk?
     } else if (!computerMissiles.includes(lastHit - 1) && (lastHit - 1) % width > 0) {
       console.log('trying to generate intelligent fire', lastHit - 1)
       if (playerShip1.location.includes(lastHit - 1)) {
@@ -666,6 +666,10 @@ function init() {
         if (playerShip1.isSunk) {
           console.log('ship sunk. resetting lastHit')
           lastHit = ''
+        } else {
+          //instead of renaming lastHit, I could add lastHit and lastHit-1 to an array
+          console.log('ship hit but not sunk. updating last hit')
+          lastHit = (lastHit - 1)
         }
       } else if (playerShip2.location.includes(lastHit - 1)) {
         console.log('targeted hit')
@@ -673,7 +677,11 @@ function init() {
         computerMissiles.push(lastHit - 1)
         checkSunk()
         if (playerShip2.isSunk) {
+          console.log('ship was sunk')
           lastHit = ''
+        } else {
+          console.log('ship hit but not sunk. updating last hit')
+          lastHit = (lastHit - 1)
         }
       } else if (playerShip3.location.includes(lastHit - 1)) {
         console.log('targeted hit')
@@ -681,7 +689,11 @@ function init() {
         computerMissiles.push(lastHit - 1)
         checkSunk()
         if (playerShip3.isSunk) {
+          console.log('ship was sunk')
           lastHit = ''
+        } else {
+          console.log('ship hit but not sunk. updating last hit')
+          lastHit = (lastHit - 1)
         }
       } else if (playerShip4.location.includes(lastHit - 1)) {
         console.log('targeted hit')
@@ -689,7 +701,11 @@ function init() {
         computerMissiles.push(lastHit - 1)
         checkSunk()
         if (playerShip4.isSunk) {
+          console.log('ship was sunk')
           lastHit = ''
+        } else {
+          console.log('ship hit but not sunk. updating last hit')
+          lastHit = (lastHit - 1)
         }
       } else {
         console.log('targeted miss')
@@ -704,7 +720,11 @@ function init() {
         computerMissiles.push(lastHit + 1)
         checkSunk()
         if (playerShip1.isSunk) {
+          console.log('ship was sunk')
           lastHit = ''
+        } else {
+          console.log('ship hit but not sunk. updating last hit')
+          lastHit = (lastHit + 1)
         }
       } else if (playerShip2.location.includes(lastHit + 1)) {
         console.log('targeted hit')
@@ -712,7 +732,11 @@ function init() {
         computerMissiles.push(lastHit + 1)
         checkSunk()
         if (playerShip2.isSunk) {
+          console.log('ship was sunk')
           lastHit = ''
+        } else {
+          console.log('ship hit but not sunk. updating last hit')
+          lastHit = (lastHit + 1)
         }
       } else if (playerShip3.location.includes(lastHit + 1)) {
         console.log('targeted hit')
@@ -721,6 +745,10 @@ function init() {
         checkSunk()
         if (playerShip3.isSunk) {
           lastHit = ''
+          console.log('ship was sunk')
+        } else {
+          console.log('ship hit but not sunk. updating last hit')
+          lastHit = (lastHit + 1)
         }
       } else if (playerShip4.location.includes(lastHit + 1)) {
         console.log('targeted hit')
@@ -729,6 +757,10 @@ function init() {
         checkSunk()
         if (playerShip4.isSunk) {
           lastHit = ''
+          console.log('ship was sunk')
+        } else {
+          console.log('ship hit but not sunk. updating last hit')
+          lastHit = (lastHit + 1)
         }
       } else {
         console.log('targeted miss')
@@ -743,7 +775,11 @@ function init() {
         computerMissiles.push(lastHit + width)
         checkSunk()
         if (playerShip1.isSunk) {
+          console.log('ship was sunk')
           lastHit = ''
+        } else {
+          console.log('ship hit but not sunk. updating last hit')
+          lastHit = (lastHit + width)
         }
       } else if (playerShip2.location.includes(lastHit + width)) {
         console.log('targeted hit')
@@ -751,7 +787,11 @@ function init() {
         computerMissiles.push(lastHit + width)
         checkSunk()
         if (playerShip2.isSunk) {
+          console.log('ship was sunk')
           lastHit = ''
+        } else {
+          console.log('ship hit but not sunk. updating last hit')
+          lastHit = (lastHit + width)
         }
       } else if (playerShip3.location.includes(lastHit + width)) {
         console.log('targeted hit')
@@ -759,7 +799,11 @@ function init() {
         computerMissiles.push(lastHit + width)
         checkSunk()
         if (playerShip3.isSunk) {
+          console.log('ship was sunk')
           lastHit = ''
+        } else {
+          console.log('ship hit but not sunk. updating last hit')
+          lastHit = (lastHit + width)
         }
       } else if (playerShip4.location.includes(lastHit + width)) {
         console.log('targeted hit')
@@ -767,7 +811,11 @@ function init() {
         computerMissiles.push(lastHit + width)
         checkSunk()
         if (playerShip4.isSunk) {
+          console.log('ship was sunk')
           lastHit = ''
+        } else {
+          console.log('ship hit but not sunk. updating last hit')
+          lastHit = (lastHit + width)
         }
       } else {
         console.log('targeted miss')
@@ -782,7 +830,11 @@ function init() {
         computerMissiles.push(lastHit - width)
         checkSunk()
         if (playerShip1.isSunk) {
+          console.log('ship was sunk')
           lastHit = ''
+        } else {
+          console.log('ship hit but not sunk. updating last hit')
+          lastHit = (lastHit - width)
         }
       } else if (playerShip2.location.includes(lastHit - width)) {
         console.log('targeted hit')
@@ -790,7 +842,11 @@ function init() {
         computerMissiles.push(lastHit - width)
         checkSunk()
         if (playerShip2.isSunk) {
+          console.log('ship was sunk')
           lastHit = ''
+        } else {
+          console.log('ship hit but not sunk. updating last hit')
+          lastHit = (lastHit - width)
         }
       } else if (playerShip3.location.includes(lastHit - width)) {
         console.log('targeted hit')
@@ -798,7 +854,11 @@ function init() {
         computerMissiles.push(lastHit - width)
         checkSunk()
         if (playerShip3.isSunk) {
+          console.log('ship was sunk')
           lastHit = ''
+        } else {
+          console.log('ship hit but not sunk. updating last hit')
+          lastHit = (lastHit - width)
         }
       } else if (playerShip4.location.includes(lastHit - width)) {
         console.log('targeted hit')
@@ -806,7 +866,11 @@ function init() {
         computerMissiles.push(lastHit - width)
         checkSunk()
         if (playerShip4.isSunk) {
+          console.log('ship was sunk')
           lastHit = ''
+        } else {
+          console.log('ship hit but not sunk. updating last hit')
+          lastHit = (lastHit - width)
         }
       } else {
         console.log('targeted miss')
