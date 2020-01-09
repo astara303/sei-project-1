@@ -135,7 +135,9 @@ function init() {
   const computerMissiles = []
   const allComputerShips = []
   let allShipsPlaced = false
-  
+  let lastHit = ''
+  console.log(lastHit)
+
   // SHIP OBJECTS
   //length: 2
   const playerShip1 = {
@@ -214,7 +216,6 @@ function init() {
   function placeShips(i) {
     if (playerShip4.location.length === 5) {
       console.log('changing allShipsPlaced to true')
-      console.log(playerShip4.location)
       allShipsPlaced = true
     } else if (playerShip3.location.length === 4) {
       playerGridCells[i] ? playerGridCells[i].classList.add('ship4') : null
@@ -648,6 +649,88 @@ function init() {
     }
   }
 
+  // STAGE THREE: COMPUTER MISSILE-FIRE
+
+  function targetedFire() {
+    if (lastHit === '') {
+      return
+      //check if target has already been fired at, and that it is on the board
+      //this makes sure it is on the board but makes it a little too intelligent- (and if it has a class of ship1, ship2, ship3, or ship4)
+      //check for sunk?
+    } else if (!computerMissiles.includes(lastHit - 1) && (lastHit - 1) % width > 0) {
+      console.log('trying to generate intelligent fire', lastHit - 1)
+      
+    } else if (!computerMissiles.includes(lastHit + 1) && (lastHit + 1) % width < width - 1) {
+      console.log('trying to generate intelligent fire', lastHit + 1)
+    } else if (!computerMissiles.includes(lastHit + width) && (lastHit + width) + width < width * width) {
+      console.log('trying to generate intelligent fire', (lastHit + width))
+    } else if (!computerMissiles.includes(lastHit - width) && (lastHit - width) - width >= 0) {
+      console.log('trying to generate intelligent fire', lastHit - width)
+    } else {
+      //if all of these values have been target already, remove last hit and generate random fire
+      lastHit = ''
+      computerMissileFire()
+    }
+  }
+
+  function computerMissileFire() {
+    if (computerShip1.isSunk && computerShip2.isSunk && computerShip3.isSunk && computerShip4.isSunk) {
+      return
+    } else if (lastHit !== '') {
+      console.log('calling targetedFire')
+      targetedFire()
+    } else {
+      const target = createNumber()
+      console.log(target)
+      if (computerMissiles.includes(target)) {
+        console.log('repeated fire; fire again.')
+        computerMissileFire()
+      } else if (playerShip1.location.includes(target)) {
+        console.log('hit')
+        playerGridCells[target].classList.add('hit')
+        computerMissiles.push(target)
+        checkSunk()
+        if (!playerShip1.isSunk) {
+          lastHit = target
+          console.log('ranNum was a hit, logged in lastHit as', lastHit)
+        }
+      } else if (playerShip2.location.includes(target)) {
+        console.log('hit')
+        playerGridCells[target].classList.add('hit')
+        computerMissiles.push(target)
+        checkSunk()
+        if (!playerShip2.isSunk) {
+          lastHit = target
+          console.log('ranNum was a hit, logged in lastHit as', lastHit)
+        }
+      } else if (playerShip3.location.includes(target)) {
+        console.log('hit')
+        playerGridCells[target].classList.add('hit')
+        computerMissiles.push(target)
+        checkSunk()
+        if (!playerShip3.isSunk) {
+          lastHit = target
+          console.log('ranNum was a hit, logged in lastHit as', lastHit)
+        }
+      } else if (playerShip4.location.includes(target)) {
+        console.log('hit')
+        playerGridCells[target].classList.add('hit')
+        computerMissiles.push(target)
+        checkSunk()
+        if (!playerShip4.isSunk) {
+          lastHit = target
+          console.log('ranNum was a hit, logged in lastHit as', lastHit)
+        }
+      } else {
+        console.log('miss')
+        playerGridCells[target].classList.add('miss')
+        computerMissiles.push(target)
+      }
+    }
+  }
+
+  // FINAL STAGE: GAME OVER
+
   function checkSunk() {
     if (computerShip1.location.every(l => computerGridCells[l].classList.contains('hit'))) {
       computerShip1.location.forEach(l => {
@@ -714,45 +797,7 @@ function init() {
       })
     }
   }
-  
-  // STAGE THREE: COMPUTER MISSILE-FIRE
 
-  function computerMissileFire() {
-    if (computerShip1.isSunk && computerShip2.isSunk && computerShip3.isSunk && computerShip4.isSunk) {
-      return
-    }
-    const target = createNumber()
-    console.log(target)
-    if (computerMissiles.includes(target)) {
-      console.log('repeated fire; fire again.')
-      computerMissileFire()
-    } else if (playerShip1.location.includes(target)) {
-      console.log('hit')
-      playerGridCells[target].classList.add('hit')
-      computerMissiles.push(target)
-      checkSunk()
-    } else if (playerShip2.location.includes(target)) {
-      console.log('hit')
-      playerGridCells[target].classList.add('hit')
-      computerMissiles.push(target)
-      checkSunk()
-    } else if (playerShip3.location.includes(target)) {
-      console.log('hit')
-      playerGridCells[target].classList.add('hit')
-      computerMissiles.push(target)
-      checkSunk()
-    } else if (playerShip4.location.includes(target)) {
-      console.log('hit')
-      playerGridCells[target].classList.add('hit')
-      computerMissiles.push(target)
-      checkSunk()
-    } else {
-      console.log('miss')
-      playerGridCells[target].classList.add('miss')
-      computerMissiles.push(target)
-    }
-  }
-  // FINAL STAGE: GAME OVER
   function checkWinner() {
     if (playerShip1.isSunk === true && playerShip2.isSunk === true && playerShip3.isSunk === true && playerShip4.isSunk === true) {
       console.log('computer won this time!')
