@@ -12,27 +12,32 @@
 
 <body>
   <div class="wrapper">
-    <h1>Battleship</h1>
     <main>
-      <h2>Instructions</h2>
-      <p>Click on the grid to place your Battleships! You may place them horizontally or
-        vertically.</p>
+      <section class="grids">
+        <h3>YOUR MAP</h3>
+        <p class="winner"></p>
+        <div class="playerGrid">
+        </div>
+        <h3>RADAR</h3>
+        <p class="winner"></p>
+        <div class="computerGrid">
+        </div>
+      </section>
+      <section class="instructions">
+        <h1>Battleship</h1>
+        <h2>Instructions</h2>
+        <p>Click on your map to place your Battleships! You may place them horizontally or
+          vertically.</p>
         <!-- have a checkmark that appears when a ship has been placed -->
-      <p>Blue has a length of 2</p>
-      <p>Yellow has a length of 3</p>
-      <p>Green has a length of 4</p>
-      <p>Purple has a length of 5</p>
-      <p>When you're finished, click on your radar to fire missiles at your enemy!</p>
-      <p class="winner"></p>
-      <button class="clearBoard">Clear Board</button>
-      <h3>Your Grid</h3>
-      <div class="playerGrid">
-      </div>
-      <h3>Radar</h3>
-      <div class="computerGrid">
-      </div>
+        <p>Blue has a length of 2</p>
+        <p>Yellow has a length of 3</p>
+        <p>Green has a length of 4</p>
+        <p>Purple has a length of 5</p>
+        <p>When you're finished, click on your radar to fire missiles at your enemy!</p>
+        <button class="clearBoard">Clear Board</button>
+      </section>
     </main>
+  </div>
 </body>
-</div>
 
 </html>

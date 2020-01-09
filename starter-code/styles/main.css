@@ -1,9 +1,26 @@
+/* images to use:
+https://pixabay.com/images/search/radar/ */
+
 * {
   box-sizing: border-box;
 }
 
 body {
   text-align: center;
+  /* background-image: url(/Users/Astara/Development/PROJECTS/project-01/starter-code/assets/radarBackground.png);
+  background-repeat: no-repeat;
+  background-size: contain; */
+}
+
+div.wrapper {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex-grow: 1;
+  display: flex;
 }
 
 h1 {
@@ -20,10 +37,19 @@ h2 {
 
 h3 {
   text-align: left;
+  font-family: 'Saira Stencil One';
 }
 
 p {
   font-family: 'Roboto Condensed', sans-serif;
+}
+
+.grids {
+  flex: 1;
+}
+
+.instructions {
+  flex: 1;
 }
 
 div.playerGrid {
@@ -67,7 +93,7 @@ div.ship4 {
 } */
 
 div.computerShip1 {
-  /* background-color: white; */
+  /* background-color: white; if white doesnt work with background image, just put a text value in*/
   background-color: red;
 }
 

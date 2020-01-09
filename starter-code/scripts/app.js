@@ -352,7 +352,6 @@ function init() {
         computerShip1.location = []
         ship1Vertical()
       } else {
-        //don't push to all computer ships or add class until here
         computerGridCells[ranNum].classList.add('computerShip1')
         computerGridCells[ranNum + width].classList.add('computerShip1')
         allComputerShips.push(ranNum)
