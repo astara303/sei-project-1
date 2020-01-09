@@ -655,19 +655,168 @@ function init() {
     if (lastHit === '') {
       return
       //check if target has already been fired at, and that it is on the board
-      //this makes sure it is on the board but makes it a little too intelligent- (and if it has a class of ship1, ship2, ship3, or ship4)
       //check for sunk?
     } else if (!computerMissiles.includes(lastHit - 1) && (lastHit - 1) % width > 0) {
       console.log('trying to generate intelligent fire', lastHit - 1)
-      
+      if (playerShip1.location.includes(lastHit - 1)) {
+        console.log('targeted hit')
+        playerGridCells[lastHit - 1].classList.add('hit')
+        computerMissiles.push(lastHit - 1)
+        checkSunk()
+        if (playerShip1.isSunk) {
+          console.log('ship sunk. resetting lastHit')
+          lastHit = ''
+        }
+      } else if (playerShip2.location.includes(lastHit - 1)) {
+        console.log('targeted hit')
+        playerGridCells[lastHit - 1].classList.add('hit')
+        computerMissiles.push(lastHit - 1)
+        checkSunk()
+        if (playerShip2.isSunk) {
+          lastHit = ''
+        }
+      } else if (playerShip3.location.includes(lastHit - 1)) {
+        console.log('targeted hit')
+        playerGridCells[lastHit - 1].classList.add('hit')
+        computerMissiles.push(lastHit - 1)
+        checkSunk()
+        if (playerShip3.isSunk) {
+          lastHit = ''
+        }
+      } else if (playerShip4.location.includes(lastHit - 1)) {
+        console.log('targeted hit')
+        playerGridCells[lastHit - 1].classList.add('hit')
+        computerMissiles.push(lastHit - 1)
+        checkSunk()
+        if (playerShip4.isSunk) {
+          lastHit = ''
+        }
+      } else {
+        console.log('targeted miss')
+        playerGridCells[lastHit - 1].classList.add('miss')
+        computerMissiles.push(lastHit - 1)
+      }
     } else if (!computerMissiles.includes(lastHit + 1) && (lastHit + 1) % width < width - 1) {
       console.log('trying to generate intelligent fire', lastHit + 1)
+      if (playerShip1.location.includes(lastHit + 1)) {
+        console.log('targeted hit')
+        playerGridCells[lastHit + 1].classList.add('hit')
+        computerMissiles.push(lastHit + 1)
+        checkSunk()
+        if (playerShip1.isSunk) {
+          lastHit = ''
+        }
+      } else if (playerShip2.location.includes(lastHit + 1)) {
+        console.log('targeted hit')
+        playerGridCells[lastHit + 1].classList.add('hit')
+        computerMissiles.push(lastHit + 1)
+        checkSunk()
+        if (playerShip2.isSunk) {
+          lastHit = ''
+        }
+      } else if (playerShip3.location.includes(lastHit + 1)) {
+        console.log('targeted hit')
+        playerGridCells[lastHit + 1].classList.add('hit')
+        computerMissiles.push(lastHit + 1)
+        checkSunk()
+        if (playerShip3.isSunk) {
+          lastHit = ''
+        }
+      } else if (playerShip4.location.includes(lastHit + 1)) {
+        console.log('targeted hit')
+        playerGridCells[lastHit + 1].classList.add('hit')
+        computerMissiles.push(lastHit + 1)
+        checkSunk()
+        if (playerShip4.isSunk) {
+          lastHit = ''
+        }
+      } else {
+        console.log('targeted miss')
+        playerGridCells[lastHit + 1].classList.add('miss')
+        computerMissiles.push(lastHit + 1)
+      }
     } else if (!computerMissiles.includes(lastHit + width) && (lastHit + width) + width < width * width) {
       console.log('trying to generate intelligent fire', (lastHit + width))
+      if (playerShip1.location.includes(lastHit + width)) {
+        console.log('targeted hit')
+        playerGridCells[lastHit + width].classList.add('hit')
+        computerMissiles.push(lastHit + width)
+        checkSunk()
+        if (playerShip1.isSunk) {
+          lastHit = ''
+        }
+      } else if (playerShip2.location.includes(lastHit + width)) {
+        console.log('targeted hit')
+        playerGridCells[lastHit + width].classList.add('hit')
+        computerMissiles.push(lastHit + width)
+        checkSunk()
+        if (playerShip2.isSunk) {
+          lastHit = ''
+        }
+      } else if (playerShip3.location.includes(lastHit + width)) {
+        console.log('targeted hit')
+        playerGridCells[lastHit + width].classList.add('hit')
+        computerMissiles.push(lastHit + width)
+        checkSunk()
+        if (playerShip3.isSunk) {
+          lastHit = ''
+        }
+      } else if (playerShip4.location.includes(lastHit + width)) {
+        console.log('targeted hit')
+        playerGridCells[lastHit + width].classList.add('hit')
+        computerMissiles.push(lastHit + width)
+        checkSunk()
+        if (playerShip4.isSunk) {
+          lastHit = ''
+        }
+      } else {
+        console.log('targeted miss')
+        playerGridCells[lastHit + width].classList.add('miss')
+        computerMissiles.push(lastHit + width)
+      }
     } else if (!computerMissiles.includes(lastHit - width) && (lastHit - width) - width >= 0) {
       console.log('trying to generate intelligent fire', lastHit - width)
+      if (playerShip1.location.includes(lastHit - width)) {
+        console.log('targeted hit')
+        playerGridCells[lastHit - width].classList.add('hit')
+        computerMissiles.push(lastHit - width)
+        checkSunk()
+        if (playerShip1.isSunk) {
+          lastHit = ''
+        }
+      } else if (playerShip2.location.includes(lastHit - width)) {
+        console.log('targeted hit')
+        playerGridCells[lastHit - width].classList.add('hit')
+        computerMissiles.push(lastHit - width)
+        checkSunk()
+        if (playerShip2.isSunk) {
+          lastHit = ''
+        }
+      } else if (playerShip3.location.includes(lastHit - width)) {
+        console.log('targeted hit')
+        playerGridCells[lastHit - width].classList.add('hit')
+        computerMissiles.push(lastHit - width)
+        checkSunk()
+        if (playerShip3.isSunk) {
+          lastHit = ''
+        }
+      } else if (playerShip4.location.includes(lastHit - width)) {
+        console.log('targeted hit')
+        playerGridCells[lastHit - width].classList.add('hit')
+        computerMissiles.push(lastHit - width)
+        checkSunk()
+        if (playerShip4.isSunk) {
+          lastHit = ''
+        }
+      } else {
+        console.log('targeted miss')
+        playerGridCells[lastHit - width].classList.add('miss')
+        computerMissiles.push(lastHit - width)
+      }
     } else {
       //if all of these values have been target already, remove last hit and generate random fire
+      //this needs to be called if every other cell around lastHit has been targeted
+      console.log('cannot fire anymore around lastHit. Resetting lastHit and calling random computerMissileFire')
       lastHit = ''
       computerMissileFire()
     }
@@ -686,7 +835,7 @@ function init() {
         console.log('repeated fire; fire again.')
         computerMissileFire()
       } else if (playerShip1.location.includes(target)) {
-        console.log('hit')
+        console.log('random hit')
         playerGridCells[target].classList.add('hit')
         computerMissiles.push(target)
         checkSunk()
@@ -695,7 +844,7 @@ function init() {
           console.log('ranNum was a hit, logged in lastHit as', lastHit)
         }
       } else if (playerShip2.location.includes(target)) {
-        console.log('hit')
+        console.log('random hit')
         playerGridCells[target].classList.add('hit')
         computerMissiles.push(target)
         checkSunk()
@@ -704,7 +853,7 @@ function init() {
           console.log('ranNum was a hit, logged in lastHit as', lastHit)
         }
       } else if (playerShip3.location.includes(target)) {
-        console.log('hit')
+        console.log('random hit')
         playerGridCells[target].classList.add('hit')
         computerMissiles.push(target)
         checkSunk()
@@ -713,7 +862,7 @@ function init() {
           console.log('ranNum was a hit, logged in lastHit as', lastHit)
         }
       } else if (playerShip4.location.includes(target)) {
-        console.log('hit')
+        console.log('random hit')
         playerGridCells[target].classList.add('hit')
         computerMissiles.push(target)
         checkSunk()
@@ -722,7 +871,7 @@ function init() {
           console.log('ranNum was a hit, logged in lastHit as', lastHit)
         }
       } else {
-        console.log('miss')
+        console.log('random miss')
         playerGridCells[target].classList.add('miss')
         computerMissiles.push(target)
       }
