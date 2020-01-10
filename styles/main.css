@@ -7,7 +7,7 @@ https://pixabay.com/images/search/radar/ */
 
 body {
   text-align: center;
-  background-image: url(/Users/Astara/Development/PROJECTS/project-01/starter-code/assets/aerialViewOfOcean.jpeg);
+  background-image: url('../assets/aerialViewOfOcean.jpeg');
   /* background-repeat: no-repeat; */
   background-size: contain;
 }
@@ -162,19 +162,19 @@ div.computerShip4 {
 } */
 
 div.hit {
-  background-image: url(/Users/Astara/Development/PROJECTS/project-01/starter-code/assets/explosionEmoji.png);
+  background-image: url('../assets/explosionEmoji.png');
   background-repeat: no-repeat;
   background-size: contain;
 }
 
 div.miss {
-  background-image: url(/Users/Astara/Development/PROJECTS/project-01/starter-code/assets/waterWave.png);
+  background-image: url('../assets/waterWave.png');
   background-repeat: no-repeat;
   background-size: contain;
 }
 
 div.sunk {
-  background-image: url(/Users/Astara/Development/PROJECTS/project-01/starter-code/assets/skullAndCrossbones.png);
+  background-image: url('../assets/skullAndCrossbones.png');
   background-repeat: no-repeat;
   background-size: contain;
 }
