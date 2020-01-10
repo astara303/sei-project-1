@@ -34,7 +34,7 @@ h1 {
 .visibility {
   background-color: rgba(217, 230, 242, 0.8);
   border-radius: 10%;
-  border: 15px inset rgb(46, 184, 184);
+  border: 15px inset steelblue;
 }
 
 h2 {
@@ -46,11 +46,13 @@ h2 {
 h3 {
   text-align: left;
   font-family: 'Saira Stencil One';
+  font-size: 28px;
+  margin: 10px;
+  /* text-shadow: 1px 1px 2px grey; */
 }
 
 .instructionsBox {
-    color: black;
-    text-shadow: 1px 1px 2px grey;
+    text-shadow: 1px 1px 2px black;
     font-weight: bold;
     font-size: 15px;
 }
@@ -58,13 +60,31 @@ h3 {
 p {
   font-family: 'Roboto Mono', monospace;
   margin: 6px;
+  padding: 3px;
+}
+
+p.submarine {
+  color: rgb(0, 51, 153);
+}
+
+p.destroyer {
+  color: lightslategrey;
+}
+
+p.aircraftCarrier {
+  color: rgb(128, 170, 255);
+}
+
+p.battleship {
+  color: steelblue;
 }
 
 .clearBoard {
+  background-color: rgba(217, 230, 242, 0.5);
   font-family: 'Saira Stencil One';
   font-size: 15px;
   border-radius: 10%;
-  padding: 10px;
+  padding: 5px;
   margin: 10px;
 }
 
@@ -93,23 +113,23 @@ div.computerGrid {
 div.grid-item {
   width: 40px;
   height: 40px;
-  border: 1px solid black;
+  border: 1px solid rgb(51, 102, 153);
 }
 
 div.ship1 {
-  background-color: steelblue;
+  background-color: rgb(0, 51, 153);
 }
 
 div.ship2 {
-  background-color: lightslategrey
+  background-color: lightslategrey;
 }
 
 div.ship3 {
-  background-color: lightskyblue;
+  background-color: rgb(128, 170, 255);
 }
 
 div.ship4 {
-  background-color: navy;
+  background-color: steelblue;
 }
 
 /* div.ship5 {
@@ -117,28 +137,23 @@ div.ship4 {
 } */
 
 div.computerShip1 {
+  /* background-color: white; */
   font-size: small;
-  /* background-color: white;  */
-  /* if white doesnt work with background image, just put a text value in */
-  /* background-color: red; */
 }
 
 div.computerShip2 {
-  font-size: small;
   /* background-color: white; */
-  /* background-color: orange; */
+  font-size: small;
 }
 
 div.computerShip3 {
-  font-size: small;
   /* background-color: white; */
-  /* background-color: purple; */
+  font-size: small;
 }
 
 div.computerShip4 {
-  font-size: small;
   /* background-color: white; */
-  /* background-color: green; */
+  font-size: small;
 }
 
 /* div.computerShip5 {
@@ -162,4 +177,73 @@ div.sunk {
   background-image: url(/Users/Astara/Development/PROJECTS/project-01/starter-code/assets/skullAndCrossbones.png);
   background-repeat: no-repeat;
   background-size: contain;
+}
+
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+@-webkit-keyframes fadeOutUp {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+  }
+}
+
+@keyframes fadeOutUp {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+  }
+}
+
+.fadeOutUp {
+  -webkit-animation-name: fadeOutUp;
+  animation-name: fadeOutUp;
+}
+
+@-webkit-keyframes fadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+.fadeInDown {
+  -webkit-animation-name: fadeInDown;
+  animation-name: fadeInDown;
 }

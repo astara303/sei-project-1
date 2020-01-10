@@ -122,18 +122,21 @@ function init() {
   
   */
   // DOM VARIABLES
-  const winner = document.querySelector('.winner')
-  //I could only reveal the computer grid when "start game" is pressed. "Start game" button could appear when allShipsPlaced is true
   const clearBoard = document.querySelector('.clearBoard')
   const playerGrid = document.querySelector('.playerGrid')
   const computerGrid = document.querySelector('.computerGrid')
-  // GAME VARIABLES
+  const header = document.querySelector('h1')
+  const instructions = document.querySelector('h2')
+  const winnerLeft = document.querySelector('.yourMap')
+  const winnerRight = document.querySelector('.radar')
+
+  //GAME VARIABLES
   //grid variables
-  const playerGridCells = []
-  const computerGridCells = []
+  let playerGridCells = []
+  let computerGridCells = []
   const width = 10
-  const computerMissiles = []
-  const allComputerShips = []
+  let computerMissiles = []
+  let allComputerShips = []
   let allShipsPlaced = false
   let lastHit = ''
 
@@ -358,7 +361,7 @@ function init() {
         allComputerShips.push(ranNum + width)
         computerShip1.isPlaced = true
       }
-    } else if (ranNum - width >= 0 && ranNum - (width * 2) >= 0 ) {
+    } else if (ranNum - width >= 0 && ranNum - (width * 2) >= 0) {
       console.log('ship1 chose to add to the top of', ranNum)
       computerShip1.location.push(ranNum)
       computerShip1.location.push(ranNum - width)
@@ -1037,18 +1040,112 @@ function init() {
   function checkWinner() {
     if (playerShip1.isSunk === true && playerShip2.isSunk === true && playerShip3.isSunk === true && playerShip4.isSunk === true) {
       console.log('computer won this time!')
-      winner.innerHTML = 'Computer sunk all your ships! Computer wins!'
+      winnerLeft.innerHTML = 'Computer sunk all your ships!'
+      winnerRight.innerHTML = 'Try again?'
     } else if (computerShip1.isSunk === true && computerShip2.isSunk === true && computerShip3.isSunk === true && computerShip4.isSunk === true) {
       console.log('player won this time!')
-      winner.innerHTML = 'YOU WON!!!'
+      winnerLeft.innerHTML = 'YOU WON!!!'
+      winnerRight.innerHTML = 'Play again?'
     } else {
       return
     }
   }
+
   // EVENTS
-  //Refreshes page
+  /*
+  clearBoard.addEventListener('click', () => {
+    playerGridCells = []
+    computerGridCells = []
+    computerMissiles = []
+    allComputerShips = []
+    allShipsPlaced = false
+    lastHit = ''
+    winnerLeft.innerHTML = 'YOUR MAP'
+    winnerRight.innerHTML = 'RADAR'
+    playerShip1.location.forEach(l => {
+      playerGridCells[l].classList.remove('hit')
+      playerGridCells[l].classList.remove('sunk')
+      playerGridCells[l].classList.remove('miss')
+    })
+    playerShip2.location.forEach(l => {
+      playerGridCells[l].classList.remove('hit')
+      playerGridCells[l].classList.remove('sunk')
+      playerGridCells[l].classList.remove('miss')
+    })
+    playerShip3.location.forEach(l => {
+      playerGridCells[l].classList.remove('hit')
+      playerGridCells[l].classList.remove('sunk')
+      playerGridCells[l].classList.remove('miss')
+    })
+    playerShip4.location.forEach(l => {
+      playerGridCells[l].classList.remove('hit')
+      playerGridCells[l].classList.remove('sunk')
+      playerGridCells[l].classList.remove('miss')
+    })
+    computerShip1.location.forEach(l => {
+      computerGridCells[l].classList.remove('hit')
+      computerGridCells[l].classList.remove('sunk')
+      computerGridCells[l].classList.remove('miss')
+    })
+    computerShip2.location.forEach(l => {
+      computerGridCells[l].classList.remove('hit')
+      computerGridCells[l].classList.remove('sunk')
+      computerGridCells[l].classList.remove('miss')
+    })
+    computerShip3.location.forEach(l => {
+      computerGridCells[l].classList.remove('hit')
+      computerGridCells[l].classList.remove('sunk')
+      computerGridCells[l].classList.remove('miss')
+    })
+    computerShip4.location.forEach(l => {
+      computerGridCells[l].classList.remove('hit')
+      computerGridCells[l].classList.remove('sunk')
+      computerGridCells[l].classList.remove('miss')
+    })
+    playerShip1.location = []
+    playerShip1.isSunk = false
+    playerShip2.location = []
+    playerShip2.isSunk = false
+    playerShip3.location = []
+    playerShip3.isSunk = false
+    playerShip4.location = []
+    playerShip4.isSunk = false
+    computerShip1.location = []
+    computerShip1.isPlaced = false
+    computerShip1.isSunk = false
+    computerShip2.location = []
+    computerShip2.isPlaced = false
+    computerShip2.isSunk = false
+    computerShip3.location = []
+    computerShip3.isPlaced = false
+    computerShip3.isSunk = false
+    computerShip4.location = []
+    computerShip4.isPlaced = false
+    computerShip4.isSunk = false
+    if (!computerShip4.isPlaced) {
+      makeShip4()
+      makeShip3()
+      makeShip2()
+      makeShip1()
+    }
+  }) 
+  */
+
   clearBoard.addEventListener('click', () => {
     window.location.reload()
   })
+
+  window.addEventListener('load', () => {
+    header.classList.add('fadeInDown')
+  })
+
+  window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 120) {
+      instructions.classList.add('fadeOutUp')
+    } else {
+      instructions.classList.remove('fadeOutUp')
+    }
+  })
+
 }
 window.addEventListener('DOMContentLoaded', init)
