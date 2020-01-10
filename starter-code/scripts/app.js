@@ -132,18 +132,18 @@ function init() {
 
   //GAME VARIABLES
   //grid variables
-  let playerGridCells = []
-  let computerGridCells = []
+  const playerGridCells = []
+  const computerGridCells = []
   const width = 10
-  let computerMissiles = []
-  let allComputerShips = []
+  const computerMissiles = []
+  const allComputerShips = []
   let allShipsPlaced = false
   let lastHit = ''
 
   // SHIP OBJECTS
   //length: 2
   const playerShip1 = {
-    location: [],
+    location: [], 
     isSunk: false
   }
   //length: 3
