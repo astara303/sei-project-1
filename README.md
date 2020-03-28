@@ -12,10 +12,9 @@ You can play the game _[here](https://astara303.github.io/sei-project-1/)_.
 - JavaScript
 - HTML5
 - CSS3
-- jQuery
 - GitHub
 
-I utilized jQuery and DOM manipulation to alter CSS classes and run my script. These tools enabled me to easily alter classes and text, or detect elements by their class.
+I utilized DOM manipulation methods to alter CSS classes and run my script. These tools enabled me to easily alter classes and text, or detect elements by their class.
 
 Most of my planning and time went into writing the JavaScript logic for the game. I built two grids of divs, each in a 10x10 formation. 
 I split the game into two stages: Set-Up and Missile Fire. Both stages have two phases: one for the player, and one for the computer, as I needed to allow for player choice, and to make all the choices for the computer.
