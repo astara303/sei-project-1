@@ -19,14 +19,14 @@ The game is split into two phases: Set-Up and Missile-Fire.
   __Missile-Fire Stage:__
   1. The player always takes the first turn by clicking on the "radar" grid.
   2. The computer will immediately return fire by targeting a square on the player's "map" grid.
-  3. "Miss", "hit", and "sink" all display differently on the grid so that the player can keep track of where they should click next, and how many of their ships have been hit or sunk.
+  3. "MISS", "HIT", and "SUNK" all display differently on the grid so that the player can keep track of where they should click next, and how many of their ships have been hit or sunk.
   4. When all of the player's ships have been sunk, the computer has won, or vice versa, and the game is over.
 
 _For more information on the game Battleship, please refer to the [Wiki](https://en.wikipedia.org/wiki/Battleship_(game))._
 
 ## Functionality
 
-In this section I discuss the functionality that I'm proud of, that makes the game work (and importantly, fun to play, and possible to lose).
+In this section I discuss the functionality that makes the game work (and importantly, fun to play, and possible to lose).
 
 - The computer's ships are automatically placed on the radar grid when the page is loaded. They will never generate off the grid nor intersect. They may be generated horizontally or vertically. This is decided by a simple Math.random() function that creates a 50/50 chance.
 
@@ -67,10 +67,9 @@ function targetedFire() {
         }
 ```
 
+## Needs Improvement
 
-## Struggles
-
-In this section I will describe what code needs work in order for the game to be even better.
+In this section I describe what needs some work in order for the game to be even better.
 
 - When the user is placing their ships square by square on the map grid, it is possible not to place the squares next to each other. To fix this, I could have the player place multiple squares at one when the corresponsing sized ship is chosen, or next to be placed.
 
