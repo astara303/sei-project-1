@@ -3,13 +3,34 @@
 
 ![](https://i.ibb.co/JcF8rft/slideshow4.png)
 
-I created this version of Battleship using vanilla JavaScript, HTML 5 and CSS 3. Battleship has always been one of my favorite games. My friends and I would draw grids on paper and play over skype. This game is my first ever solo coding project and was built three weeks into my _[General Assembly](https://generalassemb.ly/)_ Software Engineering Immersive course. 
+I created this version of Battleship using vanilla JavaScript, DOM Manipulation, HTML 5 and CSS 3. Battleship has always been one of my favorite games. My friends and I would draw grids on paper and play over skype. This game is my first ever solo coding project and was built three weeks into my _[General Assembly](https://generalassemb.ly/)_ Software Engineering Immersive course. 
 
 You can play the game _[here](https://astara303.github.io/sei-project-1/)_.
 
+## Tools and Skills
+
+- JavaScript
+- HTML5
+- CSS3
+- jQuery
+- GitHub
+
+I utilized jQuery and DOM manipulation to alter CSS classes and run my script. These tools enabled me to easily alter classes and text, or detect elements by their class.
+
+Most of my planning and time went into writing the JavaScript logic for the game. I built two grids of divs, each in a 10x10 formation. 
+I split the game into two stages: Set-Up and Missile Fire. Both stages have two phases: one for the player, and one for the computer, as I needed to allow for player choice, and to make all the choices for the computer.
+
+I struggled with the concept of how to randomly generate the computer ships horizontally or vertically. For most of my development the ships only generated horizontally. And then I realised I could write a simple Math.random() function that creates a 50/50 chance. I called this the "coin flip" function and depending on its boolean result, either a horizontal ship function is called or a vertical ship function is called.
+
+Event listeners match the user's clicks to the corresponding grid squares.
+
+Arrays and objects store information about which grids have been fired at, which grids hold ships, and boolean values on whether a ship is sunk.
+
+The game works on mobile.
+
 ## Usage
 
-The game is split into two phases: Set-Up and Missile-Fire.
+The game is split into two stages: Set-Up and Missile-Fire.
 
   __Set-Up Stage:__
   1. When the page is loaded, the computer's four ships auto-generate to random positions on the "radar" grid.
@@ -28,7 +49,7 @@ _For more information on the game Battleship, please refer to the [Wiki](https:/
 
 In this section I discuss the functionality that makes the game work (and importantly, fun to play, and possible to lose).
 
-- The computer's ships are automatically placed on the radar grid when the page is loaded. They will never generate off the grid nor intersect. They may be generated horizontally or vertically. This is decided by a simple Math.random() function that creates a 50/50 chance.
+- The computer's ships are automatically placed on the radar grid when the page is loaded. They will never generate off the grid nor intersect. They may be generated horizontally or vertically.
 
 - The player chooses where to place their ships by clicking on the grid and the corresponding ship color appears.
 
