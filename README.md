@@ -34,7 +34,7 @@ In this section I discuss the functionality that I'm proud of, that makes the ga
 
 - The player cannot start firing at the radar screen until all of their ships have been placed.
 
-- Every time the user FIREs, the computer FIREs back.
+- Every time the user FIREs, the computer FIREs back automatically.
 
 - The computer randomly targets squares on the player's grid and will never HIT the same square twice. This is because their hits are stored in an array that is referenced during the random firing function.
 
@@ -78,18 +78,17 @@ In this section I will describe what code needs work in order for the game to be
 
 - I haven't managed to make the computer's auto-generated ships place themselves at least one grid square apart, so sometimes they sit side-by-side. The rules in my house were that is allowed, but I know some people consider it a rule of Battleship to not allow ships to sit next to each other. I could make part of the placement function to detect nearby grids for ships.
 
+- I wrote a 'clear grid' function to completely erase the grids by targeting and removing all classes from the grids. This did not execute properly as a "clear", so I used a "refresh page" shortcut instead. I would definitely update this to properly function.
+
+- The code is _very_ hard-coded. It works well and I'm proud of it but now that I have more experience with functional programming and map, filter, and reduce, I would take advantage of that and refactor the code.
+
 - The computer does make targeted fire against a player's ship when it registers a "hit", but if the hit is detected in the middle of a ship, the computer will only filter through the squares in one direction, reverting to random fire again once it reaches the end of a ship. I am storing the last hit square in a variable, and would need to insert the first detected "last hit" variable if the computer reaches the end of a ship but the ship in question has not been SUNK.
 
 Targeted fire "forgetting" to check the other side of the ship:
-![](https://i.ibb.co/XSxZcdx/Screenshot-2020-03-28-at-10-25-56.png)
 
-<img src="(https://i.ibb.co/XSxZcdx/Screenshot-2020-03-28-at-10-25-56.png)" alt="forgetful targeted fire" width="250" height="250">
+<img src="https://i.ibb.co/XSxZcdx/Screenshot-2020-03-28-at-10-25-56.png" width="250" height="250">
 
-- I wrote a 'clear grid' function to completely erase the grids by targeting and removing all classes from the grids. This did not execute properly as a "clear", so I used a "refresh page" shortcut instead. I would definitely update this to properly function.
-
--The code is VERY hard-coded. It works well and I'm proud of it but now that I have more experience with functional programming and map, filter, and reduce, I would take advantage of that and refactor the code.
-
-## About me
+## Hello!
 
 I'm an avid enjoyer of JavaScript. I would be so happy to discuss this project, or any of your JavaScript projects with you.
 I am a big gaming nerd so feel free to share your games with me!
