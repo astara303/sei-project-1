@@ -3,7 +3,7 @@
 
 ![](https://i.ibb.co/JcF8rft/slideshow4.png)
 
-I created this version of Battleship in 1 week using vanilla JavaScript, DOM Manipulation, HTML 5 and CSS 3. Battleship has always been one of my favorite games. My friends and I would draw grids on paper and play over skype. This game is my first ever solo coding project and was built three weeks into my _[General Assembly](https://generalassemb.ly/)_ Software Engineering Immersive course. 
+I created this version of Battleship in 1 week using vanilla JavaScript, DOM Manipulation, HTML5 and CSS3. Battleship has always been one of my favorite games. My friends and I would draw grids on paper and play over skype. This game is my first ever solo coding project and was built three weeks into my _[General Assembly](https://generalassemb.ly/)_ Software Engineering Immersive course. 
 
 You can play the game _[here](https://astara303.github.io/sei-project-1/)_.
 
